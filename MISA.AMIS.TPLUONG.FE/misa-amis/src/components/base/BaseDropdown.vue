@@ -7,7 +7,7 @@
             @item-click="onItemClick"
           />
     </div>
-</template>
+</template> 
  
 <script>
 import DxDropDownButton from "devextreme-vue/drop-down-button";
@@ -17,13 +17,13 @@ export default {
   },
   data() {
     return {
-      items: ['Tất cả trạng thái', 'Đang theo dõi', 'Ngừng theo dõi'],
+      items: ['Tất cả trạng thái', 'Đang theo dõi', 'Ngừng theo dõi roi'],
     };
   },
   methods: {
-      onItemClick()
+      onItemClick(e)
       {
-          
+          notify(e.itemData.name || e.itemData, 'success', 600);
       }
   },
 };
