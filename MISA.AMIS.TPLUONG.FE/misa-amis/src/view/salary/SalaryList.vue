@@ -20,6 +20,7 @@
       </div>
       <div class="toolbar-right flex">
           <BaseDropdown style="margin-right:20px"/>
+          <BaseDropdownSingle/>
         <div class="box-filter-toolbar">
           <div class="icon-filter-toolbar"></div>
         </div>
@@ -34,10 +35,11 @@
 <script>
 import TitleSalary from "../../components/base/BaseTitle.vue";
 import BaseDropdown from "../../components/base/BaseDropdown.vue";
+import BaseDropdownSingle from "../../components/base/BaseDropdownSingle.vue";
 export default {
   name: "SalaryList",
   components: {
-    TitleSalary,BaseDropdown
+    TitleSalary,BaseDropdown,BaseDropdownSingle
   },
 };
 </script>

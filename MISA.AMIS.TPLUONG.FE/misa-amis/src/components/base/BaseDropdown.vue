@@ -1,30 +1,42 @@
 <template>
-    <div class="dx-field-value">
-          <DxDropDownButton
-            :items="items"
-            :drop-down-options="{ width: 230 }"
-            text="Tất cả trạng thái"
-            @item-click="onItemClick"
-          />
-    </div>
+  <div class="dx-field-value">
+    <DxSelectBox
+      :data-source="data"
+      :value="items[0].Value"
+      display-expr="Text"
+      value-expr="Value"
+      @value-changed="valueChanged"
+    />
+  </div>
 </template> 
  
 <script>
-import DxDropDownButton from "devextreme-vue/drop-down-button";
+import DxSelectBox from "devextreme-vue/select-box";
+import ArrayStore from "devextreme/data/array_store";
+import {STATUS} from "../../js/common/data.js";
 export default {
   components: {
-    DxDropDownButton,
+    DxSelectBox,
   },
   data() {
+    const items = STATUS;
     return {
-      items: ['Tất cả trạng thái', 'Đang theo dõi', 'Ngừng theo dõi roi'],
+      items,
+      data: new ArrayStore({
+        data: items,
+        key: 'Value'
+      }),
     };
   },
+  created() {
+  },
   methods: {
-      onItemClick(e)
-      {
-          notify(e.itemData.name || e.itemData, 'success', 600);
-      }
+    valueChanged(e)
+    {
+      console.log(e.value);
+    }
   },
 };
 </script>
+<style>
+</style>
