@@ -1,0 +1,39 @@
+.m-btn {
+  display: flex;
+  background-color: #34b057;
+  border-radius: 5px;
+  height: 36px;
+  color: #ffffff;
+  padding-left: 16px;
+  padding-right: 16px;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}
+
+.m-btn:hover
+{
+  background-color: #02b936;
+  color:  #fff;
+}
+
+.m-btn:active
+{
+  background-color: #34b057;
+  color:  #fff;
+}
+
+.icon-add {
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-position: -222px -2px;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #ffffff!important;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.text-add
+{
+    font-weight: 700;
+}

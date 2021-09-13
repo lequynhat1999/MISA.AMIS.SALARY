@@ -1,0 +1,208 @@
+.menu {
+  height: 56px;
+  width: 100%;
+  padding-left: 16px;
+  background-color: white;
+}
+
+.title-menu {
+  height: 56px;
+  align-items: center;
+}
+
+.icon-toggle {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-position: -80px -80px;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #000!important;
+}
+
+.img-title
+{
+    margin-left: 15px;
+}
+
+.text-title
+{
+    padding-left: 16px;
+    font-size: 18px;
+    color: #34b057;
+    font-weight: bold;
+}
+
+.navbar
+{
+    margin-left: 50px;
+    align-items: center;
+    color: #666666
+}
+
+.navbar ul
+{
+    list-style-type: none;
+    display: flex;
+}
+
+.nav-item
+{
+    display: inline-block;
+    height: 42px;
+    line-height: 42px;
+    cursor: pointer;
+}
+
+.nav-item-text
+{
+    margin-right: 25px;
+}
+
+.icon-menu
+{
+    margin-left: 8px;
+}
+
+.nav-item-text span
+{
+    height: 48px;
+    line-height: 42px;
+    display: block;
+}
+
+.nav-item-text span:hover
+{
+    border-bottom: 4px solid #34b057;
+}
+
+.item-active
+{
+    font-weight: bold !important;
+    color: #212121 !important; 
+    border-bottom: 4px solid #34b057 !important;
+}
+
+.menu-right
+{
+    position: absolute;
+    right: 24px;
+    align-items: center;
+}
+
+.img-menu-right
+{
+    background: url("../../assets/img/Avatar.jpg");
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: 10px;
+    border-radius: 50%;
+}
+
+.box-item-more
+{
+    width: 35px;
+    height: 35px;
+    margin-top: 10px;
+    margin-right: 26px;
+}
+
+.icon-more
+{
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-position: 0 -120px;
+    -webkit-mask-repeat: no-repeat;
+    background-color: #666!important;
+    cursor: pointer;
+    margin-top: 6px;
+    margin-left: 6px;
+}
+
+
+.box-item-more:hover
+{
+    background-color: #e6e6e6;
+    border-radius: 50%;
+}
+
+.box-icon-help
+{
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    margin-top: 10px;
+}
+
+.icon-help
+{
+    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -24px -120px no-repeat;
+    width: 24px;
+    height: 24px;
+    margin-top: 6px;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+.box-icon-help:hover
+{
+    background-color: #e6e6e6;
+    border-radius: 50%;
+}
+
+.box-icon-bell
+{
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    margin-top: 10px;
+}
+
+.icon-bell
+{
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: -72px -120px;
+    background-color: #666!important;
+    margin-top: 6px;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+.box-icon-bell:hover
+{
+    background-color: #e6e6e6;
+    border-radius: 50%;
+}
+
+.box-icon-setting
+{
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    margin-top: 10px;
+}
+
+.icon-setting
+{
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: -48px -120px;
+    background-color: #666!important;
+    margin-top: 6px;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+.box-icon-setting:hover
+{
+    background-color: #e6e6e6;
+    border-radius: 50%;
+}

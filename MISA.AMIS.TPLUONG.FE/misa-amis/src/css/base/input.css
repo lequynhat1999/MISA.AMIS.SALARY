@@ -1,0 +1,26 @@
+.input-search {
+  padding: 10px 12px;
+  outline: none;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  height: 34px;
+  width: 300px;
+  padding-left: 35px;
+}
+
+.input-search::placeholder {
+  font-size: 13px;
+}
+
+.icon-search {
+    background: url('../../assets/img/Icon.9254d79.svg') no-repeat -2px -2px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 8px;
+    top: 8px;
+}
+
+.m-input:hover, .m-input:active, .m-input:focus{
+    border: 1px solid #34b057;
+}
