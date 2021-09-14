@@ -19,7 +19,7 @@
         <div class="icon-search"></div>
       </div> -->
       <div class="toolbar-right flex">
-        <BaseDropdown style="margin-right: 20px" />
+        <BaseDropdown style="margin-right: 20px"/>
         <BaseDropdownSingle style="margin-right: 20px" />
         <div class="box-filter-toolbar">
           <div class="icon-filter-toolbar"></div>

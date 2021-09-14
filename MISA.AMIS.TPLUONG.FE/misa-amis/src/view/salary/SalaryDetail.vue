@@ -48,7 +48,7 @@
             <div class="text-input">
               <b>Loại thành phần <span style="color: red">*</span></b>
             </div>
-            <input type="text" class="m-input input-text-form" />
+            <SelectBox style="margin-left:25px; max-width:237px" />
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input">
@@ -57,8 +57,9 @@
             <input type="text" class="m-input input-text-form" />
           </div>
           <div class="input-form flex a-l-c">
-            <div class="text-input">
+            <div class="text-input flex a-l-c">
               <b>Định mức</b>
+              <div class="icon-quota" title="Khi tính giá trị của thành phần lương này, nếu số tiền vượt quá định mức thì chương trình sẽ tự động lấy mức tối đa theo định mức đã thiết lập"></div>
             </div>
             <input type="text" class="m-input input-text-form" />
           </div>
@@ -87,8 +88,12 @@
 </template>
 
 <script>
+import SelectBox from "../../components/base/BaseSelectBox.vue"
 export default {
   name: "SalaryDetail",
+  components:{
+    SelectBox
+  },
   props: ["isOpenModal"],
   data() {
     return {};

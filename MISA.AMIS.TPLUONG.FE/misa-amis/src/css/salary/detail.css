@@ -1,6 +1,6 @@
 .modal {
   position: fixed; /* Stay in place */
-  z-index: 9999; /* Sit on top */
+  z-index: 2; /* Sit on top */
   padding-top: 55px;
   left: 0;
   top: 0;
@@ -34,7 +34,6 @@
 .content-form
 {
     height: calc(100vh - 126px);
-    width: 100%;
     background-color: #f1f2f1;
 }
 
@@ -48,6 +47,7 @@
     margin-bottom: 22px;
     padding-left: 40px;
     padding-top: 40px;
+    padding-bottom: 40px;
     overflow-y: scroll;
 }
 
@@ -95,3 +95,14 @@
     padding: 0 26px;
 }
 
+.icon-quota
+{
+    width: 20px;
+    height: 20px;
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-position: -260px -40px;
+    -webkit-mask-repeat: no-repeat;
+    background-color: #707070!important;
+    margin-left: 6px;
+    cursor: pointer;
+}

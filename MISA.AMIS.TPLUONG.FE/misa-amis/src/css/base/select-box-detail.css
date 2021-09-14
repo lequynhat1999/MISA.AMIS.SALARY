@@ -1,0 +1,25 @@
+/* fix size cho dropdown data */
+.dx-overlay-content.dx-popup-normal.dx-resizable
+{
+    max-height: 165px !important;
+    height: 165px !important;
+    width: 237px !important;
+}
+
+/* fix bg khi hover item */
+.dx-dropdownlist-popup-wrapper
+  .dx-list:not(.dx-list-select-decorator-enabled)
+  .dx-list-item-content:hover {
+  background-color: #eafbf2 !important;
+}
+
+/* fix item selected */
+.dx-list-item-selected {
+  background-color: #eafbf2 !important;
+  color: #34b057 !important;
+}
+
+.dx-placeholder
+{
+    display: none;
+}

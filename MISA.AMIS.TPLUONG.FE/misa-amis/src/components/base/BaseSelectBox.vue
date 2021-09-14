@@ -1,34 +1,38 @@
 <template>
   <div class="dx-field-value">
-    <DxSelectBox
+    <DxSelectBox 
       :data-source="data"
-      :value="items[0].Value"
       display-expr="Text"
       value-expr="Value"
       @value-changed="valueChanged"
+      :search-enabled="true"
+      :search-mode="searchModeOption"
+      :min-search-length="minSearchLengthOption"
+      :show-data-before-search="showDataBeforeSearchOption"
     />
   </div>
-</template> 
- 
+</template>
+
 <script>
 import DxSelectBox from "devextreme-vue/select-box";
 import ArrayStore from "devextreme/data/array_store";
-import {STATUS} from "../../js/common/data.js";
+import {TYPE} from "../../js/common/data.js";
 export default {
   components: {
     DxSelectBox,
   },
   data() {
-    const items = STATUS;
+    const items = TYPE;
     return {
       items,
+      searchModeOption: 'contains',
+      showDataBeforeSearchOption: true,
+      minSearchLengthOption: 0,
       data: new ArrayStore({
         data: items,
         key: 'Value'
       }),
     };
-  },
-  created() {
   },
   methods: {
     valueChanged(e)
@@ -38,6 +42,7 @@ export default {
   },
 };
 </script>
-<style scoped>
-/* @import "../../css/base/select-box.css"; */
+
+<style>
+@import "../../css/base/select-box-detail.css";
 </style>
