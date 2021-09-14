@@ -10,17 +10,17 @@
       </div>
     </div>
     <div class="toolbar-content flex relative">
-      <div class="box-search relative">
+      <!-- <div class="box-search relative">
         <input
           type="text"
           class="m-input input-search"
           placeholder="Tìm kiếm"
         />
         <div class="icon-search"></div>
-      </div>
+      </div> -->
       <div class="toolbar-right flex">
-          <BaseDropdown style="margin-right:20px"/>
-          <BaseDropdownSingle/>
+        <BaseDropdown style="margin-right: 20px" />
+        <BaseDropdownSingle style="margin-right: 20px" />
         <div class="box-filter-toolbar">
           <div class="icon-filter-toolbar"></div>
         </div>
@@ -30,8 +30,10 @@
       </div>
     </div>
     <div class="table-salary">
-      <BaseGrid/>
+      <BaseGrid />
+      <div class="amount">Tổng số bản ghi: <b>175</b></div>
     </div>
+    <SalaryDetail />
   </div>
 </template>
 
@@ -40,11 +42,15 @@ import TitleSalary from "../../components/base/BaseTitle.vue";
 import BaseDropdown from "../../components/base/BaseDropdown.vue";
 import BaseDropdownSingle from "../../components/base/BaseDropdownSingle.vue";
 import BaseGrid from "../../components/base/BaseGrid.vue";
+import SalaryDetail from "../salary/SalaryDetail.vue";
 export default {
   name: "SalaryList",
   components: {
-    TitleSalary,BaseDropdown,BaseDropdownSingle
-    ,BaseGrid
+    TitleSalary,
+    BaseDropdown,
+    BaseDropdownSingle,
+    BaseGrid,
+    SalaryDetail,
   },
 };
 </script>

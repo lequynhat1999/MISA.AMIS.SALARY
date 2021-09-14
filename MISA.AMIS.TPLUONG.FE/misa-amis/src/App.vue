@@ -27,8 +27,7 @@ export default {
 @import "./css/base/button.css";
 @import "./css/base/input.css";
 @import "./css/base/relative.css";
-/* @import "./css/base/select-box.css"; */
-/* @import "./css/base/grid.css"; */
+@import "./css/salary/detail.css";
 * {
   margin: 0;
   padding: 0;

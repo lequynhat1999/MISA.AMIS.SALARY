@@ -1,0 +1,66 @@
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 9999; /* Sit on top */
+  padding-top: 55px;
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  border: 1px solid #ddd;
+  width: 1366px;
+  height: 580px;
+}
+
+.header-form
+{
+    height: 70px;
+    width: 100%;
+    background-color: #f1f2f1;
+    align-items: center;
+    padding: 0 24px;
+}
+
+.content-form
+{
+    height: calc(100vh - 126px);
+    width: 100%;
+}
+
+.box-icon-back
+{
+    width: 36px;
+    height: 36px;
+}
+
+.icon-back
+{
+    width: 24px;
+    height: 24px;
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: -176px 6px;
+    background-color: #666!important;
+    margin-left: 4px;
+    margin-top: 2px;
+}
+
+.box-icon-back:hover
+{
+    background-color: #d9d9d9;
+    border-radius: 50%;
+}
+
+.title-form
+{
+    margin-left: 8px;
+    font-size: 20px;
+    color: #212121;
+    font-weight: 700;
+}

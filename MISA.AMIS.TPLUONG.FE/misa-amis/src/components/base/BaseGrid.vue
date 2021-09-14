@@ -4,15 +4,15 @@
       :data-source="dataSource"
       :remote-operations="false"
       :allow-column-reordering="true"
-      :row-alternation-enabled="true"
       :show-borders="true"
       @content-ready="onContentReady"
       :height="430"
-      :column-width="270"
+      :column-width="250"
       :allow-column-resizing="true"
       :column-resizing-mode="currentMode"
       :column-min-width="180"
       :column-auto-width="true"
+      :hover-state-enabled="true"
     >
       <DxSelection
         :select-all-mode="allMode"
@@ -36,8 +36,6 @@
         data-type="number"
         format="percent"
         alignment="left"
-        cell-template="discountCellTemplate"
-        css-class="bullet"
         :fixed="true"
       />
       <DxColumn
@@ -53,20 +51,31 @@
       />
       <DxColumn data-field="Channel" caption="Tính chất" data-type="string" />
       <DxColumn data-field="Customer" caption="Giá trị" data-type="string" />
-      <DxColumn data-field="Region" caption="Trạng thái" data-type="string" />
+      <DxColumn
+        data-field="Region"
+        caption="Trạng thái"
+        data-type="string"
+        cell-template="cellTemplate"
+      />
 
       <DxScrolling column-rendering-mode="virtual" />
       <DxSearchPanel
         :visible="true"
-        :highlight-case-sensitive="true"
+        :highlight-case-sensitive="false"
+        :highlight-search-text="false"
         placeholder="Tìm kiếm"
       />
       <DxGrouping :auto-expand-all="false" />
       <DxPager
         :allowed-page-sizes="pageSizes"
         :show-page-size-selector="true"
+        :display-mode="displayMode"
       />
       <DxPaging :page-size="10" />
+
+      <template #cellTemplate="{}">
+        <DxButton icon="edit" :on-click="myCommand" />
+      </template>
     </DxDataGrid>
   </div>
 </template>
@@ -76,14 +85,13 @@ import {
   DxDataGrid,
   DxColumn,
   DxGrouping,
-  //   DxGroupPanel,
   DxSelection,
   DxPager,
   DxPaging,
   DxScrolling,
   DxSearchPanel,
 } from "devextreme-vue/data-grid";
-
+import DxButton from "devextreme-vue/button";
 import DataSource from "devextreme/data/data_source";
 import "devextreme/data/odata/store";
 let collapsed = false;
@@ -92,8 +100,8 @@ export default {
   components: {
     DxDataGrid,
     DxColumn,
+    DxButton,
     DxGrouping,
-    // DxGroupPanel,
     DxPager,
     DxPaging,
     DxScrolling,
@@ -113,6 +121,7 @@ export default {
           },
         },
       }),
+      // pageSize chọn số bản ghi/trang
       pageSizes: [10, 25, 50, 100],
       // data cho checkbox
       allMode: "page",
@@ -120,6 +129,8 @@ export default {
       // data cho resize column
       resizingModes: ["nextColumn", "widget"],
       currentMode: "widget",
+      // data cho paging
+      displayMode: "compact",
       onContentReady: function (e) {
         if (!collapsed) {
           e.component.expandRow(["EnviroCare"]);
@@ -131,6 +142,9 @@ export default {
   methods: {
     onSelectionChanged(e) {
       alert(e.value);
+    },
+    myCommand() {
+      console.log(1);
     },
   },
 };
