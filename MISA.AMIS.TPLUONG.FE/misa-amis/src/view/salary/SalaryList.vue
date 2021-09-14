@@ -3,9 +3,9 @@
     <div class="header-content flex">
       <TitleSalary />
       <div class="box-btn-add">
-        <button class="m-btn btn-add">
+        <button class="m-btn btn-add" @click="openModal">
           <div class="icon-add"></div>
-          <div class="text-add">Thêm mới</div>
+          <div class="text-btn">Thêm mới</div>
         </button>
       </div>
     </div>
@@ -33,7 +33,10 @@
       <BaseGrid />
       <div class="amount">Tổng số bản ghi: <b>175</b></div>
     </div>
-    <SalaryDetail />
+    <SalaryDetail 
+      :isOpenModal="isOpenModal"
+      @closeForm="closeForm"
+    />
   </div>
 </template>
 
@@ -51,6 +54,29 @@ export default {
     BaseDropdownSingle,
     BaseGrid,
     SalaryDetail,
+  },
+  data() {
+    return {
+      // mở modal
+      isOpenModal: true,
+    }
+  },
+  methods: {
+    /**------------------------------------------------
+     * Bắt sự kiện mở form chi tiết
+     * CreatedBy: LQNHAT(14/09/2021)
+     */
+    openModal() {
+      this.isOpenModal = !this.isOpenModal;
+    },
+
+    /**---------------------------------------------------------
+     * Bắt sự kiện đóng form chi tiết
+     * CreatedBy : LQNHAT(14/09/2021)
+     */
+    closeForm() {
+      this.isOpenModal = true;
+    },
   },
 };
 </script>

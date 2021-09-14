@@ -1,5 +1,4 @@
 .modal {
-  display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 9999; /* Sit on top */
   padding-top: 55px;
@@ -10,11 +9,16 @@
   overflow: auto; /* Enable scroll if needed */
 }
 
+.hidden-modal
+{
+    display: none;
+}
+
 /* Modal Content */
 .modal-content {
   background-color: #fefefe;
   border: 1px solid #ddd;
-  width: 1366px;
+  width: 1365px;
   height: 580px;
 }
 
@@ -31,12 +35,27 @@
 {
     height: calc(100vh - 126px);
     width: 100%;
+    background-color: #f1f2f1;
+}
+
+.content-wrapper
+{
+    width: 1320px;
+    height: 487px;
+    background-color: #fff;
+    margin-left: 22px;
+    margin-right: 22px;
+    margin-bottom: 22px;
+    padding-left: 40px;
+    padding-top: 40px;
+    overflow-y: scroll;
 }
 
 .box-icon-back
 {
     width: 36px;
     height: 36px;
+    cursor: pointer;
 }
 
 .icon-back
@@ -64,3 +83,15 @@
     color: #212121;
     font-weight: 700;
 }
+
+.box-btn-header
+{
+    position: absolute;
+    right: 24px;
+}
+
+.m-btn-add
+{
+    padding: 0 26px;
+}
+

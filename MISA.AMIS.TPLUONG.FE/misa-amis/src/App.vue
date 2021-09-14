@@ -28,6 +28,8 @@ export default {
 @import "./css/base/input.css";
 @import "./css/base/relative.css";
 @import "./css/salary/detail.css";
+@import "./css/base/margin.css";
+@import "./css/base/align-item.css";
 * {
   margin: 0;
   padding: 0;

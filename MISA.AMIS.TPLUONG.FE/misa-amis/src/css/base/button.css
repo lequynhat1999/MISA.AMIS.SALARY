@@ -11,29 +11,52 @@
   cursor: pointer;
 }
 
-.m-btn:hover
-{
+.m-btn:hover {
   background-color: #02b936;
-  color:  #fff;
+  color: #fff;
 }
 
-.m-btn:active
-{
+.m-btn:active {
   background-color: #34b057;
-  color:  #fff;
+  color: #fff;
+}
+
+.m-btn-white {
+  display: flex;
+  background-color: #fff;
+  color: #212121;
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+  height: 36px;
+  padding-left: 16px;
+  padding-right: 16px;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}
+
+.m-btn-white:hover {
+  background-color: #fff;
+  color: #02b936;
+  border: 1px solid #02b936;
+}
+
+.m-btn-white:active {
+  background-color: #fff;
+  color: #198f3b;
+  border: 1px solid #198f3b;
 }
 
 .icon-add {
   -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
   -webkit-mask-position: -222px -2px;
   -webkit-mask-repeat: no-repeat;
-  background-color: #ffffff!important;
+  background-color: #ffffff !important;
   width: 16px;
   height: 16px;
   margin-right: 8px;
 }
 
-.text-add
-{
-    font-weight: 700;
+.text-btn {
+  font-weight: 700;
 }
