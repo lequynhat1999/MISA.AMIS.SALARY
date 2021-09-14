@@ -29,6 +29,9 @@
         </div>
       </div>
     </div>
+    <div class="table-salary">
+      <BaseGrid/>
+    </div>
   </div>
 </template>
 
@@ -36,10 +39,12 @@
 import TitleSalary from "../../components/base/BaseTitle.vue";
 import BaseDropdown from "../../components/base/BaseDropdown.vue";
 import BaseDropdownSingle from "../../components/base/BaseDropdownSingle.vue";
+import BaseGrid from "../../components/base/BaseGrid.vue";
 export default {
   name: "SalaryList",
   components: {
     TitleSalary,BaseDropdown,BaseDropdownSingle
+    ,BaseGrid
   },
 };
 </script>

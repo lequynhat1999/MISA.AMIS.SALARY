@@ -38,5 +38,6 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
+@import "../../css/base/select-box.css";
 </style>

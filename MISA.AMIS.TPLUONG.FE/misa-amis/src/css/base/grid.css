@@ -1,0 +1,125 @@
+/* margin cho table */
+.box-gird
+{
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+/* ẩn message */
+.dx-datagrid-group-panel .dx-group-panel-message
+{
+    display: none !important;
+}
+
+/* fix width cho input search */
+.dx-toolbar-item-content > .dx-texteditor
+{
+    width: 300px !important;
+}
+
+/* border input search */
+.dx-toolbar-item-content > .dx-texteditor.dx-editor-outlined
+{
+    border: 1px solid #e0e0e0  !important;
+}
+
+/* vị trí inputsearch */
+.dx-toolbar .dx-toolbar-after
+{
+    position: absolute !important;
+    left: -10px;
+    top: -47px;
+}
+
+.dx-texteditor.dx-editor-outlined:hover,.dx-texteditor.dx-editor-outlined:focus
+{
+    border: 1px solid #34b057;
+}
+
+/* ẩn panel */
+.dx-datagrid-borders > .dx-datagrid-header-panel {
+    display: none !important;
+}
+
+/* style checkbox */
+ .dx-checkbox-icon
+{
+    border-radius: 4px !important;
+    border: 2px solid #737888 !important;
+}
+
+/* fix height cho tr */
+.dx-datagrid-content .dx-datagrid-table .dx-row
+{
+    line-height: 33px !important;
+    height: 33px !important;
+}
+
+/* padding text thead */
+.dx-datagrid-text-content 
+{
+    color: #212121 !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+}
+
+/* set background color cho thead */
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+    background: #f6f6f6;
+    cursor: pointer;
+}
+
+.dx-datagrid .dx-row > td {
+    padding: 0 16px !important;
+    line-height: 47px ;
+    cursor: pointer;
+}
+
+/* padding text td */
+.dx-datagrid-content .dx-datagrid-table .dx-row td
+{
+    margin-left: 8px !important;
+}
+
+/* set color cho td */
+.dx-datagrid .dx-row-alt > td, .dx-datagrid .dx-row-alt > tr > td {
+    background-color: #fff !important;
+}
+
+/* set border cho column 3 */
+.dx-datagrid-content .dx-datagrid-table .dx-row td:nth-child(3){
+    border-right: 1px solid #ddd !important;
+}
+
+/* set border bottom */
+.dx-datagrid-content .dx-datagrid-table .dx-row td
+{
+    border-bottom: 1px solid #ddd !important;
+}
+
+/* bỏ border table */
+.dx-datagrid .dx-row > td
+{
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* fix width checkbox */
+.dx-datagrid-content .dx-datagrid-table.dx-datagrid-table-fixed colgroup col:first-child{
+    width: 58px !important;
+}
+
+/* bỏ border tbody */
+.dx-widget .dx-visibility-change-handler
+{
+    border-left: none !important;
+    border-right: none !important;
+}
+
+/* bỏ border thead */
+.dx-datagrid-borders > .dx-datagrid-headers
+{
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+}
