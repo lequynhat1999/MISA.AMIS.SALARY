@@ -19,7 +19,9 @@
         <div class="icon-search"></div>
       </div>
       <div class="toolbar-right flex">
-        <BaseDropdownSingle style="margin-right: 20px;width: 400px" />
+        <BaseDropdownSingle style="margin-right: 20px;width: 316px"
+          :treeDataSource="treeDataSource"
+         />
         <div class="box-filter-toolbar">
           <div class="icon-filter-toolbar"></div>
         </div>
@@ -34,7 +36,10 @@
         :dataSource="dataSource"
        >
        <template #Status ="{data}">
-         <div style="color:rgb(52 172 84)">{{data.Status}}</div>
+         <div class="box-status flex a-l-c">
+           <div class="icon-status"></div>
+           <div class="text-status">{{data.Status}}</div>
+         </div>
        </template>
        </BaseGrid>
 
@@ -68,6 +73,34 @@ export default {
     return {
       // mở modal
       isOpenModal: true,
+      treeDataSource: [
+            {
+              OrganizationUnitID: 1,
+              OrganizationUnitName: "Công ty cổ phần MISA",
+              ParentID: 0,
+            },
+            {
+              OrganizationUnitID: 2,
+              OrganizationUnitName: "Phòng đào tạo",
+              ParentID: 1,
+            },
+            {
+              OrganizationUnitID: 3,
+              OrganizationUnitName: "Phòng công nghệ",
+              ParentID: 1,
+            },
+            {
+              OrganizationUnitID: 5,
+              OrganizationUnitName: "Phòng kế toán",
+              ParentID: 2,
+            },
+            {
+              OrganizationUnitID: 4,
+              OrganizationUnitName: "Phòng hành chính",
+              ParentID: 3,
+            },
+            
+          ],
       // data source grid
       dataSource: [
         {

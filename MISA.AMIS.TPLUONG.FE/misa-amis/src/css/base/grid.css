@@ -2,12 +2,8 @@
 .box-gird {
   margin-left: 24px;
   margin-right: 24px;
+  height: calc(100vh - 275px);
 }
-
-/* .dx-widget .dx-visibility-change-handler
-{
-  height: calc(100vh - 315px) !important;
-} */
 
 /* ẩn message */
 .dx-datagrid-group-panel .dx-group-panel-message {
@@ -81,8 +77,7 @@
 }
 
 /* set color cho td */
-.dx-datagrid .dx-row-alt > td
- {
+.dx-datagrid .dx-row-alt > td {
   background-color: #fff !important;
 }
 
@@ -136,24 +131,99 @@
 }
 
 /* chỉnh page-size */
-.dx-page-sizes
-{
-    position: absolute;
-    right: 250px;
+.dx-page-sizes {
+  position: absolute;
+  right: 250px;
 }
 
 /* chỉnh page index */
-.dx-page-indexes
-{
-    margin-right: 15px;
+.dx-page-indexes {
+  margin-right: 15px;
 }
 
 /* bỏ border-top của paging */
-.dx-datagrid-borders > .dx-datagrid-filter-panel, .dx-datagrid-borders > .dx-datagrid-headers, .dx-datagrid-borders > .dx-datagrid-pager {
-    border-top: none !important;
+.dx-datagrid-borders > .dx-datagrid-filter-panel,
+.dx-datagrid-borders > .dx-datagrid-headers,
+.dx-datagrid-borders > .dx-datagrid-pager {
+  border-top: none !important;
 }
 
-.dx-pages
-{
+/* ẩn cái paging đi */
+.dx-pages {
   display: none;
+}
+
+/* style cho icon-status */
+.icon-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background: rgb(52, 176, 87);
+  color: rgb(0, 0, 0);
+}
+
+/* style cho text-status */
+.text-status {
+  margin-left: 8px;
+  color: rgb(52 172 84);
+}
+
+/* ẩn phần chức năng */
+.box-option {
+  display: none;
+}
+
+/* khi hover thì hiện chức năng trên row */
+.dx-state-hover .box-option {
+  display: block !important;
+}
+
+/* style btn theo dõi */
+.btn-follow
+{
+  width: 20px;
+  height: 20px;
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-repeat: no-repeat;
+  background-color: #f90!important;
+  -webkit-mask-position: -220px -40px;
+  margin-top: 15px;
+  margin-right: 20px;
+}
+
+/* style btn nhân bản */
+.btn-clone
+{
+  width: 20px;
+  height: 20px;
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-repeat: no-repeat;
+  background-color: #707070!important;
+  -webkit-mask-position: -80px 0;
+  margin-top: 15px;
+  margin-right: 20px;
+}
+
+/* style btn sửa */
+.btn-edit
+{
+  width: 20px;
+  height: 20px;
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-repeat: no-repeat;
+  background-color: #707070!important;
+  -webkit-mask-position: -60px 0;
+  margin-top: 15px;
+  margin-right: 20px;
+}
+
+/* style btn delete */
+.btn-delete {
+  width: 20px;
+  height: 20px;
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-repeat: no-repeat;
+  background-color: #ff6161 !important;
+  -webkit-mask-position: -120px -20px;
+  margin-top: 12px;
 }

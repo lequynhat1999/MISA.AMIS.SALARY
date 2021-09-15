@@ -1,0 +1,47 @@
+/* set bg cho item khi selected */
+.dx-treeview-item-without-checkbox.dx-state-selected > .dx-treeview-item {
+  background-color: #eafbf2 !important;
+  color: #34b057 !important;
+}
+
+/* set bg cho item khi focus */
+.dx-treeview-item-without-checkbox.dx-state-focused > .dx-treeview-item
+{
+    background-color: #eafbf2 !important;
+    color: #34b057 !important;
+}
+
+
+/* ẩn cái icon mặc định của tree */
+.dx-treeview-toggle-item-visibility.dx-treeview-toggle-item-visibility-opened::before,.dx-treeview-toggle-item-visibility::before
+{
+    content: none !important;
+}
+
+/* set icon + */
+.dx-treeview-toggle-item-visibility
+{
+    top: 14px;
+    left: 2px;
+    margin-top: 5px;
+    width: 20px !important;
+    height: 20px !important;
+    -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) !important;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: -118px -38px;
+    background-color: #666666;
+}
+
+/* set icon - */
+.dx-treeview-toggle-item-visibility.dx-treeview-toggle-item-visibility-opened
+{
+    -webkit-mask-position: -98px -38px;
+    font: 22px/22px DXIcons;
+    text-align: center;
+}
+
+/* padding text  */
+.dx-treeview-item
+{
+    padding: 5px 16px !important;
+}

@@ -6,7 +6,8 @@
       :allow-column-reordering="true"
       :show-borders="true"
       @content-ready="onContentReady"
-      :height="385"
+      height="100%"
+      :title="titleTd"
       :column-width="250"
       :allow-column-resizing="true"
       :column-resizing-mode="currentMode"
@@ -32,11 +33,33 @@
         cell-template="cellTemplate"
       />
 
-      <template #cellTemplate="{ data }">
-        <!-- <div @click="test(data)">a</div> -->
-        <slot :name="data.column.dataField" :data="data.data">
+      <DxColumn
+        alignment="center"
+        :width="180"
+        :fixed="true"
+        fixed-position="right"
+        cell-template="option"
+      />
 
+      <template #cellTemplate="{ data }">
+        <slot :name="data.column.dataField" :data="data.data">
+          {{ data.data[data.column.dataField] }}
         </slot>
+      </template>
+
+      <template #option="{ data }">
+        <div class="box-option">
+          <div class="box-btn flex a-l-c">
+            <div
+              class="btn-follow"
+              title="Ngừng theo dõi"
+              @click="test(data)"
+            ></div>
+            <div class="btn-clone" title="Nhân bản"></div>
+            <div class="btn-edit" title="Chỉnh sửa"></div>
+            <div class="btn-delete" title="Xóa"></div>
+          </div>
+        </div>
       </template>
 
       <DxScrolling column-rendering-mode="virtual" />
@@ -66,6 +89,7 @@ export default {
   props: ["headers", "dataSource"],
   data() {
     return {
+      titleTd: "Hello",
       // data cho checkbox
       allMode: "page",
       checkBoxesMode: "always",
@@ -82,7 +106,7 @@ export default {
   },
   methods: {
     test(data) {
-      console.log(data);
+      console.log(data.data.SalaryCompositionID);
     },
   },
 };
