@@ -1,17 +1,21 @@
-export const STATUS = [
-    {Text: "Tất cả trạng thái", Value: 0},
-    {Text: "Đang theo dõi", Value: 1},
-    {Text: "Ngừng theo dõi", Value: 2}
+export const TYPE = [
+    {TypeName: "Thông tin nhân viên", TypeID: 1},
+    {TypeName: "Chấm công", TypeID: 2},
+    {TypeName: "Doanh số", TypeID: 3},
+    {TypeName: "KPI", TypeID: 4},
+    {TypeName: "Sản phẩm", TypeID: 5},
+    {TypeName: "Lương", TypeID: 6},
+    {TypeName: "Thuế TNCN", TypeID: 7},
+    {TypeName: "Bảo hiểm Công Đoàn", TypeID: 8},
+    {TypeName: "Khác", TypeID: 9},
 ]
 
-export const TYPE = [
-    {Text: "Thông tin nhân viên", Value: 0},
-    {Text: "Chấm công", Value: 1},
-    {Text: "Doanh số", Value: 2},
-    {Text: "KPI", Value: 3},
-    {Text: "Sản phẩm", Value: 4},
-    {Text: "Lương", Value: 5},
-    {Text: "Thuế TNCN", Value: 6},
-    {Text: "Bảo hiểm Công Đoàn", Value: 7},
-    {Text: "Khác", Value: 8},
+export const NATURE = [
+    {NatureName: "Thu nhập", NatureID: 1},
+    {NatureName: "Khấu trừ", NatureID: 2},
+    {NatureName: "Khác", NatureID: 3},
+]
+
+export const VALUE_TYPE = [
+    {ValueTypeName: "Tiền tệ", ValueTypeID: 1},
 ]

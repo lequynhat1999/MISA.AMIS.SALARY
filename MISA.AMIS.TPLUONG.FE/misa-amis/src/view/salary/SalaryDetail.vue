@@ -48,13 +48,29 @@
             <div class="text-input">
               <b>Loại thành phần <span style="color: red">*</span></b>
             </div>
-            <SelectBox style="margin-left:25px; max-width:237px" />
+            <SelectBox style="margin-left:25px; max-width:237px"
+              :displayExprProp = "'TypeName'"
+              :valueExprProp = "'TypeID'"
+              :dataSource = dataSourceType
+              :valueDefault = "false"
+              :disabledProp = false
+             />
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input">
               <b>Tính chất <span style="color: red">*</span></b>
             </div>
-            <input type="text" class="m-input input-text-form" />
+            <SelectBox style="margin-left:25px; max-width:237px"
+              :displayExprProp = "'NatureName'"
+              :valueExprProp = "'NatureID'"
+              :dataSource = dataSourceNature
+              :valueDefault = dataSourceNature[0].NatureID
+              :disabledProp = false
+              @getValueItem="getValueItem"
+             />
+             <div class="box-text" v-if="itemID == 1">
+               <div class="test" ><b>thu nhập</b></div>
+             </div>
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input flex a-l-c">
@@ -67,7 +83,13 @@
             <div class="text-input">
               <b>Kiểu giá trị</b>
             </div>
-            <input type="text" class="m-input input-text-form" />
+            <SelectBox style="margin-left:25px; max-width:237px"
+              :displayExprProp = "'ValueTypeName'"
+              :valueExprProp = "'ValueTypeID'"
+              :dataSource = dataSourceValueType
+              :valueDefault = dataSourceValueType[0].ValueTypeID
+              :disabledProp = true
+             />
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input">
@@ -89,6 +111,7 @@
 
 <script>
 import SelectBox from "../../components/base/BaseSelectBox.vue"
+import {TYPE,NATURE,VALUE_TYPE} from "../../js/common/data.js";
 export default {
   name: "SalaryDetail",
   components:{
@@ -96,17 +119,33 @@ export default {
   },
   props: ["isOpenModal"],
   data() {
-    return {};
+    return {
+      // dataSource selectbox
+      dataSourceType: TYPE,
+      dataSourceNature: NATURE,
+      dataSourceValueType: VALUE_TYPE,
+      // id của item
+      itemID: 1,
+    };
   },
   methods: {
     /**------------------------------------------------------------------------------
      * Sự kiện click nút <-
-     * CreatedBy: LQNHAT(30/08/2021)
+     * CreatedBy: LQNHAT(15/09/2021)
      */
     closeFormDetail() {
       // close form
       this.$emit("closeForm");
     },
+    /**---------------------------------------------------------
+     * Gán id để hiển thị label
+     * CreatedBy: LQNHAT(15/09/2021)
+     */
+    getValueItem(id)
+    {
+      this.itemID = id;
+      console.log("id item detail : "  + this.itemID);
+    }
   },
 };
 </script>

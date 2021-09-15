@@ -3,8 +3,10 @@
     <DxSelectBox 
       :data-source="data"
       placeholder=""
-      display-expr="Text"
-      value-expr="Value"
+      :disabled= disabledProp
+      :value="valueDefault"
+      :display-expr="displayExprProp"
+      :value-expr="valueExprProp"
       @value-changed="valueChanged"
       :search-enabled="true"
       :search-mode="searchModeOption"
@@ -17,13 +19,13 @@
 <script>
 import DxSelectBox from "devextreme-vue/select-box";
 import ArrayStore from "devextreme/data/array_store";
-import {TYPE} from "../../js/common/data.js";
 export default {
   components: {
     DxSelectBox,
   },
+  props:["displayExprProp","valueExprProp","dataSource","valueDefault","disabledProp"],
   data() {
-    const items = TYPE;
+    const items = this.dataSource;
     return {
       items,
       searchModeOption: 'contains',
@@ -31,14 +33,18 @@ export default {
       minSearchLengthOption: 0,
       data: new ArrayStore({
         data: items,
-        key: 'Value'
+        key: 'TypeID'
       }),
     };
   },
   methods: {
+    /**-----------------------------------------------------
+     * Bắt sự kiện khi value thay đổi
+     * CreatedBy: LQNHAT(15/09/2021)
+     */
     valueChanged(e)
     {
-      console.log(e.value);
+      this.$emit("getValueItem",e.value);
     }
   },
 };

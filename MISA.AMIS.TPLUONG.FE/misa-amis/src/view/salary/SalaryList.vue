@@ -21,6 +21,11 @@
       <div class="toolbar-right flex">
         <BaseDropdownSingle style="margin-right: 20px;width: 316px"
           :treeDataSource="treeDataSource"
+          :placeholderProp = "'Tất cả đơn vị'"
+          :valueExprProp = "'OrganizationUnitID'"
+          :displayExprProp = "'OrganizationUnitName'"
+          :parentIdExprProp = "'ParentID'"
+          :valueDefault = treeDataSource[0].OrganizationUnitID
          />
         <div class="box-filter-toolbar">
           <div class="icon-filter-toolbar"></div>
@@ -73,6 +78,7 @@ export default {
     return {
       // mở modal
       isOpenModal: true,
+      // data source treeview
       treeDataSource: [
             {
               OrganizationUnitID: 1,

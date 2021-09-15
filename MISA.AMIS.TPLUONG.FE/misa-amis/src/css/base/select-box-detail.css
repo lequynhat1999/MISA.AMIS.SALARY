@@ -19,3 +19,9 @@
   color: #34b057 !important;
 }
 
+.dx-state-disabled
+{
+  border: #e1e1e1 !important;
+  background-color: #ccccb3 !important;
+  color: #6e6a67 !important;
+}

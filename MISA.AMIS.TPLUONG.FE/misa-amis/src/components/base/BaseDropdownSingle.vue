@@ -5,9 +5,9 @@
       :opened="isTreeBoxOpened"
       :show-clear-button="true"
       :data-source="treeDataSource"
-      value-expr="ID"
-      display-expr="name"
-      placeholder=""
+      :value-expr="valueExprProp"
+      :display-expr="displayExprProp"
+      :placeholder="placeholderProp"
       @value-changed="syncTreeViewSelection($event)"
     >
       <template #content="{}">
@@ -17,10 +17,10 @@
           :data-source="treeDataSource"
           :select-by-click="true"
           data-structure="plain"
-          key-expr="OrganizationUnitID"
-          parent-id-expr="ParentID"
+          :key-expr="valueExprProp"
+          :parent-id-expr="parentIdExprProp"
           selection-mode="single"
-          display-expr="OrganizationUnitName"
+          :display-expr="displayExprProp"
           @content-ready="$event.component.selectItem(treeBoxValue)"
           @item-selection-changed="treeView_itemSelectionChanged($event)"
           @item-click="onTreeItemClick($event)"
@@ -39,19 +39,46 @@ export default {
     DxDropDownBox,
     DxTreeView,
   },
-  props:["treeDataSource"],
+  props: ["treeDataSource","placeholderProp","valueExprProp","displayExprProp","parentIdExprProp","valueDefault"],
   data() {
-      return {
-          
-          treeBoxValue: null,
-          isTreeBoxOpened: false,
-          treeViewRefName: "tree-view",
-      }
+    return {
+      treeBoxValue: null,
+      isTreeBoxOpened: false,
+      treeViewRefName: "tree-view",
+    };
   },
   created() {
+    // set value default cho dropdown single
+    this.treeBoxValue = this.valueDefault;
   },
   methods: {
-    
+    /**---------------------------------------------------------------------------------
+     * Sự kiện được kích hoạt khi value thay đổi
+     * CreatedBy: LQNHAT(15/09/2021)
+     */
+    syncTreeViewSelection() {
+      if (!this.$refs[this.textBoxRefName]) return;
+      if (!this.treeBoxValue) {
+        this.$refs[this.textBoxRefName].instance.unselectAll();
+      } else {
+        this.$refs[this.textBoxRefName].instance.selectItem(this.treeBoxValue);
+      }
+    },
+    /**---------------------------------------------------------------------------------
+     * Sự kiện được kích hoạt khi content thay đổi
+     * CreatedBy: LQNHAT(15/09/2021)
+     */
+    treeView_itemSelectionChanged(e) {
+      this.treeBoxValue = e.component.getSelectedNodeKeys();
+    },
+
+    /**--------------------------------------------------------------------------------
+     * Đóng dropdown khi click vào item
+     * CreatedBy: LQNHAT(15/09/2021)
+     */
+    onTreeItemClick() {
+      this.isTreeBoxOpened = false;
+    },
   },
 };
 </script>
