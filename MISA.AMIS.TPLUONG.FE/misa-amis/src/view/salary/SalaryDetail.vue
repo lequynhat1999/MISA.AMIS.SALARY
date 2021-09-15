@@ -25,8 +25,8 @@
         </div>
       </div>
       <div class="content-form">
-        <div class="content-wrapper" >
-          <div class=" flex a-l-c">
+        <div class="content-wrapper">
+          <div class="flex a-l-c">
             <div class="text-input">
               <b>Tên thành phần <span style="color: red">*</span></b>
             </div>
@@ -36,7 +36,11 @@
             <div class="text-input">
               <b>Mã thành phần <span style="color: red">*</span></b>
             </div>
-            <input type="text" class="m-input input-text-form" placeholder="Nhập mã viết liền"/>
+            <input
+              type="text"
+              class="m-input input-text-form"
+              placeholder="Nhập mã viết liền"
+            />
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input">
@@ -48,34 +52,67 @@
             <div class="text-input">
               <b>Loại thành phần <span style="color: red">*</span></b>
             </div>
-            <SelectBox style="margin-left:25px; max-width:237px"
-              :displayExprProp = "'TypeName'"
-              :valueExprProp = "'TypeID'"
-              :dataSource = dataSourceType
-              :valueDefault = "false"
-              :disabledProp = false
-             />
+            <SelectBox
+              style="margin-left: 25px; max-width: 237px"
+              :displayExprProp="'TypeName'"
+              :valueExprProp="'TypeID'"
+              :dataSource="dataSourceType"
+              :valueDefault="false"
+              :disabledProp="false"
+            />
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input">
               <b>Tính chất <span style="color: red">*</span></b>
             </div>
-            <SelectBox style="margin-left:25px; max-width:237px"
-              :displayExprProp = "'NatureName'"
-              :valueExprProp = "'NatureID'"
-              :dataSource = dataSourceNature
-              :valueDefault = dataSourceNature[0].NatureID
-              :disabledProp = false
+            <SelectBox
+              style="margin-left: 25px; max-width: 237px"
+              :displayExprProp="'NatureName'"
+              :valueExprProp="'NatureID'"
+              :dataSource="dataSourceNature"
+              :valueDefault="dataSourceNature[0].NatureID"
+              :disabledProp="false"
               @getValueItem="getValueItem"
-             />
-             <div class="box-text" v-if="itemID == 1">
-               <div class="test" ><b>thu nhập</b></div>
-             </div>
+            />
+            <div class="box-earning" v-if="itemID == 1">
+              <div class="earning-wrapper flex a-l-c">
+                <input
+                  type="radio"
+                  id="Chịu thuế"
+                  name="earning"
+                  class="radio-earning"
+                  value="1"
+                />
+                <span class="btn-check"></span>
+                <span class="btn-uncheck"></span>
+                <label for="Chịu thuế" class="text-radio">Chịu thuế</label>
+                <input
+                  type="radio"
+                  id="Không chịu thuế"
+                  name="earning"
+                  class="radio-earning"
+                  value="2"
+                  style="margin-left:30px"
+                />
+                <span class="btn-check"></span>
+                <span class="btn-uncheck"></span>
+                <label for="Không chịu thuế" class="text-radio">Không chịu thuế</label>
+              </div>
+            </div>
+            <div class="box-earning" v-if="itemID == 2">
+              <div class="deduct-wrapper flex a-l-c">
+                <input type="checkbox" id="deduct" style="width: 16px; height: 16px">
+                <label for="deduct" class="text-checkbox">Giảm trừ khi tính thuế</label>
+              </div>
+            </div>
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input flex a-l-c">
               <b>Định mức</b>
-              <div class="icon-quota" title="Khi tính giá trị của thành phần lương này, nếu số tiền vượt quá định mức thì chương trình sẽ tự động lấy mức tối đa theo định mức đã thiết lập"></div>
+              <div
+                class="icon-quota"
+                title="Khi tính giá trị của thành phần lương này, nếu số tiền vượt quá định mức thì chương trình sẽ tự động lấy mức tối đa theo định mức đã thiết lập"
+              ></div>
             </div>
             <input type="text" class="m-input input-text-form" />
           </div>
@@ -83,25 +120,30 @@
             <div class="text-input">
               <b>Kiểu giá trị</b>
             </div>
-            <SelectBox style="margin-left:25px; max-width:237px"
-              :displayExprProp = "'ValueTypeName'"
-              :valueExprProp = "'ValueTypeID'"
-              :dataSource = dataSourceValueType
-              :valueDefault = dataSourceValueType[0].ValueTypeID
-              :disabledProp = true
-             />
+            <SelectBox
+              style="margin-left: 25px; max-width: 237px"
+              :displayExprProp="'ValueTypeName'"
+              :valueExprProp="'ValueTypeID'"
+              :dataSource="dataSourceValueType"
+              :valueDefault="dataSourceValueType[0].ValueTypeID"
+              :disabledProp="true"
+            />
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input">
               <b>Giá trị</b>
             </div>
-            <textarea  class="m-input input-text-form" placeholder="Tự động gợi ý công thức và tham số khi gõ" style="height: 71px;" />
+            <textarea
+              class="m-input input-text-form"
+              placeholder="Tự động gợi ý công thức và tham số khi gõ"
+              style="height: 71px"
+            />
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input">
               <b>Mô tả</b>
             </div>
-            <textarea  class="m-input input-text-form" style="height: 71px;"/>
+            <textarea class="m-input input-text-form" style="height: 71px" />
           </div>
         </div>
       </div>
@@ -110,12 +152,12 @@
 </template>
 
 <script>
-import SelectBox from "../../components/base/BaseSelectBox.vue"
-import {TYPE,NATURE,VALUE_TYPE} from "../../js/common/data.js";
+import SelectBox from "../../components/base/BaseSelectBox.vue";
+import { TYPE, NATURE, VALUE_TYPE } from "../../js/common/data.js";
 export default {
   name: "SalaryDetail",
-  components:{
-    SelectBox
+  components: {
+    SelectBox,
   },
   props: ["isOpenModal"],
   data() {
@@ -141,11 +183,10 @@ export default {
      * Gán id để hiển thị label
      * CreatedBy: LQNHAT(15/09/2021)
      */
-    getValueItem(id)
-    {
+    getValueItem(id) {
       this.itemID = id;
-      console.log("id item detail : "  + this.itemID);
-    }
+      console.log("id item detail : " + this.itemID);
+    },
   },
 };
 </script>

@@ -44,3 +44,16 @@
 {
     width: 140px;
 }
+
+/* input[type='radio']:checked:after {
+  width: 9px;
+  height: 9px;
+  border-radius: 15px;
+  top: 0.5px;
+  left: 3.7px;
+  position: relative;
+  background-color: #34b057;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+} */
