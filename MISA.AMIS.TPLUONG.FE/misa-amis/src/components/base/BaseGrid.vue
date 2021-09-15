@@ -6,7 +6,7 @@
       :allow-column-reordering="true"
       :show-borders="true"
       @content-ready="onContentReady"
-      :height="430"
+      :height="385"
       :column-width="250"
       :allow-column-resizing="true"
       :column-resizing-mode="currentMode"
@@ -22,60 +22,25 @@
       />
 
       <DxColumn
-        data-field="Amount"
-        caption="Mã thành phần"
-        data-type="number"
-        format="currency"
-        alignment="left"
-        :fixed="true"
-      />
-      <DxColumn
-        :allow-grouping="false"
-        data-field="Discount"
-        caption="Tên thành phần"
-        data-type="number"
-        format="percent"
-        alignment="left"
-        :fixed="true"
-      />
-      <DxColumn
-        data-field="SaleDate"
-        caption="Đơn vị áp dụng"
-        data-type="date"
-      />
-
-      <DxColumn
-        data-field="Sector"
-        caption="Loại thành phần"
-        data-type="string"
-      />
-      <DxColumn data-field="Channel" caption="Tính chất" data-type="string" />
-      <DxColumn data-field="Customer" caption="Giá trị" data-type="string" />
-      <DxColumn
-        data-field="Region"
-        caption="Trạng thái"
-        data-type="string"
+        v-for="(item, index) in headers"
+        :key="index"
+        :data-field="item.DataField"
+        :caption="item.Caption"
+        :data-type="item.DataType"
+        :alignment="item.Alignment"
+        :fixed="item.Fixed"
         cell-template="cellTemplate"
       />
 
-      <DxScrolling column-rendering-mode="virtual" />
-      <DxSearchPanel
-        :visible="true"
-        :highlight-case-sensitive="false"
-        :highlight-search-text="false"
-        placeholder="Tìm kiếm"
-      />
-      <DxGrouping :auto-expand-all="false" />
-      <DxPager
-        :allowed-page-sizes="pageSizes"
-        :show-page-size-selector="true"
-        :display-mode="displayMode"
-      />
-      <DxPaging :page-size="10" />
+      <template #cellTemplate="{ data }">
+        <!-- <div @click="test(data)">a</div> -->
+        <slot :name="data.column.dataField" :data="data.data">
 
-      <template #cellTemplate="{}">
-        <DxButton icon="edit" :on-click="myCommand" />
+        </slot>
       </template>
+
+      <DxScrolling column-rendering-mode="virtual" />
+      <DxGrouping :auto-expand-all="false" />
     </DxDataGrid>
   </div>
 </template>
@@ -86,51 +51,27 @@ import {
   DxColumn,
   DxGrouping,
   DxSelection,
-  DxPager,
-  DxPaging,
   DxScrolling,
-  DxSearchPanel,
 } from "devextreme-vue/data-grid";
-import DxButton from "devextreme-vue/button";
-import DataSource from "devextreme/data/data_source";
 import "devextreme/data/odata/store";
 let collapsed = false;
-
 export default {
   components: {
     DxDataGrid,
     DxColumn,
-    DxButton,
     DxGrouping,
-    DxPager,
-    DxPaging,
     DxScrolling,
-    DxSearchPanel,
     DxSelection,
   },
+  props: ["headers", "dataSource"],
   data() {
     return {
-      dataSource: new DataSource({
-        store: {
-          type: "odata",
-          url: "https://js.devexpress.com/Demos/SalesViewer/odata/DaySaleDtoes",
-          key: "Id",
-          beforeSend: function (request) {
-            request.params.startDate = "2020-05-10";
-            request.params.endDate = "2020-05-15";
-          },
-        },
-      }),
-      // pageSize chọn số bản ghi/trang
-      pageSizes: [10, 25, 50, 100],
       // data cho checkbox
       allMode: "page",
       checkBoxesMode: "always",
       // data cho resize column
       resizingModes: ["nextColumn", "widget"],
       currentMode: "widget",
-      // data cho paging
-      displayMode: "compact",
       onContentReady: function (e) {
         if (!collapsed) {
           e.component.expandRow(["EnviroCare"]);
@@ -140,11 +81,8 @@ export default {
     };
   },
   methods: {
-    onSelectionChanged(e) {
-      alert(e.value);
-    },
-    myCommand() {
-      console.log(1);
+    test(data) {
+      console.log(data);
     },
   },
 };

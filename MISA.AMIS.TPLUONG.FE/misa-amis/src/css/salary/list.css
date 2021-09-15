@@ -35,7 +35,7 @@
 
 .box-setting-toolbar
 {
-    width: 52px;
+    width: 36px;
     height: 36px;
     cursor: pointer;
 }
@@ -62,7 +62,7 @@
 .box-filter-toolbar
 {
     margin-right: 10px;
-    width: 52px;
+    width: 36px;
     height: 36px;
     border: 1px solid #e0e0e0;
     border-radius: 3px;
@@ -92,4 +92,13 @@
   position: absolute;
   bottom: 40px;
   left: 40px;
+}
+
+.paging
+{
+  height: 80px;
+  width: 100%;
+  background-color: #f1f2f1;
+  position: absolute;
+  bottom: 0;
 }

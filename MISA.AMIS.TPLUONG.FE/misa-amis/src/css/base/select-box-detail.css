@@ -2,8 +2,8 @@
 .dx-overlay-content.dx-popup-normal.dx-resizable
 {
     max-height: 165px !important;
-    height: 165px !important;
-    width: 237px !important;
+    height: 165px;
+    width: 237px;
 }
 
 /* fix bg khi hover item */
@@ -19,7 +19,3 @@
   color: #34b057 !important;
 }
 
-.dx-placeholder
-{
-    display: none;
-}

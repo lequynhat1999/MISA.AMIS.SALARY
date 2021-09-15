@@ -4,6 +4,11 @@
   margin-right: 24px;
 }
 
+/* .dx-widget .dx-visibility-change-handler
+{
+  height: calc(100vh - 315px) !important;
+} */
+
 /* ẩn message */
 .dx-datagrid-group-panel .dx-group-panel-message {
   display: none !important;
@@ -28,7 +33,8 @@
 
 /* border input search */
 .dx-texteditor.dx-editor-outlined:hover,
-.dx-texteditor.dx-editor-outlined:focus {
+.dx-texteditor.dx-editor-outlined:focus,
+.dx-texteditor.dx-editor-outlined:active {
   border: 1px solid #34b057 !important;
 }
 
@@ -145,4 +151,9 @@
 /* bỏ border-top của paging */
 .dx-datagrid-borders > .dx-datagrid-filter-panel, .dx-datagrid-borders > .dx-datagrid-headers, .dx-datagrid-borders > .dx-datagrid-pager {
     border-top: none !important;
+}
+
+.dx-pages
+{
+  display: none;
 }

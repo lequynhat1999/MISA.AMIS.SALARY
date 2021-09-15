@@ -2,6 +2,7 @@
   <div class="dx-field-value">
     <DxSelectBox 
       :data-source="data"
+      placeholder=""
       display-expr="Text"
       value-expr="Value"
       @value-changed="valueChanged"
@@ -43,6 +44,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
 @import "../../css/base/select-box-detail.css";
 </style>

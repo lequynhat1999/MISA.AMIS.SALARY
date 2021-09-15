@@ -36,7 +36,7 @@
             <div class="text-input">
               <b>Mã thành phần <span style="color: red">*</span></b>
             </div>
-            <input type="text" class="m-input input-text-form" />
+            <input type="text" class="m-input input-text-form" placeholder="Nhập mã viết liền"/>
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input">
