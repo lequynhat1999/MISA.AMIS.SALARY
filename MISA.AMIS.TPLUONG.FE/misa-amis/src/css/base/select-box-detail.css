@@ -25,3 +25,9 @@
   background-color: #ccccb3 !important;
   color: #6e6a67 !important;
 }
+
+.dx-state-hover
+{
+  background-color: #eafbf2 !important;
+  color: #333 !important;
+}

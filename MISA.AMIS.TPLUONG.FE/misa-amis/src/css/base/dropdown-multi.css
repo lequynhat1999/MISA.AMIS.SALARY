@@ -1,0 +1,43 @@
+/* ẩn checkbox default */
+.dx-checkbox-checked .dx-checkbox-icon::before
+{
+    content: none !important;
+    
+}
+
+/* style cho checkbox mới */
+.dx-checkbox-checked .dx-checkbox-icon
+{
+    width: 20px !important;
+    height: 20px !important;
+    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -260px 0px no-repeat;
+    border: none  !important;
+    border-radius: none !important;
+}
+
+/* padding text dropdown multi */
+.dx-treeview-item-with-checkbox .dx-treeview-item
+{
+    padding-left: 40px !important;
+}
+
+/* style checkbox trên cùng */
+.dx-checkbox-indeterminate .dx-checkbox-icon::before
+{
+    background-color: #fff !important;
+}
+
+/* style checkbox dropdown multi */
+.dx-checkbox-icon
+{
+    width: 16px !important;
+    height: 16px !important;
+    margin-top: 2px;
+    margin-left: 6px;
+}
+
+.dx-state-selected > .dx-treeview-item
+{
+    background-color: #eafbf2 !important;
+    color: #34b057 !important;
+}

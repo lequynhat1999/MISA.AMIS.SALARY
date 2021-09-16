@@ -65,6 +65,7 @@ import TitleSalary from "../../components/base/BaseTitle.vue";
 import BaseDropdownSingle from "../../components/base/BaseDropdownSingle.vue";
 import BaseGrid from "../../components/base/BaseGrid.vue";
 import SalaryDetail from "../salary/SalaryDetail.vue";
+import { TREE_DATA_SOURCE } from "../../js/common/data.js";
 export default {
   name: "SalaryList",
   components: {
@@ -79,34 +80,7 @@ export default {
       // mở modal
       isOpenModal: true,
       // data source treeview
-      treeDataSource: [
-            {
-              OrganizationUnitID: 1,
-              OrganizationUnitName: "Công ty cổ phần MISA",
-              ParentID: 0,
-            },
-            {
-              OrganizationUnitID: 2,
-              OrganizationUnitName: "Phòng đào tạo",
-              ParentID: 1,
-            },
-            {
-              OrganizationUnitID: 3,
-              OrganizationUnitName: "Phòng công nghệ",
-              ParentID: 1,
-            },
-            {
-              OrganizationUnitID: 5,
-              OrganizationUnitName: "Phòng kế toán",
-              ParentID: 2,
-            },
-            {
-              OrganizationUnitID: 4,
-              OrganizationUnitName: "Phòng hành chính",
-              ParentID: 3,
-            },
-            
-          ],
+      treeDataSource: TREE_DATA_SOURCE,
       // data source grid
       dataSource: [
         {

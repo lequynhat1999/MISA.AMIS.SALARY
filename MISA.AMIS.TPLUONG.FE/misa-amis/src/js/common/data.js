@@ -19,3 +19,32 @@ export const NATURE = [
 export const VALUE_TYPE = [
     {ValueTypeName: "Tiền tệ", ValueTypeID: 1},
 ]
+
+export const TREE_DATA_SOURCE =  [
+    {
+      OrganizationUnitID: 1,
+      OrganizationUnitName: "Công ty cổ phần MISA",
+      ParentID: 0,
+    },
+    {
+      OrganizationUnitID: 2,
+      OrganizationUnitName: "Phòng đào tạo",
+      ParentID: 1,
+    },
+    {
+      OrganizationUnitID: 3,
+      OrganizationUnitName: "Phòng công nghệ",
+      ParentID: 1,
+    },
+    {
+      OrganizationUnitID: 5,
+      OrganizationUnitName: "Phòng kế toán",
+      ParentID: 2,
+    },
+    {
+      OrganizationUnitID: 4,
+      OrganizationUnitName: "Phòng hành chính",
+      ParentID: 3,
+    }
+    
+  ]

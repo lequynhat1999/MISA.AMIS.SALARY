@@ -46,7 +46,14 @@
             <div class="text-input">
               <b>Đơn vị áp dụng <span style="color: red">*</span></b>
             </div>
-            <input type="text" class="m-input input-text-form" />
+            <DropdownMulti style="margin-left: 24px; max-width:629px"
+              :treeDataSource="treeDataSource"
+              :placeholderProp="''"
+              :valueExprProp="'OrganizationUnitID'"
+              :displayExprProp="'OrganizationUnitName'"
+              :parentIdExprProp="'ParentID'"
+              :valueDefault="treeDataSource[0].OrganizationUnitID"
+            />
           </div>
           <div class="input-form flex a-l-c">
             <div class="text-input">
@@ -92,17 +99,25 @@
                   name="earning"
                   class="radio-earning"
                   value="2"
-                  style="margin-left:30px"
+                  style="margin-left: 30px"
                 />
                 <span class="btn-check"></span>
                 <span class="btn-uncheck"></span>
-                <label for="Không chịu thuế" class="text-radio">Không chịu thuế</label>
+                <label for="Không chịu thuế" class="text-radio"
+                  >Không chịu thuế</label
+                >
               </div>
             </div>
             <div class="box-earning" v-if="itemID == 2">
               <div class="deduct-wrapper flex a-l-c">
-                <input type="checkbox" id="deduct" style="width: 16px; height: 16px">
-                <label for="deduct" class="text-checkbox">Giảm trừ khi tính thuế</label>
+                <input
+                  type="checkbox"
+                  id="deduct"
+                  style="width: 16px; height: 16px"
+                />
+                <label for="deduct" class="text-checkbox"
+                  >Giảm trừ khi tính thuế</label
+                >
               </div>
             </div>
           </div>
@@ -153,11 +168,13 @@
 
 <script>
 import SelectBox from "../../components/base/BaseSelectBox.vue";
-import { TYPE, NATURE, VALUE_TYPE } from "../../js/common/data.js";
+import DropdownMulti from "../../components/base/BaseDropdownMulti.vue";
+import { TYPE, NATURE, VALUE_TYPE,TREE_DATA_SOURCE } from "../../js/common/data.js";
 export default {
   name: "SalaryDetail",
   components: {
     SelectBox,
+    DropdownMulti,
   },
   props: ["isOpenModal"],
   data() {
@@ -166,6 +183,8 @@ export default {
       dataSourceType: TYPE,
       dataSourceNature: NATURE,
       dataSourceValueType: VALUE_TYPE,
+      // dataSource của dropdown multi
+      treeDataSource: TREE_DATA_SOURCE,
       // id của item
       itemID: 1,
     };
