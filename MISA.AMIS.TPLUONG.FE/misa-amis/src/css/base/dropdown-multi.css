@@ -4,12 +4,22 @@
     content: none !important;
 }
 
-/* style cho checkbox mới */
+/* style cho checkbox mới dropdown multi */
+.dx-treeview-item-with-checkbox .dx-checkbox-checked .dx-checkbox-icon 
+{
+    width: 20px !important;
+    height: 20px !important;
+    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -262px -2px no-repeat;
+    border: none  !important;
+    border-radius: none !important;
+}
+
+/* style cho checkbox mới datagrid */
 .dx-checkbox-checked .dx-checkbox-icon 
 {
     width: 20px !important;
     height: 20px !important;
-    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -260px -2px no-repeat;
+    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -260px 0px no-repeat;
     border: none  !important;
     border-radius: none !important;
 }
@@ -27,14 +37,15 @@
 }
 
 /* style checkbox dropdown multi */
-.dx-checkbox-icon
+.dx-treeview-item-with-checkbox .dx-checkbox-icon
 {
     width: 16px !important;
     height: 16px !important;
-    margin-top: 5px;
-    margin-left: 6px;
+    margin-top: 4px;
+    margin-left: 8px;
 }
 
+/* style selected */
 .dx-state-selected > .dx-treeview-item
 {
     background-color: #eafbf2 !important;

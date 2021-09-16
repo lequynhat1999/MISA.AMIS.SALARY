@@ -21,7 +21,6 @@
         mode="multiple"
         :fixed="true"
       />
-
       <DxColumn
         v-for="(item, index) in headers"
         :key="index"
@@ -102,6 +101,8 @@ export default {
           collapsed = true;
         }
       },
+      dataGrid: {},
+      taskCount: 0,
     };
   },
   methods: {

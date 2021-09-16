@@ -114,3 +114,20 @@
 {
   margin-right: 24px;
 }
+
+.text-toolbar
+{
+  margin-left: 22px;
+}
+
+.uncheck-all
+{
+  color: #34b057;
+  margin-left: 15px;
+  font-weight: 700;
+}
+
+.box-btn-unfollow-all
+{
+  margin-left: 15px;
+}

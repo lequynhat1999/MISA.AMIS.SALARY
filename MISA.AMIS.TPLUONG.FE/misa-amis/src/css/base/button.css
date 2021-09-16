@@ -60,3 +60,58 @@
 .text-btn {
   font-weight: 700;
 }
+
+.icon-unfollow {
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-position: -222px -42px;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #f90 !important;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.btn-unfollow-all {
+  background-color: #fff;
+  color: #f90;
+  border: 1px solid #f90;
+}
+
+.btn-unfollow-all:hover,
+.btn-unfollow-all:active {
+  background-color: #fff;
+  color: #f90;
+  border: 1px solid #f90;
+}
+
+.icon-deletes {
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-position: -120px -23px;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #ff6161 !important;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.btn-deletes {
+  background-color: #fff;
+  color: #ef292f;
+  border: 1px solid #ef292f;
+}
+
+.btn-deletes:hover {
+  background-color: #fee8e7;
+  color: #ef292f;
+  border: 1px solid #ef292f;
+}
+
+.btn-deletes:active {
+  background-color: #fdd0ce;
+  color: #ef292f;
+  border: 1px solid #ef292f;
+}
+
+.box-btn-deletes {
+  margin-left: 8px;
+}

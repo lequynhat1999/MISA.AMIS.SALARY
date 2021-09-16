@@ -15,6 +15,7 @@
         <DxTreeView
           :searchEnabled="true"
           :ref="treeViewRefName"
+          placeholder=" Tìm kiếm"
           noDataText="Không có dữ liệu"
           :data-source="treeDataSource"
           :select-by-click="true"

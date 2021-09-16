@@ -46,7 +46,8 @@
             <div class="text-input">
               <b>Đơn vị áp dụng <span style="color: red">*</span></b>
             </div>
-            <DropdownMulti style="margin-left: 24px; max-width:629px"
+            <DropdownMulti
+              style="margin-left: 24px; max-width: 629px"
               :treeDataSource="treeDataSource"
               :placeholderProp="''"
               :valueExprProp="'OrganizationUnitID'"
@@ -83,7 +84,7 @@
             />
             <div class="box-earning" v-if="itemID == 1">
               <div class="earning-wrapper flex a-l-c">
-                <input
+                <!-- <input
                   type="radio"
                   id="Chịu thuế"
                   name="earning"
@@ -105,19 +106,25 @@
                 <span class="btn-uncheck"></span>
                 <label for="Không chịu thuế" class="text-radio"
                   >Không chịu thuế</label
-                >
+                > -->
+                <DxRadioGroup
+                  :items="dataTax"
+                  :value="dataTax[0]"
+                  layout="horizontal"
+                />
               </div>
             </div>
             <div class="box-earning" v-if="itemID == 2">
               <div class="deduct-wrapper flex a-l-c">
-                <input
+                <!-- <input
                   type="checkbox"
                   id="deduct"
                   style="width: 16px; height: 16px"
                 />
                 <label for="deduct" class="text-checkbox"
                   >Giảm trừ khi tính thuế</label
-                >
+                > -->
+                <DxCheckBox :width="550" text="Giảm trừ khi tính thuế" />
               </div>
             </div>
           </div>
@@ -169,12 +176,21 @@
 <script>
 import SelectBox from "../../components/base/BaseSelectBox.vue";
 import DropdownMulti from "../../components/base/BaseDropdownMulti.vue";
-import { TYPE, NATURE, VALUE_TYPE,TREE_DATA_SOURCE } from "../../js/common/data.js";
+import DxRadioGroup from 'devextreme-vue/radio-group';
+import { DxCheckBox } from "devextreme-vue/check-box";
+import {
+  TYPE,
+  NATURE,
+  VALUE_TYPE,
+  TREE_DATA_SOURCE,
+} from "../../js/common/data.js";
 export default {
   name: "SalaryDetail",
   components: {
     SelectBox,
     DropdownMulti,
+    DxCheckBox,
+    DxRadioGroup
   },
   props: ["isOpenModal"],
   data() {
@@ -186,7 +202,15 @@ export default {
       // dataSource của dropdown multi
       treeDataSource: TREE_DATA_SOURCE,
       // id của item
+      isShowRadio: false,
+      // value default cho input tính chất
       itemID: 1,
+      // data cho radio
+      // dataTax: [
+      //   { TaxName: 'Chịu thuế', TaxValue: 1 },
+      //   { TaxName: 'Không chịu thuế', TaxValue: 2 },
+      // ]
+      dataTax: ['Chịu thuế', 'Không chịu thuế'],
     };
   },
   methods: {

@@ -1,11 +1,4 @@
 /* fix size cho dropdown data */
-/* .dx-overlay-content.dx-popup-normal.dx-resizable
-{
-    max-height: 165px !important;
-    height: 165px;
-    width: 237px;
-} */
-
 .dx-selectbox-popup-wrapper .dx-overlay-content.dx-popup-normal.dx-resizable
 {
   max-height: 165px !important;
@@ -41,11 +34,19 @@
   color: #333 ;
 }
 
+/* set focused khi focus ô input */
 .dx-treeview-search.dx-state-focused
 {
   border: 1px solid #34b057 !important;
 }
 
+/* set border khi đang focus mà blur ra ngoài */
+.dx-selectbox.dx-state-focused
+{
+  border: 1px solid #34b057 !important;
+}
+
+/* focus item dropdown */
 .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-focused
 {
   background-color: #eafbf2 !important;

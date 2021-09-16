@@ -13,6 +13,7 @@
         <DxTreeView
           :searchEnabled="true"
           :value="treeBoxValue"
+          placeholder=" Tìm kiếm"
           noDataText="Không có dữ liệu"
           ref="treeView"
           :data-source="treeDataSource"

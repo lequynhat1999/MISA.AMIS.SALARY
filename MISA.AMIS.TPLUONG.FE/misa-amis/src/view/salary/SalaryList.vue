@@ -9,7 +9,7 @@
         </button>
       </div>
     </div>
-    <div class="toolbar-content flex relative">
+    <div class="toolbar-content flex relative" v-if="1 == 2">
       <div class="box-search relative">
         <input
           type="text"
@@ -18,7 +18,7 @@
         />
         <div class="icon-search"></div>
       </div>
-      <div class="toolbar-right flex">
+      <div class="toolbar-right flex" >
         <BaseDropdown style="margin-right:20px"
           :data="statusData"
           :widthDropdown = 120
@@ -41,6 +41,22 @@
         <div class="box-setting-toolbar">
           <div class="icon-setting-toolbar"></div>
         </div>
+      </div>
+    </div>
+    <div class="toolbar-content flex relative " v-else>
+      <span class="text-toolbar">Đã chọn  <b>1</b></span>
+      <span class="uncheck-all">Bỏ chọn</span>
+      <div class="box-btn-unfollow-all ">
+        <button class="m-btn btn-unfollow-all">
+          <div class="icon-unfollow"></div>
+          <div class="text-btn">Ngừng theo dõi</div>
+        </button>
+      </div>
+      <div class="box-btn-deletes">
+        <button class="m-btn btn-deletes">
+          <div class="icon-deletes"></div>
+          <div class="text-btn">Xoá</div>
+        </button>
       </div>
     </div>
     <div class="table-salary">
@@ -66,7 +82,7 @@
           :widthDropdownData = 60
           :topDropdownData = -150
           :rightDropdownData = 10
-          @get="getValueStatus"
+          @get="getValuePageSize"
         />
           <div class="pageIndex flex a-l-c">
             <span style="margin-right:20px"><b>1</b>-<b>100</b> bản ghi 1 trang</span>
@@ -109,6 +125,8 @@ export default {
       treeDataSource: TREE_DATA_SOURCE_FILTER,
       // value status
       valueStatus : null,
+      // value pageSize
+      valuePageSize : null,
       // data source grid
       dataSource: [
         {
@@ -304,14 +322,25 @@ export default {
       this.isOpenModal = true;
     },
 
-    /**
+    /**-----------------------------------
      * Set value cho status để filter
+     * CreatedBy : LQNHAT(14/09/2021)
      */
-    getValueStatus(valueStatus)
+    getValueStatus(value)
     {
-      this.valueStatus = valueStatus;
+      this.valueStatus = value;
       console.log(this.valueStatus);
-    }
+    },
+
+    /**------------------------------------
+     * Set value cho pageSize
+     * CreatedBy: LQNHAT(16/09/2021)
+     */
+    getValuePageSize(value)
+    {
+      this.valuePageSize = value;
+      console.log(this.valuePageSize);
+    },
   },
 };
 </script>
