@@ -1,0 +1,98 @@
+.dropdown {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+  height: 36px;
+  outline: none;
+  white-space: nowrap;
+}
+
+.dropdown:hover {
+  cursor: pointer;
+}
+
+.dropdown .dropdown-text {
+  font-size: 13.33333px;
+  color: #212121;
+}
+
+.dropdown .dropdown-icon {
+  width: 20px !important;
+  height: 20px !important;
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) !important;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: -98px 7px;
+  background-color: #707070 !important;
+  margin-bottom: 15px;
+  margin-left: 5px;
+}
+
+.dropdown-hidden {
+  display: none;
+}
+
+.dropdown .dropdown-data {
+  position: absolute;
+  z-index: 999;
+  border-radius: 4px;
+  padding-bottom: 4px;
+  box-shadow: 0px 8px 8px 0px #ccc;
+  background-color: #fff;
+}
+
+.dropdown .dropdown-data .dropdown-item {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  width: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding-left: 12px;
+  font-size: 13.33333px;
+  color: #212121;
+}
+
+.dropdown .dropdown-data .dropdown-item:hover {
+  background-color: #eafbf2;
+  color: #333;
+}
+
+.dropdown .dropdown-data .dropdown-item .dropdown-item-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin: auto 10px;
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  margin-bottom: 5px;
+}
+
+.box-dropdown .dropdown {
+  width: 100%;
+}
+
+.icon-check {
+  width: 20px;
+  height: 20px;
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-position: -120px -60px;
+  -webkit-mask-repeat: no-repeat;
+  background-color: #34b057 !important;
+}
+
+.dropdown .dropdown-data .dropdown-item .icon-dropdown-selected {
+  visibility: visible;
+  color: #34b057;
+}
+
+.dropdown-selected {
+  background-color: #eafbf2;
+  color: #34b057;
+}
+
+.dropdown .dropdown-data .dropdown-selected:hover {
+  background-color: #eafbf2;
+  color: #34b057;
+}

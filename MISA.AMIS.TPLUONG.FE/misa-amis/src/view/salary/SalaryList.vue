@@ -19,6 +19,14 @@
         <div class="icon-search"></div>
       </div>
       <div class="toolbar-right flex">
+        <BaseDropdown style="margin-right:20px"
+          :data="statusData"
+          :widthDropdown = 120
+          :widthDropdownData = 230
+          :topDropdownData = 42
+          :rightDropdownData = 0
+          @get="getValueStatus"
+        />
         <BaseDropdownSingle style="margin-right: 20px;width: 316px"
           :treeDataSource="treeDataSource"
           :placeholderProp = "'Tất cả đơn vị'"
@@ -50,6 +58,22 @@
 
       <div class="paging">
         <div class="amount">Tổng số bản ghi: <b>175</b></div>
+        <div class="pagination flex a-l-c ">
+          <span style="margin-right:20px">Số bản ghi/trang</span>
+          <BaseDropdown style="margin-right:60px"
+          :data="dataPage"
+          :widthDropdown = 60
+          :widthDropdownData = 60
+          :topDropdownData = -150
+          :rightDropdownData = 10
+          @get="getValueStatus"
+        />
+          <div class="pageIndex flex a-l-c">
+            <span style="margin-right:20px"><b>1</b>-<b>100</b> bản ghi 1 trang</span>
+            <i class="fas fa-chevron-left"></i>
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
       </div>
     </div>
     <SalaryDetail 
@@ -65,7 +89,8 @@ import TitleSalary from "../../components/base/BaseTitle.vue";
 import BaseDropdownSingle from "../../components/base/BaseDropdownSingle.vue";
 import BaseGrid from "../../components/base/BaseGrid.vue";
 import SalaryDetail from "../salary/SalaryDetail.vue";
-import { TREE_DATA_SOURCE } from "../../js/common/data.js";
+import { TREE_DATA_SOURCE_FILTER } from "../../js/common/data.js";
+import BaseDropdown from "../../components/base/BaseDropdown.vue";
 export default {
   name: "SalaryList",
   components: {
@@ -74,13 +99,16 @@ export default {
     BaseDropdownSingle,
     BaseGrid,
     SalaryDetail,
+    BaseDropdown,
   },
   data() {
     return {
       // mở modal
       isOpenModal: true,
       // data source treeview
-      treeDataSource: TREE_DATA_SOURCE,
+      treeDataSource: TREE_DATA_SOURCE_FILTER,
+      // value status
+      valueStatus : null,
       // data source grid
       dataSource: [
         {
@@ -245,7 +273,18 @@ export default {
           Alignment: "left",
           Fixed: false,
         },
-      ]
+      ],
+      statusData: [
+        { Text: "Tất cả trạng thái", Value: 1 },
+        { Text: "Đang theo dõi", Value: 2 },
+        { Text: "Ngừng theo dõi", Value: 3 },
+      ],
+      dataPage: [
+        { Text: "15", Value: 15 },
+        { Text: "25", Value: 25 },
+        { Text: "50", Value: 50 },
+        { Text: "100", Value: 100 },
+      ],
     }
   },
   methods: {
@@ -264,6 +303,15 @@ export default {
     closeForm() {
       this.isOpenModal = true;
     },
+
+    /**
+     * Set value cho status để filter
+     */
+    getValueStatus(valueStatus)
+    {
+      this.valueStatus = valueStatus;
+      console.log(this.valueStatus);
+    }
   },
 };
 </script>

@@ -145,7 +145,7 @@
 .dx-datagrid-borders > .dx-datagrid-filter-panel,
 .dx-datagrid-borders > .dx-datagrid-headers,
 .dx-datagrid-borders > .dx-datagrid-pager {
-  border-top: none !important;
+  /* border-top: none !important; */
 }
 
 /* ẩn cái paging đi */

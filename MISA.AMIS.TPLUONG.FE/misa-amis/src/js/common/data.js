@@ -45,6 +45,44 @@ export const TREE_DATA_SOURCE =  [
       OrganizationUnitID: 4,
       OrganizationUnitName: "Phòng hành chính",
       ParentID: 3,
+    },
+    {
+      OrganizationUnitID: 6,
+      OrganizationUnitName: "Phòng nhân sự",
+      ParentID: 1,
     }
+  ]
+
+  export const TREE_DATA_SOURCE_FILTER =  [
+    {
+      OrganizationUnitID: 1,
+      OrganizationUnitName: "Công ty cổ phần MISA",
+      ParentID: 0,
+    },
+    {
+      OrganizationUnitID: 2,
+      OrganizationUnitName: "Phòng đào tạo",
+      ParentID: 1,
+    },
+    {
+      OrganizationUnitID: 3,
+      OrganizationUnitName: "Phòng công nghệ",
+      ParentID: 1,
+    },
+    {
+      OrganizationUnitID: 5,
+      OrganizationUnitName: "Phòng kế toán",
+      ParentID: 2,
+    },
+    {
+      OrganizationUnitID: 4,
+      OrganizationUnitName: "Phòng hành chính",
+      ParentID: 3,
+    },
+    {
+      OrganizationUnitID: 6,
+      OrganizationUnitName: "Phòng nhân sự",
+      ParentID: 1,
+    },
     
   ]

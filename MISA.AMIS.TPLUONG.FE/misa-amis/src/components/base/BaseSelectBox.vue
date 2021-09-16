@@ -1,6 +1,6 @@
 <template>
   <div class="dx-field-value">
-    <DxSelectBox 
+    <DxSelectBox class="scroll-content"
       :data-source="data"
       placeholder=""
       :disabled= disabledProp
@@ -12,6 +12,7 @@
       :search-mode="searchModeOption"
       :min-search-length="minSearchLengthOption"
       :show-data-before-search="showDataBeforeSearchOption"
+      noDataText="Không có dữ liệu"
     />
   </div>
 </template>
@@ -33,7 +34,7 @@ export default {
       minSearchLengthOption: 0,
       data: new ArrayStore({
         data: items,
-        key: 'TypeID'
+        key: 'valueExprProp'
       }),
     };
   },

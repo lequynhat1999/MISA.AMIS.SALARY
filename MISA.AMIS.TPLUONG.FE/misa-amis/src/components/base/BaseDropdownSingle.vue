@@ -2,6 +2,7 @@
   <div class="dx-field-value">
     <DxDropDownBox
       :value="treeBoxValue"
+      ref="dropdownBox"
       :opened="isTreeBoxOpened"
       :show-clear-button="true"
       :data-source="treeDataSource"
@@ -14,6 +15,7 @@
         <DxTreeView
           :searchEnabled="true"
           :ref="treeViewRefName"
+          noDataText="Không có dữ liệu"
           :data-source="treeDataSource"
           :select-by-click="true"
           data-structure="plain"
@@ -39,7 +41,14 @@ export default {
     DxDropDownBox,
     DxTreeView,
   },
-  props: ["treeDataSource","placeholderProp","valueExprProp","displayExprProp","parentIdExprProp","valueDefault"],
+  props: [
+    "treeDataSource",
+    "placeholderProp",
+    "valueExprProp",
+    "displayExprProp",
+    "parentIdExprProp",
+    "valueDefault",
+  ],
   data() {
     return {
       treeBoxValue: null,
@@ -78,6 +87,7 @@ export default {
      */
     onTreeItemClick() {
       this.isTreeBoxOpened = false;
+      this.$refs.dropdownBox.instance.close();
     },
   },
 };

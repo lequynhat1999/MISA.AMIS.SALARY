@@ -6,6 +6,13 @@
     width: 237px;
 } */
 
+.dx-selectbox-popup-wrapper .dx-overlay-content.dx-popup-normal.dx-resizable
+{
+  max-height: 165px !important;
+    height: 165px;
+    width: 237px;
+}
+
 /* fix bg khi hover item */
 .dx-dropdownlist-popup-wrapper
   .dx-list:not(.dx-list-select-decorator-enabled)
@@ -19,6 +26,7 @@
   color: #34b057 !important;
 }
 
+/* selectbox disable */
 .dx-state-disabled
 {
   border: #e1e1e1 !important;
@@ -26,7 +34,19 @@
   color: #6e6a67 !important;
 }
 
+/* khi hover vào selectbox */
 .dx-state-hover
+{
+  background-color: #eafbf2;
+  color: #333 ;
+}
+
+.dx-treeview-search.dx-state-focused
+{
+  border: 1px solid #34b057 !important;
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-focused
 {
   background-color: #eafbf2 !important;
   color: #333 !important;

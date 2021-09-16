@@ -102,3 +102,15 @@
   position: absolute;
   bottom: 0;
 }
+
+.pagination
+{
+  position: absolute;
+  right: 24px;
+  top: 15px;
+}
+
+.pageIndex
+{
+  margin-right: 24px;
+}
