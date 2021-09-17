@@ -24,67 +24,82 @@
           </div>
         </div>
       </div>
-      <div class="content-form">
-        <div class="content-wrapper">
-          <div class="flex a-l-c">
-            <div class="text-input">
-              <b>Tên thành phần <span style="color: red">*</span></b>
+      <ValidationObserver ref="form_salary">
+        <div class="content-form">
+          <div class="content-wrapper">
+            <div class="flex">
+              <div class="text-input">
+                <b>Tên thành phần <span style="color: red">*</span></b>
+              </div>
+              <ValidationProvider
+                rules="validateRequired"
+                name="Tên thành phần"
+                v-slot="{ errors }"
+              >
+                <input
+                  type="text"
+                  v-model="employee.EmployeeCode"
+                  class="m-input input-text-form"
+                  :class="{
+                    'border-red': errors.length > 0 ? true : false,
+                  }"
+                />
+                <div class="text-error">{{ errors[0] }}</div>
+              </ValidationProvider>
             </div>
-            <input type="text" class="m-input input-text-form" />
-          </div>
-          <div class="input-form flex a-l-c">
-            <div class="text-input">
-              <b>Mã thành phần <span style="color: red">*</span></b>
+            <div class="input-form flex">
+              <div class="text-input">
+                <b>Mã thành phần <span style="color: red">*</span></b>
+              </div>
+              <input
+                type="text"
+                class="m-input input-text-form"
+                placeholder="Nhập mã viết liền"
+              />
             </div>
-            <input
-              type="text"
-              class="m-input input-text-form"
-              placeholder="Nhập mã viết liền"
-            />
-          </div>
-          <div class="input-form flex a-l-c">
-            <div class="text-input">
-              <b>Đơn vị áp dụng <span style="color: red">*</span></b>
+            <div class="input-form flex">
+              <div class="text-input">
+                <b>Đơn vị áp dụng <span style="color: red">*</span></b>
+              </div>
+              <DropdownMulti
+                style="margin-left: 24px; max-width: 629px"
+                :treeDataSource="treeDataSource"
+                :placeholderProp="''"
+                :valueExprProp="'OrganizationUnitID'"
+                :displayExprProp="'OrganizationUnitName'"
+                :parentIdExprProp="'ParentID'"
+                :valueDefault="treeDataSource[0].OrganizationUnitID"
+              />
             </div>
-            <DropdownMulti
-              style="margin-left: 24px; max-width: 629px"
-              :treeDataSource="treeDataSource"
-              :placeholderProp="''"
-              :valueExprProp="'OrganizationUnitID'"
-              :displayExprProp="'OrganizationUnitName'"
-              :parentIdExprProp="'ParentID'"
-              :valueDefault="treeDataSource[0].OrganizationUnitID"
-            />
-          </div>
-          <div class="input-form flex a-l-c">
-            <div class="text-input">
-              <b>Loại thành phần <span style="color: red">*</span></b>
+            <div class="input-form flex">
+              <div class="text-input">
+                <b>Loại thành phần <span style="color: red">*</span></b>
+              </div>
+              <SelectBox
+                style="margin-left: 25px; max-width: 237px"
+                :displayExprProp="'TypeName'"
+                :valueExprProp="'TypeID'"
+                :dataSource="dataSourceType"
+                :valueDefault="false"
+                :disabledProp="false"
+              />
             </div>
-            <SelectBox
-              style="margin-left: 25px; max-width: 237px"
-              :displayExprProp="'TypeName'"
-              :valueExprProp="'TypeID'"
-              :dataSource="dataSourceType"
-              :valueDefault="false"
-              :disabledProp="false"
-            />
-          </div>
-          <div class="input-form flex a-l-c">
-            <div class="text-input">
-              <b>Tính chất <span style="color: red">*</span></b>
-            </div>
-            <SelectBox
-              style="margin-left: 25px; max-width: 237px"
-              :displayExprProp="'NatureName'"
-              :valueExprProp="'NatureID'"
-              :dataSource="dataSourceNature"
-              :valueDefault="dataSourceNature[0].NatureID"
-              :disabledProp="false"
-              @getValueItem="getValueItem"
-            />
-            <div class="box-earning" v-if="itemID == 1">
-              <div class="earning-wrapper flex a-l-c">
-                <!-- <input
+            <div class="input-form flex">
+              <div class="text-input">
+                <b>Tính chất <span style="color: red">*</span></b>
+              </div>
+              <SelectBox
+                style="margin-left: 25px; max-width: 237px"
+                :displayExprProp="'NatureName'"
+                :valueExprProp="'NatureID'"
+                :dataSource="dataSourceNature"
+                :valueDefault="dataSourceNature[0].NatureID"
+                :disabledProp="false"
+                @getValueItem="getValueItem"
+              />
+              <div class="box-earning" v-if="itemID == 1">
+                <div class="earning-wrapper flex a-l-c">
+                  <!-- <input
                   type="radio"
                   id="Chịu thuế"
                   name="earning"
@@ -107,16 +122,16 @@
                 <label for="Không chịu thuế" class="text-radio"
                   >Không chịu thuế</label
                 > -->
-                <DxRadioGroup
-                  :items="dataTax"
-                  :value="dataTax[0]"
-                  layout="horizontal"
-                />
+                  <DxRadioGroup
+                    :items="dataTax"
+                    :value="dataTax[0]"
+                    layout="horizontal"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="box-earning" v-if="itemID == 2">
-              <div class="deduct-wrapper flex a-l-c">
-                <!-- <input
+              <div class="box-earning" v-if="itemID == 2">
+                <div class="deduct-wrapper flex">
+                  <!-- <input
                   type="checkbox"
                   id="deduct"
                   style="width: 16px; height: 16px"
@@ -124,51 +139,52 @@
                 <label for="deduct" class="text-checkbox"
                   >Giảm trừ khi tính thuế</label
                 > -->
-                <DxCheckBox :width="550" text="Giảm trừ khi tính thuế" />
+                  <DxCheckBox :width="550" text="Giảm trừ khi tính thuế" />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="input-form flex a-l-c">
-            <div class="text-input flex a-l-c">
-              <b>Định mức</b>
-              <div
-                class="icon-quota"
-                title="Khi tính giá trị của thành phần lương này, nếu số tiền vượt quá định mức thì chương trình sẽ tự động lấy mức tối đa theo định mức đã thiết lập"
-              ></div>
+            <div class="input-form flex">
+              <div class="text-input flex">
+                <b>Định mức</b>
+                <div
+                  class="icon-quota"
+                  title="Khi tính giá trị của thành phần lương này, nếu số tiền vượt quá định mức thì chương trình sẽ tự động lấy mức tối đa theo định mức đã thiết lập"
+                ></div>
+              </div>
+              <input type="text" class="m-input input-text-form" />
             </div>
-            <input type="text" class="m-input input-text-form" />
-          </div>
-          <div class="input-form flex a-l-c">
-            <div class="text-input">
-              <b>Kiểu giá trị</b>
+            <div class="input-form flex">
+              <div class="text-input">
+                <b>Kiểu giá trị</b>
+              </div>
+              <SelectBox
+                style="margin-left: 25px; max-width: 237px"
+                :displayExprProp="'ValueTypeName'"
+                :valueExprProp="'ValueTypeID'"
+                :dataSource="dataSourceValueType"
+                :valueDefault="dataSourceValueType[0].ValueTypeID"
+                :disabledProp="true"
+              />
             </div>
-            <SelectBox
-              style="margin-left: 25px; max-width: 237px"
-              :displayExprProp="'ValueTypeName'"
-              :valueExprProp="'ValueTypeID'"
-              :dataSource="dataSourceValueType"
-              :valueDefault="dataSourceValueType[0].ValueTypeID"
-              :disabledProp="true"
-            />
-          </div>
-          <div class="input-form flex a-l-c">
-            <div class="text-input">
-              <b>Giá trị</b>
+            <div class="input-form flex">
+              <div class="text-input">
+                <b>Giá trị</b>
+              </div>
+              <textarea
+                class="m-input input-text-form"
+                placeholder="Tự động gợi ý công thức và tham số khi gõ"
+                style="height: 71px"
+              />
             </div>
-            <textarea
-              class="m-input input-text-form"
-              placeholder="Tự động gợi ý công thức và tham số khi gõ"
-              style="height: 71px"
-            />
-          </div>
-          <div class="input-form flex a-l-c">
-            <div class="text-input">
-              <b>Mô tả</b>
+            <div class="input-form flex">
+              <div class="text-input">
+                <b>Mô tả</b>
+              </div>
+              <textarea class="m-input input-text-form" style="height: 71px" />
             </div>
-            <textarea class="m-input input-text-form" style="height: 71px" />
           </div>
         </div>
-      </div>
+      </ValidationObserver>
     </div>
   </div>
 </template>
@@ -176,7 +192,9 @@
 <script>
 import SelectBox from "../../components/base/BaseSelectBox.vue";
 import DropdownMulti from "../../components/base/BaseDropdownMulti.vue";
-import DxRadioGroup from 'devextreme-vue/radio-group';
+import DxRadioGroup from "devextreme-vue/radio-group";
+import { extend } from "vee-validate";
+import { required } from "vee-validate/dist/rules";
 import { DxCheckBox } from "devextreme-vue/check-box";
 import {
   TYPE,
@@ -184,17 +202,23 @@ import {
   VALUE_TYPE,
   TREE_DATA_SOURCE,
 } from "../../js/common/data.js";
+extend("validateRequired", {
+  ...required,
+  message: "Không được để trống",
+});
+
 export default {
   name: "SalaryDetail",
   components: {
     SelectBox,
     DropdownMulti,
     DxCheckBox,
-    DxRadioGroup
+    DxRadioGroup,
   },
   props: ["isOpenModal"],
   data() {
     return {
+      employee: { EmployeeCode: "123", Test: "ABC" },
       // dataSource selectbox
       dataSourceType: TYPE,
       dataSourceNature: NATURE,
@@ -210,7 +234,7 @@ export default {
       //   { TaxName: 'Chịu thuế', TaxValue: 1 },
       //   { TaxName: 'Không chịu thuế', TaxValue: 2 },
       // ]
-      dataTax: ['Chịu thuế', 'Không chịu thuế'],
+      dataTax: ["Chịu thuế", "Không chịu thuế"],
     };
   },
   methods: {

@@ -88,3 +88,8 @@
     background-color: #707070!important
 }
 
+/* đè content lên placeholder của dropdown */
+.dx-searchbox .dx-placeholder::before
+{
+    content: "Tìm kiếm" ;
+}

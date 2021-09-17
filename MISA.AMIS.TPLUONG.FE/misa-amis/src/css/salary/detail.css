@@ -94,10 +94,12 @@
   background-color: #707070 !important;
   margin-left: 6px;
   cursor: pointer;
+  margin-top: -2px;
 }
 
 .box-earning {
   margin-left: 30px;
+  margin-top: 6px;
 }
 
 .radio-earning {
