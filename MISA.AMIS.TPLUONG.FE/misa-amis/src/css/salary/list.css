@@ -125,6 +125,7 @@
   color: #34b057;
   margin-left: 15px;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .box-btn-unfollow-all

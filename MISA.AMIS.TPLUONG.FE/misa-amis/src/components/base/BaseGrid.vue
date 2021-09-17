@@ -1,6 +1,7 @@
 <template>
   <div class="box-gird">
     <DxDataGrid
+      ref="dxDataGrid"
       :data-source="dataSource"
       :remote-operations="false"
       :allow-column-reordering="true"
@@ -14,6 +15,7 @@
       :column-min-width="180"
       :column-auto-width="true"
       :hover-state-enabled="true"
+      @selection-changed="onSelectionChanged"
     >
       <DxSelection
         :select-all-mode="allMode"
@@ -101,13 +103,27 @@ export default {
           collapsed = true;
         }
       },
-      dataGrid: {},
-      taskCount: 0,
     };
   },
   methods: {
     test(data) {
       console.log(data.data.SalaryCompositionID);
+    },
+    /**-------------------------------------------------------
+     * Gửi những rows được checked sang cha
+     * CreatedBy:LQNHAT(17/09/2021)
+     */
+    onSelectionChanged({ selectedRowsData }) {
+      console.log(selectedRowsData);
+      this.$emit("getRowChecked", selectedRowsData);
+    },
+
+    /**---------------------------------------------------------
+     * Hàm bắt sự kiện uncheckAll
+     * CreatedBy:LQNHAT(17/09/2021)
+     */
+    uncheckAllRow() {
+      this.$refs.dxDataGrid.instance.deselectAll();
     },
   },
 };

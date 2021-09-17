@@ -74,13 +74,13 @@ export default {
   },
   created() {
     // set value default cho dropdown single
-    var seft = this;
-    seft.treeBoxValue = [seft.valueDefault];
-    // setTimeout(() => {
-    //   self.$refs.treeView.instance.selectItem(self.treeBoxValue);
-    // },500)
+    this.treeBoxValue = [this.valueDefault];
   },
   methods: {
+    /**--------------------------------------------------------------
+     * Bắt sự kiện khi value thay đổi
+     * CreatedBy:LQNHAT(16/09/2021)
+     */
     syncTreeViewSelection(e) {
       console.log("value-changed: " + e.value);
       let treeView =
@@ -93,21 +93,20 @@ export default {
           treeView.unselectAll();
         } else {
           let values = e.value || this.treeBoxValue;
-          console.log("số lượng item: " + values.length);
-          //   values &&
-          //     values.forEach((value) => {
-          //       treeView.selectItem(value);
-          //     });
           for (let index = 0; index < values.length; index++) {
             treeView.selectItem(values[index]);
           }
         }
       }
     },
+
+    /**--------------------------------------------------------------
+     * Bắt sự kiện khi item được chọn thay đổi
+     * CreatedBy:LQNHAT(17/09/2021)
+     */
     treeView_itemSelectionChanged(e) {
       console.log(e);
       this.treeBoxValue = e.component.getSelectedNodeKeys();
-      console.log("treeBoxValue: " + this.treeBoxValue);
     },
   },
 };

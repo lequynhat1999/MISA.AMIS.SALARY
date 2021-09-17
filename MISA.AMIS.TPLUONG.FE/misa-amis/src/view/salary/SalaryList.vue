@@ -9,7 +9,7 @@
         </button>
       </div>
     </div>
-    <div class="toolbar-content flex relative" v-if="1 == 2">
+    <div class="toolbar-content flex relative" v-if="countRowChecked == 0">
       <div class="box-search relative">
         <input
           type="text"
@@ -44,8 +44,8 @@
       </div>
     </div>
     <div class="toolbar-content flex relative " v-else>
-      <span class="text-toolbar">Đã chọn  <b>1</b></span>
-      <span class="uncheck-all">Bỏ chọn</span>
+      <span class="text-toolbar">Đã chọn  <b>{{countRowChecked}}</b></span>
+      <span class="uncheck-all" @click="uncheckAll">Bỏ chọn</span>
       <div class="box-btn-unfollow-all ">
         <button class="m-btn btn-unfollow-all">
           <div class="icon-unfollow"></div>
@@ -61,8 +61,10 @@
     </div>
     <div class="table-salary">
       <BaseGrid 
+        ref="baseGrid"
         :headers="headers"
         :dataSource="dataSource"
+        @getRowChecked="getRowChecked"
        >
        <template #Status ="{data}">
          <div class="box-status flex a-l-c">
@@ -127,6 +129,8 @@ export default {
       valueStatus : null,
       // value pageSize
       valuePageSize : null,
+      // count rowchecked
+      countRowChecked: 0,
       // data source grid
       dataSource: [
         {
@@ -341,6 +345,20 @@ export default {
       this.valuePageSize = value;
       console.log(this.valuePageSize);
     },
+
+    /**---------------------------------------------------------
+     * Lấy ra số dòng đã được checked
+     * CreatedBy: LQNHAT(17/09/2021)
+     */
+    getRowChecked(selectedRowsData)
+    {
+      this.countRowChecked = selectedRowsData.length;
+    },
+
+    uncheckAll()
+    {
+      this.$refs.baseGrid.uncheckAllRow();
+    }
   },
 };
 </script>

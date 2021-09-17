@@ -3,7 +3,6 @@
     <DxDropDownBox
       :value="treeBoxValue"
       ref="dropdownBox"
-      :opened="isTreeBoxOpened"
       :show-clear-button="true"
       :data-source="treeDataSource"
       :value-expr="valueExprProp"
@@ -15,7 +14,6 @@
         <DxTreeView
           :searchEnabled="true"
           :ref="treeViewRefName"
-          placeholder=" Tìm kiếm"
           noDataText="Không có dữ liệu"
           :data-source="treeDataSource"
           :select-by-click="true"
@@ -53,7 +51,6 @@ export default {
   data() {
     return {
       treeBoxValue: null,
-      isTreeBoxOpened: false,
       treeViewRefName: "tree-view",
     };
   },
@@ -87,7 +84,6 @@ export default {
      * CreatedBy: LQNHAT(15/09/2021)
      */
     onTreeItemClick() {
-      this.isTreeBoxOpened = false;
       this.$refs.dropdownBox.instance.close();
     },
   },
