@@ -9,6 +9,7 @@
       :placeholder="placeholderProp"
       @value-changed="syncTreeViewSelection($event)"
     >
+      <!-- field-template="list-item" -->
       <template #content="{}">
         <DxTreeView
           :searchEnabled="true"
@@ -33,11 +34,7 @@
       <!-- <template #list-item="{data}">
         <div class="dx-field-value">
           <DxTextBox :value="data" style="height:3px !important"/>
-          <DxTagBox
-            :data-source="treeDataSource"
-            :value-expr="valueExprProp"
-            :display-expr="displayExprProp"
-          />
+          a
 
         </div>
       </template> -->
@@ -49,14 +46,12 @@
 import DxDropDownBox from "devextreme-vue/drop-down-box";
 import DxTreeView from "devextreme-vue/tree-view";
 // import DxTextBox from 'devextreme-vue/text-box';
-// import DxTagBox from "devextreme-vue/tag-box";
 export default {
   name: "BaseDropdownMulti",
   components: {
     DxDropDownBox,
     DxTreeView,
     // DxTextBox
-    // DxTagBox,
   },
   props: [
     "treeDataSource",
