@@ -1,0 +1,14 @@
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\bin\Debug\net5.0\MISA.AMI.TPLUONG.Core.deps.json
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\bin\Debug\net5.0\MISA.AMI.TPLUONG.Core.dll
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\bin\Debug\net5.0\ref\MISA.AMI.TPLUONG.Core.dll
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\bin\Debug\net5.0\MISA.AMI.TPLUONG.Core.pdb
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\MISA.AMI.TPLUONG.Core.csproj.AssemblyReference.cache
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\MISA.AMI.TPLUONG.Core.Resources.ResourceSalaryComposition.resources
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\MISA.AMI.TPLUONG.Core.csproj.GenerateResource.cache
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\MISA.AMI.TPLUONG.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\MISA.AMI.TPLUONG.Core.AssemblyInfoInputs.cache
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\MISA.AMI.TPLUONG.Core.AssemblyInfo.cs
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\MISA.AMI.TPLUONG.Core.csproj.CoreCompileInputs.cache
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\MISA.AMI.TPLUONG.Core.dll
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\ref\MISA.AMI.TPLUONG.Core.dll
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMI.TPLUONG.Core\obj\Debug\net5.0\MISA.AMI.TPLUONG.Core.pdb

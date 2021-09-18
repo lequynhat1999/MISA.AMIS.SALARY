@@ -1,0 +1,15 @@
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\bin\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.deps.json
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\bin\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.dll
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\bin\Debug\net5.0\ref\MISA.AMIS.TPLUONG.Infrastructure.dll
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\bin\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.pdb
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\bin\Debug\net5.0\MISA.AMI.TPLUONG.Core.dll
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\bin\Debug\net5.0\MISA.AMI.TPLUONG.Core.pdb
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\obj\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\obj\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\obj\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\obj\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.AssemblyInfo.cs
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\obj\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\obj\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.csproj.CopyComplete
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\obj\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.dll
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\obj\Debug\net5.0\ref\MISA.AMIS.TPLUONG.Infrastructure.dll
+C:\Users\BVCN 88\OneDrive\Desktop\Bài đánh giá giai đoạn 2\MISA.AMIS.TPLUONG.BE\MISA.AMIS.TPLUONG.Infrastructure\obj\Debug\net5.0\MISA.AMIS.TPLUONG.Infrastructure.pdb

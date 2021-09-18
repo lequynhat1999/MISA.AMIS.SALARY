@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "w2RSkTl4RoFW0MZ52M04mVJ8mjDZLQw5KlMHFzk8drG/Jb2V5UsLz8Hj4FhYqyB0XbCNf4iCOrxojleQ4dWDIA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\BVCN 88\\OneDrive\\Desktop\\Bài đánh giá giai đoạn 2\\MISA.AMIS.TPLUONG.BE\\MISA.AMIS.TPLUONG.Infrastructure\\MISA.AMIS.TPLUONG.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\BVCN 88\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
+    "C:\\Users\\BVCN 88\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\BVCN 88\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "C:\\Users\\BVCN 88\\.nuget\\packages\\mysqlconnector\\1.3.12\\mysqlconnector.1.3.12.nupkg.sha512"
+  ],
+  "logs": []
+}
