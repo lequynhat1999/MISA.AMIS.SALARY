@@ -149,14 +149,12 @@
 }
 
 /* padding text của checkbox trong form detail */
-.dx-checkbox-text
-{
+.dx-checkbox-text {
   padding-left: 37px !important;
 }
 
 /* style icon uncheck trong form detail */
-.dx-radiobutton-icon::before
-{
+.dx-radiobutton-icon::before {
   width: 16px !important;
   height: 16px !important;
   border: none !important;
@@ -170,8 +168,7 @@
 }
 
 /* icon radio mới */
-.dx-radiobutton-icon-checked .dx-radiobutton-icon-dot
-{
+.dx-radiobutton-icon-checked .dx-radiobutton-icon-dot {
   width: 20px !important;
   height: 20px !important;
   -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
@@ -183,6 +180,42 @@
 }
 
 /* bỏ border của icon radio */
-.dx-radiobutton.dx-state-focused:not(.dx-state-active) .dx-radiobutton-icon::before {
+.dx-radiobutton.dx-state-focused:not(.dx-state-active)
+  .dx-radiobutton-icon::before {
   border: none !important;
+}
+
+/* bỏ hover text checkbox  */
+.dx-checkbox-has-text.dx-state-hover {
+  background-color: #fff !important;
+}
+
+.dx-checkbox-has-text
+{
+  position: relative;
+}
+
+/* set vị trí cho text checkbox */
+.dx-checkbox-has-text .dx-checkbox-text {
+  position: absolute;
+  left: 50px;
+  top: 1px;
+  padding-left: 0px !important;
+
+}
+
+/* set vị trí cho checkbox trong detail */
+.dx-checkbox-has-text .dx-checkbox-icon {
+  margin-top: 3px !important;
+}
+
+/* set lại icon checkbox checked trong detail */
+.dx-checkbox-checked .dx-checkbox-icon
+{
+  width: 20px !important;
+  height: 20px !important;
+  background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -262px -1.5px
+    no-repeat;
+  border: none !important;
+  border-radius: none !important;
 }

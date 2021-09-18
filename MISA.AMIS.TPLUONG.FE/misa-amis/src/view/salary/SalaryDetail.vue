@@ -44,7 +44,7 @@
                     'border-red': errors.length > 0 ? true : false,
                   }"
                 />
-                <div class="text-error">{{ errors[0] }}</div>
+                <div v-if="errors.length > 0"><div class="text-error">{{ errors[0] }}</div></div>
               </ValidationProvider>
             </div>
             <div class="input-form flex">
@@ -99,29 +99,6 @@
               />
               <div class="box-earning" v-if="itemID == 1">
                 <div class="earning-wrapper flex a-l-c">
-                  <!-- <input
-                  type="radio"
-                  id="Chịu thuế"
-                  name="earning"
-                  class="radio-earning"
-                  value="1"
-                />
-                <span class="btn-check"></span>
-                <span class="btn-uncheck"></span>
-                <label for="Chịu thuế" class="text-radio">Chịu thuế</label>
-                <input
-                  type="radio"
-                  id="Không chịu thuế"
-                  name="earning"
-                  class="radio-earning"
-                  value="2"
-                  style="margin-left: 30px"
-                />
-                <span class="btn-check"></span>
-                <span class="btn-uncheck"></span>
-                <label for="Không chịu thuế" class="text-radio"
-                  >Không chịu thuế</label
-                > -->
                   <DxRadioGroup
                     :items="dataTax"
                     :value="dataTax[0]"
@@ -131,14 +108,6 @@
               </div>
               <div class="box-earning" v-if="itemID == 2">
                 <div class="deduct-wrapper flex">
-                  <!-- <input
-                  type="checkbox"
-                  id="deduct"
-                  style="width: 16px; height: 16px"
-                />
-                <label for="deduct" class="text-checkbox"
-                  >Giảm trừ khi tính thuế</label
-                > -->
                   <DxCheckBox :width="550" text="Giảm trừ khi tính thuế" />
                 </div>
               </div>
@@ -151,7 +120,7 @@
                   title="Khi tính giá trị của thành phần lương này, nếu số tiền vượt quá định mức thì chương trình sẽ tự động lấy mức tối đa theo định mức đã thiết lập"
                 ></div>
               </div>
-              <input type="text" class="m-input input-text-form" />
+              <money type="text" class="m-input input-text-form" style="text-align: right" value="" v-bind="money"></money>
             </div>
             <div class="input-form flex">
               <div class="text-input">
@@ -196,6 +165,7 @@ import DxRadioGroup from "devextreme-vue/radio-group";
 import { extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 import { DxCheckBox } from "devextreme-vue/check-box";
+import { Money } from "v-money";
 import {
   TYPE,
   NATURE,
@@ -214,11 +184,19 @@ export default {
     DropdownMulti,
     DxCheckBox,
     DxRadioGroup,
+    Money,
   },
   props: ["isOpenModal"],
   data() {
     return {
       employee: { EmployeeCode: "123", Test: "ABC" },
+      // v-money
+      money: {
+        decimal: ",",
+        thousands: ",",
+        precision: 0,
+        masked: false,
+      },
       // dataSource selectbox
       dataSourceType: TYPE,
       dataSourceNature: NATURE,
@@ -230,11 +208,11 @@ export default {
       // value default cho input tính chất
       itemID: 1,
       // data cho radio
-      // dataTax: [
-      //   { TaxName: 'Chịu thuế', TaxValue: 1 },
-      //   { TaxName: 'Không chịu thuế', TaxValue: 2 },
-      // ]
       dataTax: ["Chịu thuế", "Không chịu thuế"],
+      test: [
+        { TaxName: 'Chịu thuế'},
+        { TaxName: 'Không chịu thuế'},
+      ],
     };
   },
   methods: {

@@ -227,3 +227,13 @@
   -webkit-mask-position: -120px -20px;
   margin-top: 12px;
 }
+
+/* style cho checkbox mới datagrid */
+.dx-datagrid-checkbox-size.dx-checkbox-checked .dx-checkbox-icon 
+{
+    width: 20px !important;
+    height: 20px !important;
+    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -260px 0px no-repeat;
+    border: none  !important;
+    border-radius: none !important;
+}

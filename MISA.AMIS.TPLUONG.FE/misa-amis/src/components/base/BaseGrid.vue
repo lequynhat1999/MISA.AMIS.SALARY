@@ -8,7 +8,6 @@
       :show-borders="true"
       @content-ready="onContentReady"
       height="100%"
-      :title="titleTd"
       :column-width="250"
       :allow-column-resizing="true"
       :column-resizing-mode="currentMode"
@@ -44,7 +43,7 @@
 
       <template #cellTemplate="{ data }">
         <slot :name="data.column.dataField" :data="data.data">
-          {{ data.data[data.column.dataField] }}
+          <div :title= data.data[data.column.dataField]>{{ data.data[data.column.dataField] }}</div>
         </slot>
       </template>
 

@@ -93,3 +93,16 @@
 {
     content: "Tìm kiếm" ;
 }
+
+/* chỉnh cỡ chữ và màu chữ cho placeholder */
+.dx-placeholder::before
+{
+    font-size: 14px;
+    color: #666;
+}
+
+/* set border khi đang focus vào dropdown mà blur ra ngoài */
+.dx-dropdownbox.dx-state-focused
+{
+    border: 1px solid #34b057 !important;
+}

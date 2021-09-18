@@ -18,23 +18,25 @@
         />
         <div class="icon-search"></div>
       </div>
-      <div class="toolbar-right flex" >
-        <BaseDropdown style="margin-right:20px"
+      <div class="toolbar-right flex">
+        <BaseDropdown
+          style="margin-right: 20px"
           :data="statusData"
-          :widthDropdown = 120
-          :widthDropdownData = 230
-          :topDropdownData = 42
-          :rightDropdownData = 0
+          :widthDropdown="120"
+          :widthDropdownData="230"
+          :topDropdownData="42"
+          :rightDropdownData="0"
           @get="getValueStatus"
         />
-        <BaseDropdownSingle style="margin-right: 20px;width: 316px"
+        <BaseDropdownSingle
+          style="margin-right: 10px; width: 316px"
           :treeDataSource="treeDataSource"
-          :placeholderProp = "'Tất cả đơn vị'"
-          :valueExprProp = "'OrganizationUnitID'"
-          :displayExprProp = "'OrganizationUnitName'"
-          :parentIdExprProp = "'ParentID'"
-          :valueDefault = treeDataSource[0].OrganizationUnitID
-         />
+          :placeholderProp="'Tất cả đơn vị'"
+          :valueExprProp="'OrganizationUnitID'"
+          :displayExprProp="'OrganizationUnitName'"
+          :parentIdExprProp="'ParentID'"
+          :valueDefault="treeDataSource[0].OrganizationUnitID"
+        />
         <div class="box-filter-toolbar">
           <div class="icon-filter-toolbar"></div>
         </div>
@@ -43,10 +45,12 @@
         </div>
       </div>
     </div>
-    <div class="toolbar-content flex relative " v-else>
-      <span class="text-toolbar">Đã chọn  <b>{{countRowChecked}}</b></span>
+    <div class="toolbar-content flex relative" v-else>
+      <span class="text-toolbar"
+        >Đã chọn <b>{{ countRowChecked }}</b></span
+      >
       <span class="uncheck-all" @click="uncheckAll">Bỏ chọn</span>
-      <div class="box-btn-unfollow-all ">
+      <div class="box-btn-unfollow-all">
         <button class="m-btn btn-unfollow-all">
           <div class="icon-unfollow"></div>
           <div class="text-btn">Ngừng theo dõi</div>
@@ -60,44 +64,44 @@
       </div>
     </div>
     <div class="table-salary">
-      <BaseGrid 
+      <BaseGrid
         ref="baseGrid"
         :headers="headers"
         :dataSource="dataSource"
         @getRowChecked="getRowChecked"
-       >
-       <template #Status ="{data}">
-         <div class="box-status flex a-l-c">
-           <div class="icon-status"></div>
-           <div class="text-status">{{data.Status}}</div>
-         </div>
-       </template>
-       </BaseGrid>
+      >
+        <template #StatusName="{ data }">
+          <div class="box-status flex a-l-c">
+            <div class="icon-status"></div>
+            <div class="text-status">{{ data.StatusName }}</div>
+          </div>
+        </template>
+      </BaseGrid>
 
       <div class="paging">
         <div class="amount">Tổng số bản ghi: <b>175</b></div>
-        <div class="pagination flex a-l-c ">
-          <span style="margin-right:20px">Số bản ghi/trang</span>
-          <BaseDropdown style="margin-right:60px"
-          :data="dataPage"
-          :widthDropdown = 60
-          :widthDropdownData = 60
-          :topDropdownData = -150
-          :rightDropdownData = 10
-          @get="getValuePageSize"
-        />
+        <div class="pagination flex a-l-c">
+          <span style="margin-right: 20px">Số bản ghi/trang</span>
+          <BaseDropdown
+            style="margin-right: 60px"
+            :data="dataPage"
+            :widthDropdown="60"
+            :widthDropdownData="60"
+            :topDropdownData="-150"
+            :rightDropdownData="10"
+            @get="getValuePageSize"
+          />
           <div class="pageIndex flex a-l-c">
-            <span style="margin-right:20px"><b>1</b>-<b>100</b> bản ghi 1 trang</span>
-            <i class="fas fa-chevron-left"></i>
-            <i class="fas fa-chevron-right"></i>
+            <span style="margin-right: 20px"
+              ><b>1</b>-<b>100</b> bản ghi</span
+            >
+            <i class="fas fa-chevron-left" style="margin-right: 28px; color: #afb3c1;font-size:13px" title="Trước"></i>
+            <i class="fas fa-chevron-right" style="font-size:13px" title="Sau"></i>
           </div>
         </div>
       </div>
     </div>
-    <SalaryDetail 
-      :isOpenModal="isOpenModal"
-      @closeForm="closeForm"
-    />
+    <SalaryDetail :isOpenModal="isOpenModal" @closeForm="closeForm" />
   </div>
 </template>
 
@@ -126,126 +130,170 @@ export default {
       // data source treeview
       treeDataSource: TREE_DATA_SOURCE_FILTER,
       // value status
-      valueStatus : null,
+      valueStatus: null,
       // value pageSize
-      valuePageSize : null,
+      valuePageSize: null,
       // count rowchecked
       countRowChecked: 0,
       // data source grid
       dataSource: [
         {
-          SalaryCompositionID : 0,
+          SalaryCompositionID: 0,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 1,
+          SalaryCompositionID: 1,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Long",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Long",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 2,
+          SalaryCompositionID: 2,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 3,
+          SalaryCompositionID: 3,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 4,
+          SalaryCompositionID: 4,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 5,
+          SalaryCompositionID: 5,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 6,
+          SalaryCompositionID: 6,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 7,
+          SalaryCompositionID: 7,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 8,
+          SalaryCompositionID: 8,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 9,
+          SalaryCompositionID: 9,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
         {
-          SalaryCompositionID : 10,
+          SalaryCompositionID: 10,
           SalaryCompositionCode: "LUONG_SAN_PHAM",
           SalaryCompositionName: "Lương sản phẩm",
-          ApplicableUnit: "Công ty TNHH Kim Đồng",
-          IngredientType: "Sản phẩm",
-          Nature: "Khấu trừ",
-          Price: "Tiền tệ",
-          Status: "Đang hoạt động"
+          OrganizationUnitName: "Công ty TNHH Kim Đồng",
+          SalaryCompositionTypeName: "Sản phẩm",
+          NatureName: "Khấu trừ",
+          Cost: "Tiền tệ",
+          StatusName: "Đang hoạt động",
+          TaxableName: "Chịu thuế",
+          ReduceName: "Không",
+          Quota: "100,000",
+          Description: "Là hệ số của từng sản phẩm"
         },
       ],
       // header grid
-      headers : [
+      headers: [
         {
           DataField: "SalaryCompositionCode",
           Caption: "Mã thành phần",
@@ -261,35 +309,63 @@ export default {
           Fixed: true,
         },
         {
-          DataField: "ApplicableUnit",
-          Caption: "Đơn vị áp dụng",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: false,
-        },
-        {
-          DataField: "IngredientType",
+          DataField: "SalaryCompositionTypeName",
           Caption: "Loại thành phần",
           DataType: "text",
           Alignment: "left",
           Fixed: false,
         },
         {
-          DataField: "Nature",
+          DataField: "NatureName",
           Caption: "Tính chất",
           DataType: "text",
           Alignment: "left",
           Fixed: false,
         },
         {
-          DataField: "Price",
+          DataField: "OrganizationUnitName",
+          Caption: "Đơn vị áp dụng",
+          DataType: "text",
+          Alignment: "left",
+          Fixed: false,
+        },
+        {
+          DataField: "TaxableName",
+          Caption: "Chịu thuế",
+          DataType: "text",
+          Alignment: "left",
+          Fixed: false,
+        },
+        {
+          DataField: "ReduceName",
+          Caption: "Giảm trừ khi tính thuế",
+          DataType: "text",
+          Alignment: "left",
+          Fixed: false,
+        },
+        {
+          DataField: "Quota",
+          Caption: "Định mức",
+          DataType: "text",
+          Alignment: "left",
+          Fixed: false,
+        },
+        {
+          DataField: "Cost",
           Caption: "Giá trị",
           DataType: "text",
           Alignment: "left",
           Fixed: false,
         },
         {
-          DataField: "Status",
+          DataField: "Description",
+          Caption: "Mô tả",
+          DataType: "text",
+          Alignment: "left",
+          Fixed: false,
+        },
+        {
+          DataField: "StatusName",
           Caption: "Trạng thái",
           DataType: "text",
           Alignment: "left",
@@ -307,7 +383,7 @@ export default {
         { Text: "50", Value: 50 },
         { Text: "100", Value: 100 },
       ],
-    }
+    };
   },
   methods: {
     /**------------------------------------------------
@@ -330,8 +406,7 @@ export default {
      * Set value cho status để filter
      * CreatedBy : LQNHAT(14/09/2021)
      */
-    getValueStatus(value)
-    {
+    getValueStatus(value) {
       this.valueStatus = value;
       console.log(this.valueStatus);
     },
@@ -340,8 +415,7 @@ export default {
      * Set value cho pageSize
      * CreatedBy: LQNHAT(16/09/2021)
      */
-    getValuePageSize(value)
-    {
+    getValuePageSize(value) {
       this.valuePageSize = value;
       console.log(this.valuePageSize);
     },
@@ -350,15 +424,17 @@ export default {
      * Lấy ra số dòng đã được checked
      * CreatedBy: LQNHAT(17/09/2021)
      */
-    getRowChecked(selectedRowsData)
-    {
+    getRowChecked(selectedRowsData) {
       this.countRowChecked = selectedRowsData.length;
     },
 
-    uncheckAll()
-    {
+    /*---------------------------------------------------------
+     * Bắt sự kiện bỏ chọn
+     * CreatedBy:LQNHAT(17/09/2021)
+     */
+    uncheckAll() {
       this.$refs.baseGrid.uncheckAllRow();
-    }
+    },
   },
 };
 </script>

@@ -89,7 +89,7 @@
 
 .dropdown-selected {
   background-color: #eafbf2;
-  color: #34b057;
+  color: #34b057 !important;
 }
 
 .dropdown .dropdown-data .dropdown-selected:hover {

@@ -6,6 +6,7 @@ import 'devextreme/dist/css/dx.light.css';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'; 
 import * as rules from 'vee-validate/dist/rules';
 import { messages } from 'vee-validate/dist/locale/vi.json';
+import money from 'v-money';
 Object.keys(rules).forEach(rule => {
   extend(rule, {
     ...rules[rule], // copies rule configuration
@@ -18,6 +19,7 @@ Vue.component('ValidationProvider', ValidationProvider); // validate field
 Vue.component('ValidationObserver', ValidationObserver); // validate form
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
+Vue.use(money)
 new Vue({
   render: h => h(App),
 }).$mount('#app')
