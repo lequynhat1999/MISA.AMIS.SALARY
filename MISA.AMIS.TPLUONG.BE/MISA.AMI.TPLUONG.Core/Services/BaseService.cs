@@ -191,10 +191,16 @@ namespace MISA.AMI.TPLUONG.Core.Services
             if (flag)
             {
                 var result = _baseRepository.DeleteEntites(idList);
-                if (!result)
+                if (result == 0)
                 {
                     _serviceResult.MISACode = MISAEnum.EnumServiceResult.BadRequest;
                     _serviceResult.Message = "Id sai hoặc không tồn tại";
+                }
+                else
+                {
+                    _serviceResult.Message = "Xóa nhiều đối tượng thành công";
+                    _serviceResult.MISACode = MISAEnum.EnumServiceResult.Success;
+                    _serviceResult.Data = result;
                 }
             }
             else
@@ -202,7 +208,7 @@ namespace MISA.AMI.TPLUONG.Core.Services
                 _serviceResult.MISACode = MISAEnum.EnumServiceResult.BadRequest;
                 _serviceResult.Message = "Id sai hoặc không tồn tại";
             }
-            _serviceResult.Message = "Xóa nhiều đối tượng thành công";
+
             return _serviceResult;
         }
         #endregion

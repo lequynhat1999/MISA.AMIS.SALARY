@@ -26,6 +26,13 @@ namespace MISA.AMI.TPLUONG.Core.Interfaces.Repository
         /// </summary>
         /// <param name="salaryCompositionID">ID thành phần lương</param>
         /// <returns>Số bản ghi đã thao tác</returns>
-        int UnFollow(SalaryComposition salaryComposition, Guid salaryCompositionID);
+        int UnFollow(Guid salaryCompositionID);
+
+        /// <summary>
+        /// Ngừng theo dõi nhiều đối tượng trong db
+        /// </summary>
+        /// <param name="entitesId">mảng các đối tượng muốn xóa</param>
+        /// <returns>Số bản ghi được thao tác</returns>
+        int UnfollowSalaryCompositions(List<Guid> entitesId);
     }
 }

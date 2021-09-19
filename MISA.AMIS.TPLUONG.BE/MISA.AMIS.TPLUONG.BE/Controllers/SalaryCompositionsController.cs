@@ -68,11 +68,62 @@ namespace MISA.AMIS.TPLUONG.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Ngừng theo dõi thành phần lương
+        /// </summary>
+        /// <param name="salaryCompositionID">ID thành phần lương</param>
+        /// <returns>Số bản ghi đã thao tác</returns>
+        /// CreatedBy:LQNHAT(19/09/2021)
         [HttpPut("unfollow")]
-        public IActionResult UnfollowSalaryComposition(SalaryComposition salaryComposition, Guid salaryCompositionID)
+        public IActionResult UnfollowSalaryComposition(Guid salaryCompositionID)
         {
-            var result = _salaryCompositionRepository.UnFollow(salaryComposition, salaryCompositionID);
-            return StatusCode(200, result);
+            try
+            {
+                var result = _salaryCompositionRepository.UnFollow(salaryCompositionID);
+                return StatusCode(200, result);
+            }
+            catch (Exception ex)
+            {
+                var msg = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Properties.ResourceSalaryComposition.Exception_ErrorMsg,
+                };
+                return StatusCode(500, msg);
+            }
+        }
+
+        /// <summary>
+        /// Ngừng theo dõi nhiều đối tượng
+        /// </summary>
+        /// <param name="entitesId">Id các đối tượng</param>
+        /// <returns></returns>
+        /// CreatedBy: LQNHAT(27/08/2021)
+        [HttpPut]
+        public IActionResult UnfollowSalaryCompositions(string entitesId)
+        {
+            try
+            {
+                var serviceResult = _salaryCompositionService.UnfollowSalaryCompositions(entitesId);
+                if (serviceResult.MISACode == AMI.TPLUONG.Core.MISAEnum.EnumServiceResult.Success)
+                {
+                    return StatusCode(200, serviceResult);
+                }
+                else
+                {
+                    return BadRequest(serviceResult.Message);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var msg = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Properties.ResourceSalaryComposition.Exception_ErrorMsg,
+                };
+                return StatusCode(500, msg);
+            }
         }
 
         #endregion

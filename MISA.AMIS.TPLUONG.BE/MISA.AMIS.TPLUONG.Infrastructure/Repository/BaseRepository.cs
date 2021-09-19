@@ -173,7 +173,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
                         var propName = prop.Name;
                         var propValue = prop.GetValue(entity);
                         //ngày chỉnh sửa
-                        if (propName == "ModifiedDate")
+                        if (propName == "ModifedDate")
                         {
                             propValue = DateTime.UtcNow;
                         }
@@ -228,9 +228,10 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
         /// <param name="entitesId">Id các đối tượng</param>
         /// <returns>flag: True or False</returns>
         /// CreatedBy:LQNhat(26/08/2021)
-        public bool DeleteEntites(List<Guid> entitesId)
+        public int DeleteEntites(List<Guid> entitesId)
         {
             bool flag = true;
+            var count = 0;
             try
             {
                 _dbConnection.Open();
@@ -246,6 +247,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
                             transaction.Rollback();
                             break;
                         }
+                        count += result;
                     }
                     transaction.Commit();
                 }
@@ -254,7 +256,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
             {
                 throw;
             }
-            return flag;
+            return count;
         }
 
         /// <summary>

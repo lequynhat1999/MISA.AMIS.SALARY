@@ -54,7 +54,7 @@ namespace MISA.AMI.TPLUONG.Core.Interfaces.Repository
         /// </summary>
         /// <param name="entitesId">mảng các đối tượng muốn xóa</param>
         /// <returns>True or false</returns>
-        bool DeleteEntites(List<Guid> entitesId);
+        int DeleteEntites(List<Guid> entitesId);
 
         /// <summary>
         /// Lấy ra đối tượng theo Property

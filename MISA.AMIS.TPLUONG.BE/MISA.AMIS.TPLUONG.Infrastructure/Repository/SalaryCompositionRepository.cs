@@ -82,27 +82,34 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
             return employeesFilter;
         }
 
-        public int UnFollow(SalaryComposition salaryComposition, Guid salaryCompositionID)
+        /// <summary>
+        /// Ngừng theo dõi thành phần lương
+        /// </summary>
+        /// <param name="salaryCompositionID">ID thành phần lương</param>
+        /// <returns>Số bản ghi đã thao tác</returns>
+        /// CreatedBy:LQNHAT(19/09/2021)
+        public int UnFollow(Guid salaryCompositionID)
         {
             var entityCurrent = GetById(salaryCompositionID);
             if (entityCurrent != null)
             {
                 var columnsName = string.Empty;
                 var param = new DynamicParameters();
-                var properties = salaryComposition.GetType().GetProperties();
+                var properties = entityCurrent.GetType().GetProperties();
                 foreach (var prop in properties)
                 {
                     var propertyAttrNotMap = prop.GetCustomAttributes(typeof(NotMap), true);
                     if (propertyAttrNotMap.Length == 0)
                     {
                         var propName = prop.Name;
-                        var propValue = prop.GetValue(salaryComposition);
+                        var propValue = prop.GetValue(entityCurrent);
                         //ngày chỉnh sửa
-                        if (propName == "ModifiedDate")
+                        if (propName == "ModifedDate")
                         {
                             propValue = DateTime.UtcNow;
                         }
 
+                        // ngừng theo dõi
                         if (propName == "StatusID" && (int)propValue == 0)
                         {
                             propValue = 1;
@@ -124,6 +131,59 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
             {
                 return -1;
             }
+        }
+
+        public int UnfollowSalaryCompositions(List<Guid> entitesId)
+        {
+            var count = 0;
+            try
+            {
+                foreach (var item in entitesId)
+                {
+                    var entityCurrent = GetById(item);
+                    if (entityCurrent != null)
+                    {
+                        var columnsName = string.Empty;
+                        var param = new DynamicParameters();
+                        var properties = entityCurrent.GetType().GetProperties();
+                        foreach (var prop in properties)
+                        {
+                            var propertyAttrNotMap = prop.GetCustomAttributes(typeof(NotMap), true);
+                            if (propertyAttrNotMap.Length == 0)
+                            {
+                                var propName = prop.Name;
+                                var propValue = prop.GetValue(entityCurrent);
+                                //ngày chỉnh sửa
+                                if (propName == "ModifedDate")
+                                {
+                                    propValue = DateTime.UtcNow;
+                                }
+
+                                // ngừng theo dõi
+                                if (propName == "StatusID" && (int)propValue == 1)
+                                {
+                                    propValue = 0;
+                                }
+                                columnsName += $"{propName} = @{propName},";
+                                param.Add($"@{propName}", propValue);
+                            }
+                        }
+
+                        // cắt dấu phẩy cuối chuỗi
+                        columnsName = columnsName.Remove(columnsName.Length - 1, 1);
+
+                        // sửa dữ liệu
+                        var sqlQuery = $"UPDATE SalaryComposition SET {columnsName} WHERE SalaryCompositionID = '{item}'";
+                        var result = _dbConnection.Execute(sqlQuery, param: param);
+                        count += result;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return count;
         }
         #endregion
     }
