@@ -202,6 +202,7 @@ namespace MISA.AMI.TPLUONG.Core.Services
                 _serviceResult.MISACode = MISAEnum.EnumServiceResult.BadRequest;
                 _serviceResult.Message = "Id sai hoặc không tồn tại";
             }
+            _serviceResult.Message = "Xóa nhiều đối tượng thành công";
             return _serviceResult;
         }
         #endregion

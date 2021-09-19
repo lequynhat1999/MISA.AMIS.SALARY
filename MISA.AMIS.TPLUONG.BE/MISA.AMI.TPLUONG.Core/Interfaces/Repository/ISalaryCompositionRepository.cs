@@ -14,11 +14,18 @@ namespace MISA.AMI.TPLUONG.Core.Interfaces.Repository
         /// </summary>
         /// <param name="pageIndex">Index của trang hiện tại</param>
         /// <param name="pageSize">Số bản ghi hiển thị trên 1 trang</param>
-        /// <param name="statusId">Id của trạng thái cần tìm kiếm</param>
-        /// <param name="organizationUnitId">Id của đơn vị cần tìm kiếm</param>
+        /// <param name="statusID">Id của trạng thái cần tìm kiếm</param>
+        /// <param name="organizationUnitID">Id của đơn vị cần tìm kiếm</param>
         /// <param name="keysearch">Mã, tên thành phần lương</param>
         /// <returns>Danh sách các bản ghi theo điều kiện lọc</returns>
         /// CreateBy: LQNHAT(27/08/2021)
-        object GetByPaging(int pageIndex, int pageSize, string statusId, string organizationUnitId, string keysearch);
+        object GetByPaging(int pageIndex, int pageSize, int statusID, string organizationUnitID, string keysearch);
+
+        /// <summary>
+        /// Ngừng theo dõi 1 đối tượng thành phần lương
+        /// </summary>
+        /// <param name="salaryCompositionID">ID thành phần lương</param>
+        /// <returns>Số bản ghi đã thao tác</returns>
+        int UnFollow(SalaryComposition salaryComposition, Guid salaryCompositionID);
     }
 }

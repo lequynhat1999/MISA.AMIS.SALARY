@@ -32,18 +32,18 @@ namespace MISA.AMIS.TPLUONG.Api.Controllers
         /// </summary>
         /// <param name="pageIndex">Index của trang hiện tại</param>
         /// <param name="pageSize">Số bản ghi hiển thị trên 1 trang</param>
-        /// <param name="statusId">Id của trạng thái cần tìm kiếm</param>
-        /// <param name="organizationUnitId">Id của đơn vị cần tìm kiếm</param>
+        /// <param name="statusID">Id của trạng thái cần tìm kiếm</param>
+        /// <param name="organizationUnitID">Id của đơn vị cần tìm kiếm</param>
         /// <param name="keysearch">Mã, tên thành phần lương</param>
         /// <returns>Danh sách các bản ghi theo điều kiện lọc</returns>
         /// CreateBy: LQNHAT(27/08/2021)
         [HttpGet("filter")]
-        public IActionResult GetSalaryCompositionsPaging(int pageIndex, int pageSize, string statusId, string organizationUnitId, string keysearch)
+        public IActionResult GetSalaryCompositionsPaging(int pageIndex, int pageSize, int statusID, string organizationUnitID, string keysearch)
         {
             try
             {
                 // 4. trả về cho client
-                var salaryCompositionsFilter = _salaryCompositionRepository.GetByPaging(pageIndex, pageSize, statusId, organizationUnitId, keysearch);
+                var salaryCompositionsFilter = _salaryCompositionRepository.GetByPaging(pageIndex, pageSize, statusID, organizationUnitID, keysearch);
                 if (salaryCompositionsFilter != null)
                 {
                     return StatusCode(200, salaryCompositionsFilter);
@@ -66,6 +66,13 @@ namespace MISA.AMIS.TPLUONG.Api.Controllers
                 };
                 return StatusCode(500, msg);
             }
+        }
+
+        [HttpPut("unfollow")]
+        public IActionResult UnfollowSalaryComposition(SalaryComposition salaryComposition, Guid salaryCompositionID)
+        {
+            var result = _salaryCompositionRepository.UnFollow(salaryComposition, salaryCompositionID);
+            return StatusCode(200, result);
         }
 
         #endregion

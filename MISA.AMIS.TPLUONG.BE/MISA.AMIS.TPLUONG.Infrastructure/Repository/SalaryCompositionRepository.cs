@@ -49,25 +49,25 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
         /// </summary>
         /// <param name="pageIndex">Index của trang hiện tại</param>
         /// <param name="pageSize">Số bản ghi hiển thị trên 1 trang</param>
-        /// <param name="statusId">Id của trạng thái cần tìm kiếm</param>
-        /// <param name="organizationUnitId">Id của đơn vị cần tìm kiếm</param>
+        /// <param name="statusID">Id của trạng thái cần tìm kiếm</param>
+        /// <param name="organizationUnitID">Id của đơn vị cần tìm kiếm</param>
         /// <param name="keysearch">Mã, tên thành phần lương</param>
         /// <returns>Danh sách các bản ghi theo điều kiện lọc</returns>
         /// CreateBy: LQNHAT(27/08/2021)
-        public object GetByPaging(int pageIndex, int pageSize, string statusId, string organizationUnitId, string keysearch)
+        public object GetByPaging(int pageIndex, int pageSize, int statusID, string organizationUnitID, string keysearch)
         {
             keysearch = keysearch == null ? string.Empty : keysearch;
             // add vào param
             var param = new DynamicParameters();
             param.Add("@keysearch", keysearch);
-            param.Add("@statusId", statusId);
-            param.Add("@organizationUnitId", organizationUnitId);
+            param.Add("@statusId", statusID);
+            param.Add("@organizationUnitId", organizationUnitID);
             param.Add("@pageIndex", pageIndex);
             param.Add("@pageSize", pageSize);
             param.Add("@totalRecord", dbType: DbType.Int32, direction: ParameterDirection.Output);
             param.Add("@totalPage", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-            var employees = _dbConnection.Query<SalaryComposition>("Proc_GetEmployeesByPaging", param: param, commandType: CommandType.StoredProcedure);
+            var employees = _dbConnection.Query<SalaryComposition>("Proc_GetSalaryCompositionsByPaging", param: param, commandType: CommandType.StoredProcedure);
             // tổng số trang
             var totalPage = param.Get<int>("@totalPage");
             // tổng số bản ghi
@@ -80,6 +80,50 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
                 Data = employees,
             };
             return employeesFilter;
+        }
+
+        public int UnFollow(SalaryComposition salaryComposition, Guid salaryCompositionID)
+        {
+            var entityCurrent = GetById(salaryCompositionID);
+            if (entityCurrent != null)
+            {
+                var columnsName = string.Empty;
+                var param = new DynamicParameters();
+                var properties = salaryComposition.GetType().GetProperties();
+                foreach (var prop in properties)
+                {
+                    var propertyAttrNotMap = prop.GetCustomAttributes(typeof(NotMap), true);
+                    if (propertyAttrNotMap.Length == 0)
+                    {
+                        var propName = prop.Name;
+                        var propValue = prop.GetValue(salaryComposition);
+                        //ngày chỉnh sửa
+                        if (propName == "ModifiedDate")
+                        {
+                            propValue = DateTime.UtcNow;
+                        }
+
+                        if (propName == "StatusID" && (int)propValue == 0)
+                        {
+                            propValue = 1;
+                        }
+                        columnsName += $"{propName} = @{propName},";
+                        param.Add($"@{propName}", propValue);
+                    }
+                }
+
+                // cắt dấu phẩy cuối chuỗi
+                columnsName = columnsName.Remove(columnsName.Length - 1, 1);
+
+                // sửa dữ liệu
+                var sqlQuery = $"UPDATE SalaryComposition SET {columnsName} WHERE SalaryCompositionID = '{salaryCompositionID}'";
+                var result = _dbConnection.Execute(sqlQuery, param: param);
+                return result;
+            }
+            else
+            {
+                return -1;
+            }
         }
         #endregion
     }

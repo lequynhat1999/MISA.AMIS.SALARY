@@ -60,7 +60,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
                     var propName = prop.Name;
                     var propValue = prop.GetValue(entity) == "" ? null : prop.GetValue(entity);
                     // sinh mã mới
-                    if (propName == $"{_tableName}Id" && prop.PropertyType == typeof(Guid))
+                    if (propName == $"{_tableName}ID" && prop.PropertyType == typeof(Guid))
                     {
                         propValue = Guid.NewGuid();
                     }
@@ -68,6 +68,12 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
                     if (propName == "CreatedDate")
                     {
                         propValue = DateTime.UtcNow;
+                    }
+
+                    // trạng thái đang theo dõi
+                    if (propName == "StatusID")
+                    {
+                        propValue = 0;
                     }
 
                     columnsName += $"{propName},";
@@ -94,7 +100,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
             // xóa dữ liệu
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@entityIdParam", entityId);
-            var sqlQuery = $"DELETE FROM {_tableName} WHERE {_tableName}Id = @entityIdParam";
+            var sqlQuery = $"DELETE FROM {_tableName} WHERE {_tableName}ID = @entityIdParam";
             var result = _dbConnection.Execute(sqlQuery, param: parameters);
             return result;
         }
@@ -131,7 +137,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
             try
             {
                 // 3. lấy dữ liệu
-                var sqlQuery = $"SELECT * FROM {_tableName} WHERE {_tableName}Id = @entityId";
+                var sqlQuery = $"SELECT * FROM {_tableName} WHERE {_tableName}ID = @entityId";
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@entityId", entityId);
                 var entity = _dbConnection.QueryFirstOrDefault<TEntity>(sqlQuery, param: parameters);
@@ -180,7 +186,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
                 columnsName = columnsName.Remove(columnsName.Length - 1, 1);
 
                 // sửa dữ liệu
-                var sqlQuery = $"UPDATE {_tableName} SET {columnsName} WHERE {_tableName}Id = '{entityId}'";
+                var sqlQuery = $"UPDATE {_tableName} SET {columnsName} WHERE {_tableName}ID = '{entityId}'";
                 var result = _dbConnection.Execute(sqlQuery, param: param);
                 return result;
             }
@@ -202,7 +208,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
         {
             var propName = property.Name;
             var propValue = property.GetValue(entity);
-            var keyValue = entity.GetType().GetProperty($"{_tableName}Id").GetValue(entity).ToString();
+            var keyValue = entity.GetType().GetProperty($"{_tableName}ID").GetValue(entity).ToString();
             var sqlQuery = string.Empty;
             if (entity.EntityState == AMI.TPLUONG.Core.MISAEnum.EnumEntityState.Add)
             {
@@ -210,7 +216,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
             }
             else if (entity.EntityState == AMI.TPLUONG.Core.MISAEnum.EnumEntityState.Update)
             {
-                sqlQuery = $"SELECT * FROM {_tableName} WHERE {propName} = '{propValue}' AND {_tableName}Id <> '{keyValue}'";
+                sqlQuery = $"SELECT * FROM {_tableName} WHERE {propName} = '{propValue}' AND {_tableName}ID <> '{keyValue}'";
             }
             var entityGetByProperty = _dbConnection.QueryFirstOrDefault<TEntity>(sqlQuery);
             return entityGetByProperty;
@@ -232,7 +238,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
                 {
                     foreach (var item in entitesId)
                     {
-                        string sqlQuery = $"DELETE FROM {_tableName} WHERE {_tableName}Id = '{item}'";
+                        string sqlQuery = $"DELETE FROM {_tableName} WHERE {_tableName}ID = '{item}'";
                         var result = _dbConnection.Execute(sqlQuery, transaction: transaction);
                         if (result == 0)
                         {
