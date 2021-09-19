@@ -16,7 +16,8 @@
     "vee-validate": "^3.4.13",
     "vue": "^2.6.11",
     "vue-axios": "^3.3.6",
-    "vue-toastification": "^1.7.11"
+    "vue-toastification": "^1.7.11",
+    "vuejs-paginate": "^2.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

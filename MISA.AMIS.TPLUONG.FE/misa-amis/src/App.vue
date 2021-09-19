@@ -20,6 +20,7 @@ export default {
 <style>
 @import "./css/page/menu.css";
 @import "./css/base/flex.css";
+@import "./css/base/paging.css";
 @import "./css/base/font-size.css";
 @import "./css/page/content.css";
 @import "./css/salary/list.css";

@@ -54,7 +54,7 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
         /// <param name="keysearch">Mã, tên thành phần lương</param>
         /// <returns>Danh sách các bản ghi theo điều kiện lọc</returns>
         /// CreateBy: LQNHAT(27/08/2021)
-        public object GetByPaging(int pageIndex, int pageSize, int statusID, string organizationUnitID, string keysearch)
+        public object GetByPaging(int pageIndex, int pageSize, int? statusID, string organizationUnitID, string keysearch)
         {
             keysearch = keysearch == null ? string.Empty : keysearch;
             // add vào param
@@ -160,9 +160,9 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
                                 }
 
                                 // ngừng theo dõi
-                                if (propName == "StatusID" && (int)propValue == 1)
+                                if (propName == "StatusID" && (int)propValue == 0)
                                 {
-                                    propValue = 0;
+                                    propValue = 1;
                                 }
                                 columnsName += $"{propName} = @{propName},";
                                 param.Add($"@{propName}", propValue);

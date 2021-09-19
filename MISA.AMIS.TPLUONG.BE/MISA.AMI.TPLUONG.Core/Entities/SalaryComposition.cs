@@ -75,6 +75,11 @@ namespace MISA.AMI.TPLUONG.Core.Entities
         public string ReduceName { get; set; }
 
         /// <summary>
+        /// Giá trị
+        /// </summary>
+        public string Cost { get; set; }
+
+        /// <summary>
         /// Định mức
         /// </summary>
         public int? Quota { get; set; }

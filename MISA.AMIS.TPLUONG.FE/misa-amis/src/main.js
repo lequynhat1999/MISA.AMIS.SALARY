@@ -7,6 +7,7 @@ import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import * as rules from 'vee-validate/dist/rules';
 import { messages } from 'vee-validate/dist/locale/vi.json';
 import money from 'v-money';
+import Paginate from 'vuejs-paginate'
 Object.keys(rules).forEach(rule => {
   extend(rule, {
     ...rules[rule], // copies rule configuration
@@ -20,6 +21,7 @@ Vue.component('ValidationObserver', ValidationObserver); // validate form
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 Vue.use(money)
+Vue.component('paginate', Paginate)
 new Vue({
   render: h => h(App),
 }).$mount('#app')

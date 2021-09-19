@@ -38,7 +38,7 @@ namespace MISA.AMIS.TPLUONG.Api.Controllers
         /// <returns>Danh sách các bản ghi theo điều kiện lọc</returns>
         /// CreateBy: LQNHAT(27/08/2021)
         [HttpGet("filter")]
-        public IActionResult GetSalaryCompositionsPaging(int pageIndex, int pageSize, int statusID, string organizationUnitID, string keysearch)
+        public IActionResult GetSalaryCompositionsPaging(int pageIndex, int pageSize, int? statusID, string organizationUnitID, string keysearch)
         {
             try
             {

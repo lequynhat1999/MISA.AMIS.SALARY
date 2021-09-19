@@ -19,7 +19,7 @@ namespace MISA.AMI.TPLUONG.Core.Interfaces.Repository
         /// <param name="keysearch">Mã, tên thành phần lương</param>
         /// <returns>Danh sách các bản ghi theo điều kiện lọc</returns>
         /// CreateBy: LQNHAT(27/08/2021)
-        object GetByPaging(int pageIndex, int pageSize, int statusID, string organizationUnitID, string keysearch);
+        object GetByPaging(int pageIndex, int pageSize, int? statusID, string organizationUnitID, string keysearch);
 
         /// <summary>
         /// Ngừng theo dõi 1 đối tượng thành phần lương

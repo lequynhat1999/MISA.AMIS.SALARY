@@ -15,6 +15,7 @@
           type="text"
           class="m-input input-search"
           placeholder="Tìm kiếm"
+          v-model="keysearch"
         />
         <div class="icon-search"></div>
       </div>
@@ -71,19 +72,36 @@
         @getRowChecked="getRowChecked"
       >
         <template #StatusName="{ data }">
-          <div class="box-status flex a-l-c">
+          <div
+            class="box-status flex a-l-c"
+            v-if="data.StatusName == 'Đang theo dõi'"
+          >
             <div class="icon-status"></div>
             <div class="text-status">{{ data.StatusName }}</div>
           </div>
+          <div class="box-status flex a-l-c" v-else>
+            <div
+              class="icon-status"
+              style="background-color: rgb(255, 153, 0)"
+            ></div>
+            <div class="text-status" style="color: rgb(255, 153, 0)">
+              {{ data.StatusName }}
+            </div>
+          </div>
+        </template>
+        <template #Quota="{ data }">
+          {{ formatPrice(data.Quota) }}
         </template>
       </BaseGrid>
 
       <div class="paging">
-        <div class="amount">Tổng số bản ghi: <b>175</b></div>
+        <div class="amount">
+          Tổng số bản ghi: <b>{{ amountPage }}</b>
+        </div>
         <div class="pagination flex a-l-c">
           <span style="margin-right: 20px">Số bản ghi/trang</span>
           <BaseDropdown
-            style="margin-right: 60px"
+            style="margin-right: 30px"
             :data="dataPage"
             :widthDropdown="60"
             :widthDropdownData="60"
@@ -92,11 +110,36 @@
             @get="getValuePageSize"
           />
           <div class="pageIndex flex a-l-c">
-            <span style="margin-right: 20px"
-              ><b>1</b>-<b>100</b> bản ghi</span
+            <div style="margin-right: 40px">
+              <span
+                ><b>{{ startRecord }}</b
+                ><span style="margin-left: 3px; margin-right: 3px">-</span
+                ><b>{{ endRecord }}</b> bản ghi</span
+              >
+            </div>
+            <i
+              class="fas fa-chevron-left"
+              style="margin-right: 28px; color: #afb3c1; font-size: 13px"
+              title="Trước"
+            ></i>
+            <i
+              class="fas fa-chevron-right"
+              style="font-size: 13px"
+              title="Sau"
+            ></i>
+            <!-- <paginate
+              :page-count="numPages"
+              :margin-pages="1"
+              :container-class="'pagination'"
+              prev-text="Trước"
+              next-text="Sau"
+              :page-class="'page-item'"
+              :prev-link-class="'btn-pre'"
+              :next-link-class="'btn-next'"
+              :click-handler="clickPaging"
+              ref="pagination"
             >
-            <i class="fas fa-chevron-left" style="margin-right: 28px; color: #afb3c1;font-size:13px" title="Trước"></i>
-            <i class="fas fa-chevron-right" style="font-size:13px" title="Sau"></i>
+            </paginate> -->
           </div>
         </div>
       </div>
@@ -107,12 +150,12 @@
 
 <script>
 import TitleSalary from "../../components/base/BaseTitle.vue";
-// import BaseDropdown from "../../components/base/BaseDropdown.vue";
 import BaseDropdownSingle from "../../components/base/BaseDropdownSingle.vue";
 import BaseGrid from "../../components/base/BaseGrid.vue";
 import SalaryDetail from "../salary/SalaryDetail.vue";
-import { TREE_DATA_SOURCE_FILTER } from "../../js/common/data.js";
+import { TREE_DATA_SOURCE_FILTER, URL_API } from "../../js/common/data.js";
 import BaseDropdown from "../../components/base/BaseDropdown.vue";
+import axios from "axios";
 export default {
   name: "SalaryList",
   components: {
@@ -129,169 +172,10 @@ export default {
       isOpenModal: true,
       // data source treeview
       treeDataSource: TREE_DATA_SOURCE_FILTER,
-      // value status
-      valueStatus: null,
-      // value pageSize
-      valuePageSize: null,
       // count rowchecked
       countRowChecked: 0,
       // data source grid
-      dataSource: [
-        {
-          SalaryCompositionID: 0,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 1,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Long",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 2,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 3,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 4,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 5,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 6,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 7,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 8,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 9,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-        {
-          SalaryCompositionID: 10,
-          SalaryCompositionCode: "LUONG_SAN_PHAM",
-          SalaryCompositionName: "Lương sản phẩm",
-          OrganizationUnitName: "Công ty TNHH Kim Đồng",
-          SalaryCompositionTypeName: "Sản phẩm",
-          NatureName: "Khấu trừ",
-          Cost: "Tiền tệ",
-          StatusName: "Đang hoạt động",
-          TaxableName: "Chịu thuế",
-          ReduceName: "Không",
-          Quota: "100,000",
-          Description: "Là hệ số của từng sản phẩm"
-        },
-      ],
+      dataSource: [],
       // header grid
       headers: [
         {
@@ -373,9 +257,9 @@ export default {
         },
       ],
       statusData: [
-        { Text: "Tất cả trạng thái", Value: 1 },
-        { Text: "Đang theo dõi", Value: 2 },
-        { Text: "Ngừng theo dõi", Value: 3 },
+        { Text: "Tất cả trạng thái" },
+        { Text: "Đang theo dõi", Value: 0 },
+        { Text: "Ngừng theo dõi", Value: 1 },
       ],
       dataPage: [
         { Text: "15", Value: 15 },
@@ -383,9 +267,84 @@ export default {
         { Text: "50", Value: 50 },
         { Text: "100", Value: 100 },
       ],
+      // trang hiện tại
+      pageIndex: 1,
+      // value pageSize
+      pageSize: 15,
+      // value status
+      statusID: "",
+      // value dropdown filter
+      organizationUnitID: "",
+      // value input search
+      keysearch: "",
+      // tổng số bản ghi
+      amountPage: 0,
+      // tổng số trang
+      numPages: 0,
+      // bắt đầu từ bản ghi
+      startRecord: 0,
+      // kết thúc tại bản ghi
+      endRecord: 0,
     };
   },
+  created() {
+    // lấy ra toàn bộ danh sách
+    this.getSalaryCompositionByFilter(
+      this.pageIndex,
+      this.pageSize,
+      this.statusID,
+      this.organizationUnitID,
+      this.keysearch
+    );
+  },
   methods: {
+    /**----------------------------------------------------
+     * Lấy ra danh sách thành phần lương theo filter
+     * CreatedBy:LQNHAT(19/09/2021)
+     */
+    getSalaryCompositionByFilter() {
+      var self = this;
+      axios
+        .get(
+          URL_API.API_SALARYCOMPOSITION +
+            "/filter?pageIndex=" +
+            self.pageIndex +
+            "&pageSize=" +
+            self.pageSize +
+            "&statusID=" +
+            self.statusID +
+            "&organizationUnitID=" +
+            self.organizationUnitID +
+            "&keysearch=" +
+            self.keysearch
+        )
+        .then((res) => {
+          // lấy ra data
+          self.dataSource = res.data.Data;
+          // lấy ra tổng số bản ghi
+          self.amountPage = res.data.TotalRecord;
+          // lấy ra số lượng trang
+          self.numPages = res.data.TotalPage;
+          // set value startRecord, endRecord
+          self.startRecord = (self.pageIndex - 1) * self.pageSize + 1;
+          self.endRecord =
+            self.amountPage < self.pageSize * self.pageIndex
+              ? self.amountPage
+              : self.pageSize;
+        });
+    },
+
+    clickPaging(pageNum) {
+      this.pageIndex = pageNum;
+      this.getSalaryCompositionByFilter(
+        this.pageIndex,
+        this.pageSize,
+        this.statusID,
+        this.organizationUnitID,
+        this.keysearch
+      );
+    },
+
     /**------------------------------------------------
      * Bắt sự kiện mở form chi tiết
      * CreatedBy: LQNHAT(14/09/2021)
@@ -407,8 +366,8 @@ export default {
      * CreatedBy : LQNHAT(14/09/2021)
      */
     getValueStatus(value) {
-      this.valueStatus = value;
-      console.log(this.valueStatus);
+      this.statusID = value;
+      console.log(this.statusID);
     },
 
     /**------------------------------------
@@ -416,8 +375,15 @@ export default {
      * CreatedBy: LQNHAT(16/09/2021)
      */
     getValuePageSize(value) {
-      this.valuePageSize = value;
-      console.log(this.valuePageSize);
+      this.pageSize = value;
+      console.log("pageSize: " + this.pageSize);
+      this.getSalaryCompositionByFilter(
+        this.pageIndex,
+        this.pageSize,
+        this.statusID,
+        this.organizationUnitID,
+        this.keysearch
+      );
     },
 
     /**---------------------------------------------------------
@@ -434,6 +400,15 @@ export default {
      */
     uncheckAll() {
       this.$refs.baseGrid.uncheckAllRow();
+    },
+
+    /**
+     * Hàm format lương trên table
+     * CreateBy:LQNhat(17/09/2021)
+     */
+    formatPrice(value) {
+      let val = (value / 1).toFixed(0).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
   },
 };

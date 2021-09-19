@@ -1,3 +1,7 @@
+export const URL_API = {
+  API_SALARYCOMPOSITION : "https://localhost:44307/api/v1/SalaryCompositions",
+}
+
 export const TYPE = [
     {TypeName: "Thông tin nhân viên", TypeID: 1},
     {TypeName: "Chấm công", TypeID: 2},

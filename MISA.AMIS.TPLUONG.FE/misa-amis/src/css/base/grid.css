@@ -237,3 +237,9 @@
     border: none  !important;
     border-radius: none !important;
 }
+
+/* ẩn dòng cuối cùng */
+.dx-freespace-row
+{
+  display: none;
+}
