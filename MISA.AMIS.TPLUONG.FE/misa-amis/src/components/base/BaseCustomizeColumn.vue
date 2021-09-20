@@ -20,14 +20,16 @@
         <draggable v-model="listHeader">
           <transition-group>
             <div v-for="element in listHeader" :key="element.DataField">
-              <div class="item-column relative flex a-l-c">
-                <!-- <div class="icon-checkbox-column-default"></div> -->
+              <div
+                class="item-column relative flex a-l-c"
+                @click="toggleCheckbox(element)"
+              >
                 <div
+                  class="icon-checkbox-filter-default"
                   :class="{
-                    'icon-checkbox-column-default': showIconDefault,
-                    'icon-checkboc-column-checked': !showIconDefault,
+                    'icon-checkbox-filter-default': !element.Checked,
+                    'icon-checkboc-filter-checked': element.Checked,
                   }"
-                  @click="toggleIconCheckbox"
                 ></div>
                 <div class="text-checkbox-column">{{ element.Caption }}</div>
                 <div class="box-icon-draggable">
@@ -69,8 +71,8 @@ export default {
      * Ẩn hiện icon checkbox
      * CreatedBy: LQNHAT(20/09/2021)
      */
-    toggleIconCheckbox() {
-      this.showIconDefault = !this.showIconDefault;
+    toggleCheckbox(element) {
+      element.Checked = !element.Checked;
     },
 
     /**----------------------------------------------------------------------

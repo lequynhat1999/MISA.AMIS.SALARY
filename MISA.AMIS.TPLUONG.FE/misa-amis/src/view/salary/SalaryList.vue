@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="wrapper-content flex">
-      <div class="wrapper-content-left" :class="{'w-78' : !hiddenPopupFilter}">
+      <div class="wrapper-content-left" :class="{ 'w-78': !hiddenPopupFilter }">
         <div class="toolbar-content flex relative" v-if="countRowChecked == 0">
           <div class="box-search relative">
             <input
@@ -44,6 +44,7 @@
                   ? treeDataSource[7].OrganizationUnitID
                   : null
               "
+              @getValueOrganizationUnit="getValueOrganizationUnit"
             />
             <div class="box-filter-toolbar" @click="openPopupFilter">
               <div class="icon-filter-toolbar"></div>
@@ -142,9 +143,14 @@
           </div>
         </div>
       </div>
-      <div class="wrapper-content-right" :class="{'w-22' : !hiddenPopupFilter}">
+      <div
+        class="wrapper-content-right"
+        :class="{ 'w-22': !hiddenPopupFilter }"
+      >
         <BaseFilter
           :hiddenPopupFilter="hiddenPopupFilter"
+          :headers="headers"
+          @closePopupFilter="closePopupFilter"
         />
       </div>
     </div>
@@ -181,7 +187,7 @@ export default {
     SalaryDetail,
     BaseDropdown,
     BaseCustomizeColumn,
-    BaseFilter
+    BaseFilter,
   },
   data() {
     return {
@@ -201,6 +207,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: true,
+          Checked: false,
         },
         {
           DataField: "SalaryCompositionName",
@@ -208,6 +215,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: true,
+          Checked: false,
         },
         {
           DataField: "SalaryCompositionTypeName",
@@ -215,6 +223,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: false,
+          Checked: false,
         },
         {
           DataField: "NatureName",
@@ -222,6 +231,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: false,
+          Checked: false,
         },
         {
           DataField: "OrganizationUnitName",
@@ -229,6 +239,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: false,
+          Checked: false,
         },
         {
           DataField: "TaxableName",
@@ -236,6 +247,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: false,
+          Checked: false,
         },
         {
           DataField: "ReduceName",
@@ -243,6 +255,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: false,
+          Checked: false,
         },
         {
           DataField: "Quota",
@@ -250,6 +263,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: false,
+          Checked: false,
         },
         {
           DataField: "Cost",
@@ -257,6 +271,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: false,
+          Checked: false,
         },
         {
           DataField: "Description",
@@ -264,6 +279,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: false,
+          Checked: false,
         },
         {
           DataField: "StatusName",
@@ -271,6 +287,7 @@ export default {
           DataType: "text",
           Alignment: "left",
           Fixed: false,
+          Checked: false,
         },
       ],
       statusData: [
@@ -399,8 +416,6 @@ export default {
       var self = this;
       axios.get(URL_API.API_ORGANIZATIONUNIT).then((res) => {
         self.treeDataSource = res.data;
-        console.log(self.treeDataSource);
-        console.log("value: " + self.treeDataSource[0].OrganizationUnitID);
       });
     },
 
@@ -457,9 +472,16 @@ export default {
      * Mở popup filter
      * CreatedBy:LQNHAT(20/09/2021)
      */
-    openPopupFilter()
-    {
+    openPopupFilter() {
       this.hiddenPopupFilter = !this.hiddenPopupFilter;
+    },
+
+    /**------------------------------------------------------------------
+     * Đóng popup filter
+     * CreatedBy:LQNHAT(20/09/2021)
+     */
+    closePopupFilter() {
+      this.hiddenPopupFilter = true;
     },
 
     /**-----------------------------------
@@ -468,7 +490,6 @@ export default {
      */
     getValueStatus(value) {
       this.statusID = value;
-      console.log("StatusID: " + this.statusID);
       this.getSalaryCompositionByFilter(
         this.pageIndex,
         this.pageSize,
@@ -484,7 +505,26 @@ export default {
      */
     getValuePageSize(value) {
       this.pageSize = value;
-      console.log("pageSize: " + this.pageSize);
+      this.$refs.pagination.selectFirstPage();
+      this.getSalaryCompositionByFilter(
+        this.pageIndex,
+        this.pageSize,
+        this.statusID,
+        this.organizationUnitID,
+        this.keysearch
+      );
+    },
+
+    /**---------------------------------------------
+     * Set value cho OrganizationUnit
+     * CreatedBy:LQNHAT(20/09/2021)
+     */
+    getValueOrganizationUnit(value) {
+      if(value == null)
+      {
+        value = "";
+      }
+      this.organizationUnitID = value;
       this.getSalaryCompositionByFilter(
         this.pageIndex,
         this.pageSize,

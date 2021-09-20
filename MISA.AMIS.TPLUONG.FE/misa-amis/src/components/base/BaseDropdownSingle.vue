@@ -13,6 +13,7 @@
       <template #content="{}">
         <DxTreeView
           :searchEnabled="true"
+          :value="treeBoxValue"
           :ref="treeViewRefName"
           noDataText="Không có dữ liệu"
           :data-source="treeDataSource"
@@ -52,7 +53,7 @@ export default {
   data() {
     return {
       treeBoxValue: null,
-      treeViewRefName: "tree-view",
+      treeViewRefName: "treeView",
     };
   },
   created() {
@@ -64,7 +65,8 @@ export default {
      * Sự kiện được kích hoạt khi value thay đổi
      * CreatedBy: LQNHAT(15/09/2021)
      */
-    syncTreeViewSelection() {
+    syncTreeViewSelection(e) {
+      this.$emit("getValueOrganizationUnit", e.value);
       if (!this.$refs[this.textBoxRefName]) return;
       if (!this.treeBoxValue) {
         this.$refs[this.textBoxRefName].instance.unselectAll();
