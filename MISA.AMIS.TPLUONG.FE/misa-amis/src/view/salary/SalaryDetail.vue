@@ -38,6 +38,7 @@
               >
                 <input
                   type="text"
+                  ref="salaryCompositionName"
                   v-model="employee.EmployeeCode"
                   class="m-input input-text-form"
                   :class="{
@@ -120,7 +121,7 @@
                   title="Khi tính giá trị của thành phần lương này, nếu số tiền vượt quá định mức thì chương trình sẽ tự động lấy mức tối đa theo định mức đã thiết lập"
                 ></div>
               </div>
-              <money type="text" class="m-input input-text-form" style="text-align: right" value="" v-bind="money"></money>
+              <money type="text" class="m-input input-text-form" style="text-align: right" value= "" v-bind="money"></money>
             </div>
             <div class="input-form flex">
               <div class="text-input">
@@ -189,7 +190,7 @@ export default {
   props: ["isOpenModal"],
   data() {
     return {
-      employee: { EmployeeCode: "123", Test: "ABC" },
+      employee: { EmployeeCode: "", Test: "ABC" },
       // v-money
       money: {
         decimal: ",",
@@ -213,9 +214,19 @@ export default {
         { TaxName: 'Chịu thuế'},
         { TaxName: 'Không chịu thuế'},
       ],
+      // mode để check trạng thái form
+      mode: 0,
     };
   },
   methods: {
+    show(mode)
+    {
+      this.mode = mode;
+      if(mode == 0)
+      {
+        this.$nextTick(() => this.$refs.salaryCompositionName.focus());
+      }
+    },
     /**------------------------------------------------------------------------------
      * Sự kiện click nút <-
      * CreatedBy: LQNHAT(15/09/2021)
@@ -223,6 +234,7 @@ export default {
     closeFormDetail() {
       // close form
       this.$emit("closeForm");
+      this.$refs.form_salary.reset();
     },
     /**---------------------------------------------------------
      * Gán id để hiển thị label

@@ -16,6 +16,7 @@
     "vee-validate": "^3.4.13",
     "vue": "^2.6.11",
     "vue-axios": "^3.3.6",
+    "vue-pagination-2": "^3.0.91",
     "vue-toastification": "^1.7.11",
     "vuejs-paginate": "^2.1.0"
   },

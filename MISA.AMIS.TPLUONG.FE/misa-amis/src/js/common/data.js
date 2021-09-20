@@ -1,5 +1,6 @@
 export const URL_API = {
   API_SALARYCOMPOSITION : "https://localhost:44307/api/v1/SalaryCompositions",
+  API_ORGANIZATIONUNIT: "https://localhost:44307/api/v1/OrganizationUnits",
 }
 
 export const TYPE = [

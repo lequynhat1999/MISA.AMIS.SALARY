@@ -16,6 +16,7 @@
           class="m-input input-search"
           placeholder="Tìm kiếm"
           v-model="keysearch"
+          @keyup.enter="searchByKeysearch"
         />
         <div class="icon-search"></div>
       </div>
@@ -36,7 +37,7 @@
           :valueExprProp="'OrganizationUnitID'"
           :displayExprProp="'OrganizationUnitName'"
           :parentIdExprProp="'ParentID'"
-          :valueDefault="treeDataSource[0].OrganizationUnitID"
+          :valueDefault="treeDataSource && treeDataSource.length > 0 ? treeDataSource[7].OrganizationUnitID : null"
         />
         <div class="box-filter-toolbar">
           <div class="icon-filter-toolbar"></div>
@@ -110,41 +111,33 @@
             @get="getValuePageSize"
           />
           <div class="pageIndex flex a-l-c">
-            <div style="margin-right: 40px">
+            <div style="margin-right: 70px">
               <span
                 ><b>{{ startRecord }}</b
                 ><span style="margin-left: 3px; margin-right: 3px">-</span
                 ><b>{{ endRecord }}</b> bản ghi</span
               >
             </div>
-            <i
-              class="fas fa-chevron-left"
-              style="margin-right: 28px; color: #afb3c1; font-size: 13px"
-              title="Trước"
-            ></i>
-            <i
-              class="fas fa-chevron-right"
-              style="font-size: 13px"
-              title="Sau"
-            ></i>
-            <!-- <paginate
+            <paginate
               :page-count="numPages"
               :margin-pages="1"
               :container-class="'pagination'"
-              prev-text="Trước"
-              next-text="Sau"
               :page-class="'page-item'"
               :prev-link-class="'btn-pre'"
               :next-link-class="'btn-next'"
               :click-handler="clickPaging"
               ref="pagination"
             >
-            </paginate> -->
+            </paginate>
           </div>
         </div>
       </div>
     </div>
-    <SalaryDetail :isOpenModal="isOpenModal" @closeForm="closeForm" />
+    <SalaryDetail
+      ref="modeForm"
+      :isOpenModal="isOpenModal"
+      @closeForm="closeForm"
+    />
   </div>
 </template>
 
@@ -153,7 +146,7 @@ import TitleSalary from "../../components/base/BaseTitle.vue";
 import BaseDropdownSingle from "../../components/base/BaseDropdownSingle.vue";
 import BaseGrid from "../../components/base/BaseGrid.vue";
 import SalaryDetail from "../salary/SalaryDetail.vue";
-import { TREE_DATA_SOURCE_FILTER, URL_API } from "../../js/common/data.js";
+import { URL_API } from "../../js/common/data.js";
 import BaseDropdown from "../../components/base/BaseDropdown.vue";
 import axios from "axios";
 export default {
@@ -171,7 +164,7 @@ export default {
       // mở modal
       isOpenModal: true,
       // data source treeview
-      treeDataSource: TREE_DATA_SOURCE_FILTER,
+      treeDataSource: [],
       // count rowchecked
       countRowChecked: 0,
       // data source grid
@@ -257,7 +250,7 @@ export default {
         },
       ],
       statusData: [
-        { Text: "Tất cả trạng thái" },
+        { Text: "Tất cả trạng thái", Value: "" },
         { Text: "Đang theo dõi", Value: 0 },
         { Text: "Ngừng theo dõi", Value: 1 },
       ],
@@ -285,6 +278,9 @@ export default {
       startRecord: 0,
       // kết thúc tại bản ghi
       endRecord: 0,
+      page: 1,
+      // mode form detail : 0 là add, 1 là edit
+      modeFormDetail: 0,
     };
   },
   created() {
@@ -296,6 +292,7 @@ export default {
       this.organizationUnitID,
       this.keysearch
     );
+    this.getOrganizationUnits();
   },
   methods: {
     /**----------------------------------------------------
@@ -330,10 +327,54 @@ export default {
           self.endRecord =
             self.amountPage < self.pageSize * self.pageIndex
               ? self.amountPage
-              : self.pageSize;
+              : self.pageSize * self.pageIndex;
         });
     },
 
+    reloadTableAndFilter() {
+      var self = this;
+      axios
+        .get(
+          URL_API.API_SALARYCOMPOSITION +
+            "/filter?pageIndex=" +
+            self.pageIndex +
+            "&pageSize=" +
+            self.pageSize
+        )
+        .then((res) => {
+          // lấy ra data
+          self.dataSource = res.data.Data;
+          // lấy ra tổng số bản ghi
+          self.amountPage = res.data.TotalRecord;
+          // lấy ra số lượng trang
+          self.numPages = res.data.TotalPage;
+          // set value startRecord, endRecord
+          self.startRecord = (self.pageIndex - 1) * self.pageSize + 1;
+          self.endRecord =
+            self.amountPage < self.pageSize * self.pageIndex
+              ? self.amountPage
+              : self.pageSize * self.pageIndex;
+          self.$refs.pagination.selectFirstPage();
+        });
+    },
+
+    /**------------------------------------------------------------------------
+     * Lấy ra danh sách đơn vị
+     * CreatedBy:LQNHAT(20/09/2021)
+     */
+    getOrganizationUnits() {
+      var self = this;
+      axios.get(URL_API.API_ORGANIZATIONUNIT).then((res) => {
+        self.treeDataSource = res.data;
+        console.log(self.treeDataSource);
+        console.log("value: " + self.treeDataSource[0].OrganizationUnitID);
+      });
+    },
+
+    /**-------------------------------------------------------------------
+     * Bắt sự kiện chuyển trang
+     * CreatedBy:LQNHAT(20/09/2021)
+     */
     clickPaging(pageNum) {
       this.pageIndex = pageNum;
       this.getSalaryCompositionByFilter(
@@ -351,6 +392,8 @@ export default {
      */
     openModal() {
       this.isOpenModal = !this.isOpenModal;
+      this.modeFormDetail = 0;
+      this.$refs.modeForm.show(this.modeFormDetail);
     },
 
     /**---------------------------------------------------------
@@ -367,7 +410,14 @@ export default {
      */
     getValueStatus(value) {
       this.statusID = value;
-      console.log(this.statusID);
+      console.log("StatusID: " + this.statusID);
+      this.getSalaryCompositionByFilter(
+        this.pageIndex,
+        this.pageSize,
+        this.statusID,
+        this.organizationUnitID,
+        this.keysearch
+      );
     },
 
     /**------------------------------------
@@ -394,6 +444,25 @@ export default {
       this.countRowChecked = selectedRowsData.length;
     },
 
+    /**-----------------------------------------------------------
+     * Hàm bắt sự kiện khi có text thì search theo text
+     * CreateBy: LQNhat(20/09/2021)
+     */
+    searchByKeysearch() {
+      if (this.keysearch == "") {
+        this.reloadTableAndFilter();
+      } else {
+        this.pageIndex = 1;
+        this.getSalaryCompositionByFilter(
+          this.pageIndex,
+          this.pageSize,
+          this.statusID,
+          this.organizationUnitID,
+          this.keysearch
+        );
+      }
+    },
+
     /*---------------------------------------------------------
      * Bắt sự kiện bỏ chọn
      * CreatedBy:LQNHAT(17/09/2021)
@@ -415,4 +484,7 @@ export default {
 </script>
 
 <style>
+[v-cloak] {
+  display: none;
+}
 </style>

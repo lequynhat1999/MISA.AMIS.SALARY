@@ -51,9 +51,10 @@
     font-weight: 900;
 }
 
-.pagination .disabled
+.pagination .disabled .btn-pre,.pagination .disabled .btn-next
 {
-    color:#a6a6a6;
+    color:#afb3c1;
+    background-color: #afb3c1;
 }
 
 .pagination li 
@@ -66,13 +67,14 @@
     padding: 0 8px;
 }
 
-/* .btn-pre
+.btn-pre
 {
     -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
-    -webkit-mask-position: -156px -5px;
+    -webkit-mask-position: -163px -5px;
     -webkit-mask-repeat: no-repeat;
     font-size: 10px;
-    background-color: #333 !important;
+    background-color: black ;
+    color: black;
     position: absolute;
     top: 1px;
     left: -55px;
@@ -84,11 +86,12 @@
     -webkit-mask-position: -135px -5px;
     -webkit-mask-repeat: no-repeat;
     font-size: 13px;
-    background-color: #333 !important;
+    background-color: black ;
+    color: black;
     position: absolute;
     top: 1px;
     right: 0px;
-} */
+}
 
 .page-item
 {

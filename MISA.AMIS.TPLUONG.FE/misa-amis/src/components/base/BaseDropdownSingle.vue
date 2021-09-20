@@ -19,6 +19,7 @@
           :select-by-click="true"
           data-structure="plain"
           :key-expr="valueExprProp"
+          root-value="00000000-0000-0000-0000-000000000000"
           :parent-id-expr="parentIdExprProp"
           selection-mode="single"
           :display-expr="displayExprProp"
