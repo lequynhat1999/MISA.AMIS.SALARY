@@ -90,24 +90,32 @@
 .amount
 {
   position: absolute;
-  bottom: 45px;
-  left: 40px;
+  bottom: 15px;
+  left: -3px;
+}
+
+.box-paging
+{
+  margin-left: 24px;
+  margin-right: 24px;
+  background-color: #f6f6f6;
+  width: calc(100% - 68px);
+  height: 60px;
+  border-top: 1px solid #e0e0e0;
 }
 
 .paging
 {
-  height: 80px;
+  height: 60px;
   width: 100%;
-  background-color: #f1f2f1;
-  position: absolute;
-  bottom: 0;
+  background-color: #f6f6f6;
 }
 
-.pagination
+.box-pagination
 {
   position: absolute;
   right: 24px;
-  top: 10px;
+  top: 15px;
 }
 
 .pageIndex
@@ -131,4 +139,29 @@
 .box-btn-unfollow-all
 {
   margin-left: 15px;
+}
+
+.wrapper-content
+{
+  width: 100%;
+}
+
+.wrapper-content-left
+{
+  width: 100%;
+}
+
+.wrapper-content-right
+{
+  width: 0%;
+}
+
+.w-78
+{
+  width: 78% ;
+}
+
+.w-22
+{
+  width: 22%;
 }

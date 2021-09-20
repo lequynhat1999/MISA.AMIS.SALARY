@@ -1,0 +1,12 @@
+.box-filter
+{
+  width: 278px;
+  height: 480px;
+  background-color: red;
+  margin-right: 20px;
+}
+
+.hidden-filter
+{
+    display: none;
+}

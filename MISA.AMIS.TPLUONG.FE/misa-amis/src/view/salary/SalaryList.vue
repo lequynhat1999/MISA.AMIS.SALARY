@@ -9,134 +9,154 @@
         </button>
       </div>
     </div>
-    <div class="toolbar-content flex relative" v-if="countRowChecked == 0">
-      <div class="box-search relative">
-        <input
-          type="text"
-          class="m-input input-search"
-          placeholder="Tìm kiếm"
-          v-model="keysearch"
-          @keyup.enter="searchByKeysearch"
-        />
-        <div class="icon-search"></div>
-      </div>
-      <div class="toolbar-right flex">
-        <BaseDropdown
-          style="margin-right: 20px"
-          :data="statusData"
-          :widthDropdown="120"
-          :widthDropdownData="230"
-          :topDropdownData="42"
-          :rightDropdownData="0"
-          @get="getValueStatus"
-        />
-        <BaseDropdownSingle
-          style="margin-right: 10px; width: 316px"
-          :treeDataSource="treeDataSource"
-          :placeholderProp="'Tất cả đơn vị'"
-          :valueExprProp="'OrganizationUnitID'"
-          :displayExprProp="'OrganizationUnitName'"
-          :parentIdExprProp="'ParentID'"
-          :valueDefault="treeDataSource && treeDataSource.length > 0 ? treeDataSource[7].OrganizationUnitID : null"
-        />
-        <div class="box-filter-toolbar">
-          <div class="icon-filter-toolbar"></div>
+    <div class="wrapper-content flex">
+      <div class="wrapper-content-left" :class="{'w-78' : !hiddenPopupFilter}">
+        <div class="toolbar-content flex relative" v-if="countRowChecked == 0">
+          <div class="box-search relative">
+            <input
+              type="text"
+              class="m-input input-search"
+              placeholder="Tìm kiếm"
+              v-model="keysearch"
+              @keyup.enter="searchByKeysearch"
+            />
+            <div class="icon-search"></div>
+          </div>
+          <div class="toolbar-right flex">
+            <BaseDropdown
+              style="margin-right: 20px"
+              :data="statusData"
+              :widthDropdown="120"
+              :widthDropdownData="230"
+              :topDropdownData="42"
+              :rightDropdownData="0"
+              @get="getValueStatus"
+            />
+            <BaseDropdownSingle
+              style="margin-right: 10px; width: 316px"
+              :treeDataSource="treeDataSource"
+              :placeholderProp="'Tất cả đơn vị'"
+              :valueExprProp="'OrganizationUnitID'"
+              :displayExprProp="'OrganizationUnitName'"
+              :parentIdExprProp="'ParentID'"
+              :valueDefault="
+                treeDataSource && treeDataSource.length > 0
+                  ? treeDataSource[7].OrganizationUnitID
+                  : null
+              "
+            />
+            <div class="box-filter-toolbar" @click="openPopupFilter">
+              <div class="icon-filter-toolbar"></div>
+            </div>
+            <div class="box-setting-toolbar" @click="openCustomizeColumn">
+              <div class="icon-setting-toolbar"></div>
+            </div>
+          </div>
         </div>
-        <div class="box-setting-toolbar">
-          <div class="icon-setting-toolbar"></div>
-        </div>
-      </div>
-    </div>
-    <div class="toolbar-content flex relative" v-else>
-      <span class="text-toolbar"
-        >Đã chọn <b>{{ countRowChecked }}</b></span
-      >
-      <span class="uncheck-all" @click="uncheckAll">Bỏ chọn</span>
-      <div class="box-btn-unfollow-all">
-        <button class="m-btn btn-unfollow-all">
-          <div class="icon-unfollow"></div>
-          <div class="text-btn">Ngừng theo dõi</div>
-        </button>
-      </div>
-      <div class="box-btn-deletes">
-        <button class="m-btn btn-deletes">
-          <div class="icon-deletes"></div>
-          <div class="text-btn">Xoá</div>
-        </button>
-      </div>
-    </div>
-    <div class="table-salary">
-      <BaseGrid
-        ref="baseGrid"
-        :headers="headers"
-        :dataSource="dataSource"
-        @getRowChecked="getRowChecked"
-      >
-        <template #StatusName="{ data }">
-          <div
-            class="box-status flex a-l-c"
-            v-if="data.StatusName == 'Đang theo dõi'"
+        <div class="toolbar-content flex relative" v-else>
+          <span class="text-toolbar"
+            >Đã chọn <b>{{ countRowChecked }}</b></span
           >
-            <div class="icon-status"></div>
-            <div class="text-status">{{ data.StatusName }}</div>
+          <span class="uncheck-all" @click="uncheckAll">Bỏ chọn</span>
+          <div class="box-btn-unfollow-all">
+            <button class="m-btn btn-unfollow-all">
+              <div class="icon-unfollow"></div>
+              <div class="text-btn">Ngừng theo dõi</div>
+            </button>
           </div>
-          <div class="box-status flex a-l-c" v-else>
-            <div
-              class="icon-status"
-              style="background-color: rgb(255, 153, 0)"
-            ></div>
-            <div class="text-status" style="color: rgb(255, 153, 0)">
-              {{ data.StatusName }}
-            </div>
+          <div class="box-btn-deletes">
+            <button class="m-btn btn-deletes">
+              <div class="icon-deletes"></div>
+              <div class="text-btn">Xoá</div>
+            </button>
           </div>
-        </template>
-        <template #Quota="{ data }">
-          {{ formatPrice(data.Quota) }}
-        </template>
-      </BaseGrid>
-
-      <div class="paging">
-        <div class="amount">
-          Tổng số bản ghi: <b>{{ amountPage }}</b>
         </div>
-        <div class="pagination flex a-l-c">
-          <span style="margin-right: 20px">Số bản ghi/trang</span>
-          <BaseDropdown
-            style="margin-right: 30px"
-            :data="dataPage"
-            :widthDropdown="60"
-            :widthDropdownData="60"
-            :topDropdownData="-150"
-            :rightDropdownData="10"
-            @get="getValuePageSize"
-          />
-          <div class="pageIndex flex a-l-c">
-            <div style="margin-right: 70px">
-              <span
-                ><b>{{ startRecord }}</b
-                ><span style="margin-left: 3px; margin-right: 3px">-</span
-                ><b>{{ endRecord }}</b> bản ghi</span
+        <div class="table-salary">
+          <BaseGrid
+            ref="baseGrid"
+            :headers="headers"
+            :dataSource="dataSource"
+            @getRowChecked="getRowChecked"
+          >
+            <template #StatusName="{ data }">
+              <div
+                class="box-status flex a-l-c"
+                v-if="data.StatusName == 'Đang theo dõi'"
               >
+                <div class="icon-status"></div>
+                <div class="text-status">{{ data.StatusName }}</div>
+              </div>
+              <div class="box-status flex a-l-c" v-else>
+                <div
+                  class="icon-status"
+                  style="background-color: rgb(255, 153, 0)"
+                ></div>
+                <div class="text-status" style="color: rgb(255, 153, 0)">
+                  {{ data.StatusName }}
+                </div>
+              </div>
+            </template>
+            <template #Quota="{ data }">
+              {{ formatPrice(data.Quota) }}
+            </template>
+          </BaseGrid>
+
+          <div class="box-paging">
+            <div class="paging">
+              <div class="amount">
+                Tổng số bản ghi: <b>{{ amountPage }}</b>
+              </div>
+              <div class="box-pagination flex a-l-c">
+                <span style="margin-right: 20px">Số bản ghi/trang</span>
+                <BaseDropdown
+                  style="margin-right: 30px"
+                  :data="dataPage"
+                  :widthDropdown="60"
+                  :widthDropdownData="60"
+                  :topDropdownData="-150"
+                  :rightDropdownData="10"
+                  @get="getValuePageSize"
+                />
+                <div class="pageIndex flex a-l-c">
+                  <div style="margin-right: 70px">
+                    <span
+                      ><b>{{ startRecord }}</b
+                      ><span style="margin-left: 3px; margin-right: 3px">-</span
+                      ><b>{{ endRecord }}</b> bản ghi</span
+                    >
+                  </div>
+                  <paginate
+                    :page-count="numPages"
+                    :margin-pages="1"
+                    :container-class="'pagination'"
+                    :page-class="'page-item'"
+                    :prev-link-class="'btn-pre'"
+                    :next-link-class="'btn-next'"
+                    :click-handler="clickPaging"
+                    ref="pagination"
+                  >
+                  </paginate>
+                </div>
+              </div>
             </div>
-            <paginate
-              :page-count="numPages"
-              :margin-pages="1"
-              :container-class="'pagination'"
-              :page-class="'page-item'"
-              :prev-link-class="'btn-pre'"
-              :next-link-class="'btn-next'"
-              :click-handler="clickPaging"
-              ref="pagination"
-            >
-            </paginate>
           </div>
         </div>
+      </div>
+      <div class="wrapper-content-right" :class="{'w-22' : !hiddenPopupFilter}">
+        <BaseFilter
+          :hiddenPopupFilter="hiddenPopupFilter"
+        />
       </div>
     </div>
     <SalaryDetail
       ref="modeForm"
       :isOpenModal="isOpenModal"
       @closeForm="closeForm"
+    />
+    <BaseCustomizeColumn
+      :hiddenCustomizeColumn="hiddenCustomizeColumn"
+      :headers="headers"
+      @closeCustomizeColumn="closeCustomizeColumn"
     />
   </div>
 </template>
@@ -148,6 +168,8 @@ import BaseGrid from "../../components/base/BaseGrid.vue";
 import SalaryDetail from "../salary/SalaryDetail.vue";
 import { URL_API } from "../../js/common/data.js";
 import BaseDropdown from "../../components/base/BaseDropdown.vue";
+import BaseCustomizeColumn from "../../components/base/BaseCustomizeColumn.vue";
+import BaseFilter from "../../components/base/BaseFilter.vue";
 import axios from "axios";
 export default {
   name: "SalaryList",
@@ -158,6 +180,8 @@ export default {
     BaseGrid,
     SalaryDetail,
     BaseDropdown,
+    BaseCustomizeColumn,
+    BaseFilter
   },
   data() {
     return {
@@ -281,10 +305,14 @@ export default {
       page: 1,
       // mode form detail : 0 là add, 1 là edit
       modeFormDetail: 0,
+      // ẩn tùy chỉnh cột
+      hiddenCustomizeColumn: true,
+      // ẩn popup filter
+      hiddenPopupFilter: true,
     };
   },
   created() {
-    // lấy ra toàn bộ danh sách
+    // lấy ra toàn bộ danh sách thành phần lương
     this.getSalaryCompositionByFilter(
       this.pageIndex,
       this.pageSize,
@@ -292,6 +320,7 @@ export default {
       this.organizationUnitID,
       this.keysearch
     );
+    // lấy ra danh sách đơn vị
     this.getOrganizationUnits();
   },
   methods: {
@@ -331,6 +360,10 @@ export default {
         });
     },
 
+    /**--------------------------------------------------------------------
+     * Reload lại data của bảng
+     * CreatedBy:LQNHAT(20/09/2021)
+     */
     reloadTableAndFilter() {
       var self = this;
       axios
@@ -402,6 +435,31 @@ export default {
      */
     closeForm() {
       this.isOpenModal = true;
+    },
+
+    /**----------------------------------------------------------
+     * Mở form tùy chỉnh cột
+     * CreatedBy:LQNHAT(20/09/2021)
+     */
+    openCustomizeColumn() {
+      this.hiddenCustomizeColumn = !this.hiddenCustomizeColumn;
+    },
+
+    /**----------------------------------------------------------------
+     * Đóng form tùy chỉnh cột
+     * CreatedBy:LQNHAT(20/09/2021)
+     */
+    closeCustomizeColumn() {
+      // this.hiddenCustomizeColumn = true;
+    },
+
+    /**----------------------------------------------------------------
+     * Mở popup filter
+     * CreatedBy:LQNHAT(20/09/2021)
+     */
+    openPopupFilter()
+    {
+      this.hiddenPopupFilter = !this.hiddenPopupFilter;
     },
 
     /**-----------------------------------
@@ -484,7 +542,4 @@ export default {
 </script>
 
 <style>
-[v-cloak] {
-  display: none;
-}
 </style>

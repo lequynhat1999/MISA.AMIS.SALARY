@@ -31,6 +31,8 @@ export default {
 @import "./css/salary/detail.css";
 @import "./css/base/margin.css";
 @import "./css/base/align-item.css";
+@import "./css/base/customize-column.css";
+@import "./css/base/filter.css";
 * {
   margin: 0;
   padding: 0;
