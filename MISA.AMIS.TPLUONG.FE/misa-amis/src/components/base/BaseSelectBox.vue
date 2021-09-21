@@ -1,7 +1,7 @@
 <template>
   <div class="dx-field-value">
     <DxSelectBox class="scroll-content"
-      :data-source="data"
+      :data-source="dataSource"
       placeholder=""
       :disabled= disabledProp
       :value="valueDefault"
@@ -19,7 +19,6 @@
 
 <script>
 import DxSelectBox from "devextreme-vue/select-box";
-import ArrayStore from "devextreme/data/array_store";
 export default {
   components: {
     DxSelectBox,
@@ -32,10 +31,6 @@ export default {
       searchModeOption: 'contains',
       showDataBeforeSearchOption: true,
       minSearchLengthOption: 0,
-      data: new ArrayStore({
-        data: items,
-        key: 'valueExprProp'
-      }),
     };
   },
   methods: {
@@ -45,7 +40,8 @@ export default {
      */
     valueChanged(e)
     {
-      this.$emit("getValueItem",e.value);
+      // this.$emit("getValueItem",e.value);
+      this.$emit("input",e.value);
     }
   },
 };

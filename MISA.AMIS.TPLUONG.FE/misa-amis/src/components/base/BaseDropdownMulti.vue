@@ -14,6 +14,7 @@
         <DxTreeView
           :searchEnabled="true"
           :value="treeBoxValue"
+          root-value="00000000-0000-0000-0000-000000000000"
           placeholder=" Tìm kiếm"
           noDataText="Không có dữ liệu"
           ref="treeView"
@@ -34,7 +35,6 @@
       <!-- <template #list-item="{data}">
         <div class="dx-field-value">
           <DxTextBox :value="data" style="height:3px !important"/>
-          a
 
         </div>
       </template> -->
@@ -77,7 +77,7 @@ export default {
      * CreatedBy:LQNHAT(16/09/2021)
      */
     syncTreeViewSelection(e) {
-      console.log("value-changed: " + e.value);
+      // console.log("value-changed: " + e.value);
       let treeView =
         (e.component.selectItem && e.component) ||
         (this.$refs[this.treeViewName] &&
@@ -89,6 +89,8 @@ export default {
         } else {
           let values = e.value || this.treeBoxValue;
           for (let index = 0; index < values.length; index++) {
+            console.log("values: " + values[index]);
+            this.$emit("input", values[index]);
             treeView.selectItem(values[index]);
           }
         }
@@ -100,7 +102,6 @@ export default {
      * CreatedBy:LQNHAT(17/09/2021)
      */
     treeView_itemSelectionChanged(e) {
-      console.log(e);
       this.treeBoxValue = e.component.getSelectedNodeKeys();
     },
   },

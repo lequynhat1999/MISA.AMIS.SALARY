@@ -15,6 +15,7 @@
       :column-auto-width="true"
       :hover-state-enabled="true"
       @selection-changed="onSelectionChanged"
+      @row-dbl-click="onRowDblClick"
     >
       <DxSelection
         :select-all-mode="allMode"
@@ -124,6 +125,15 @@ export default {
     uncheckAllRow() {
       this.$refs.dxDataGrid.instance.deselectAll();
     },
+
+    /**---------------------------------------------------------
+     * Bắt sự kiện click vào row
+     * CreatedBy:LQNHAT(21/09/2021)
+     */
+    onRowDblClick(e)
+    {
+      this.$emit("onRowDblClick",e.data);
+    }
   },
 };
 </script>

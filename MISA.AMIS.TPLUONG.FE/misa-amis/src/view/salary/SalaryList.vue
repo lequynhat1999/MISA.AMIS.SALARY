@@ -78,6 +78,7 @@
             :headers="headers"
             :dataSource="dataSource"
             @getRowChecked="getRowChecked"
+            @onRowDblClick="rowDblClick"
           >
             <template #StatusName="{ data }">
               <div
@@ -157,6 +158,7 @@
     <SalaryDetail
       ref="modeForm"
       :isOpenModal="isOpenModal"
+      :treeDataSource="treeDataSource"
       @closeForm="closeForm"
     />
     <BaseCustomizeColumn
@@ -326,9 +328,11 @@ export default {
       hiddenCustomizeColumn: true,
       // ẩn popup filter
       hiddenPopupFilter: true,
+      // ID thành phần lương
+      salaryCompositionID: "",
     };
   },
-  created() {
+   created() {
     // lấy ra toàn bộ danh sách thành phần lương
     this.getSalaryCompositionByFilter(
       this.pageIndex,
@@ -337,8 +341,10 @@ export default {
       this.organizationUnitID,
       this.keysearch
     );
+  },
+  mounted() {
     // lấy ra danh sách đơn vị
-    this.getOrganizationUnits();
+     this.getOrganizationUnits();
   },
   methods: {
     /**----------------------------------------------------
@@ -442,6 +448,18 @@ export default {
       this.isOpenModal = !this.isOpenModal;
       this.modeFormDetail = 0;
       this.$refs.modeForm.show(this.modeFormDetail);
+    },
+
+    /**--------------------------------------------------------
+     * Bắt sự khi dblclick mở form sửa
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    rowDblClick(data)
+    {
+      this.salaryCompositionID = data.SalaryCompositionID;
+      this.isOpenModal = !this.isOpenModal;
+      this.modeFormDetail = 1;
+      this.$refs.modeForm.show(this.modeFormDetail, this.salaryCompositionID);
     },
 
     /**---------------------------------------------------------
