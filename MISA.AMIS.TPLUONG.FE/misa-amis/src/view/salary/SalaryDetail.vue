@@ -5,8 +5,12 @@
         <div class="box-icon-back" title="Quay lại" @click="closeFormDetail">
           <div class="icon-back"></div>
         </div>
-        <div class="title-form" v-if="mode == 0"><span>Thêm thành phần</span></div>
-        <div class="title-form" v-else><span>{{salaryComposition.SalaryCompositionName}}</span></div>
+        <div class="title-form" v-if="mode == 0">
+          <span>Thêm thành phần</span>
+        </div>
+        <div class="title-form" v-else>
+          <span>{{ salaryComposition.SalaryCompositionName }}</span>
+        </div>
         <div class="box-btn-header flex" v-if="mode == 0">
           <div class="btn-cancel-form m-r-8">
             <button class="m-btn-white">
@@ -18,20 +22,37 @@
               <div class="text-btn">Lưu và thêm</div>
             </button>
           </div>
-          <div class="btn-add-form">
+          <div class="btn-add-form" @click="saveBtnClick">
             <button class="m-btn m-btn-add">
               <div class="text-btn">Lưu</div>
             </button>
           </div>
         </div>
         <div class="box-btn-header flex" v-else>
-          <div class="btn-add-form">
+          <div class="btn-add-form" @click="openBoxBtn" v-if="hiddenBoxBtn">
             <button class="m-btn m-btn-add btn-edit-detail">
               <div class="text-btn">Sửa</div>
             </button>
           </div>
-          <div class="box-context-menu" :class="{'box-content-active': !hiddenContextMenu}">
-            <div class="icon-context" @click="toggleContextMenu" ></div>
+          <div class="box-btn-detail flex" v-else>
+            <div class="btn-cancel-form m-r-8" @click="closeBoxBtn">
+              <button class="m-btn-white">
+                <div class="text-btn">Hủy bỏ</div>
+              </button>
+            </div>
+            <div class="btn-add-form">
+              <button class="m-btn m-btn-add btn-edit-detail">
+                <div class="text-btn">Lưu</div>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="box-context-menu"
+            @click="toggleContextMenu"
+            :class="{ 'box-content-active': !hiddenContextMenu }"
+          >
+            <div class="icon-context"></div>
             <div class="context-menu-data" v-if="!hiddenContextMenu">
               <div class="box-item-context">
                 <div class="item-context flex a-l-c">
@@ -82,6 +103,7 @@
                   :class="{
                     'border-red': errors.length > 0 ? true : false,
                   }"
+                  @blur="checkDuplicateCode"
                 />
                 <div v-if="errors.length > 0">
                   <div class="text-error">{{ errors[0] }}</div>
@@ -141,8 +163,7 @@
               <div class="text-input">
                 <b>Tính chất <span style="color: red">*</span></b>
               </div>
-              <ValidationProvider rules="validateRequired" v-slot="{ errors }"
-                >
+              <ValidationProvider rules="validateRequired" v-slot="{ errors }">
                 <SelectBox
                   style="margin-left: 25px; width: 237px"
                   :displayExprProp="'NatureName'"
@@ -155,22 +176,30 @@
                     'border-red-component': errors.length > 0 ? true : false,
                   }"
                 />
-                 <div v-if="errors.length > 0">
+                <div v-if="errors.length > 0">
                   <div class="text-error">{{ errors[0] }}</div>
                 </div>
               </ValidationProvider>
               <div class="box-earning" v-if="salaryComposition.NatureID == 1">
                 <div class="earning-wrapper flex a-l-c">
                   <DxRadioGroup
-                    :items="dataTax"
-                    :value="dataTax[0]"
+                    :dataSource="dataSourceTax"
+                    :display-expr="'TaxableName'"
+                    :value-expr="'TaxableID'"
+                    :value="dataSourceTax[0].TaxableID"
                     layout="horizontal"
+                    v-model="salaryComposition.TaxableID"
                   />
                 </div>
               </div>
               <div class="box-earning" v-if="salaryComposition.NatureID == 2">
                 <div class="deduct-wrapper flex">
-                  <DxCheckBox :width="550" text="Giảm trừ khi tính thuế" />
+                  <DxCheckBox
+                    :width="550"
+                    text="Giảm trừ khi tính thuế"
+                    :value="false"
+                    v-model="salaryComposition.ReduceBoolean"
+                  />
                 </div>
               </div>
             </div>
@@ -190,6 +219,7 @@
                 v-bind="money"
                 v-model="salaryComposition.Quota"
               ></money>
+              <!-- <vue-autonumeric :options="'integer'" v-model="salaryComposition.Quota"></vue-autonumeric> -->
             </div>
             <div class="input-form flex">
               <div class="text-input">
@@ -219,9 +249,11 @@
               <div class="text-input">
                 <b>Mô tả</b>
               </div>
-              <textarea class="m-input input-text-form" style="height: 71px"
+              <textarea
+                class="m-input input-text-form"
+                style="height: 71px"
                 v-model="salaryComposition.Description"
-               />
+              />
             </div>
           </div>
         </div>
@@ -240,6 +272,7 @@ import { DxCheckBox } from "devextreme-vue/check-box";
 import { Money } from "v-money";
 import axios from "axios";
 import { NATURE, VALUE_TYPE, URL_API } from "../../js/common/data.js";
+// import VueAutonumeric from '../src/components/VueAutonumeric.vue';
 extend("validateRequired", {
   ...required,
   message: "Không được để trống",
@@ -253,6 +286,7 @@ export default {
     DxCheckBox,
     DxRadioGroup,
     Money,
+    // VueAutonumeric,
   },
   props: ["isOpenModal", "treeDataSource"],
   data() {
@@ -273,19 +307,31 @@ export default {
       // value default cho input tính chất
       itemID: 1,
       // data cho radio
-      dataTax: ["Chịu thuế", "Không chịu thuế"],
-      test: [{ TaxName: "Chịu thuế" }, { TaxName: "Không chịu thuế" }],
+      dataSourceTax: [
+        { TaxableName: "Chịu thuế", TaxableID: 0 },
+        { TaxableName: "Không chịu thuế", TaxableID: 1 },
+      ],
+      // ẩn contextmenu
       hiddenContextMenu: true,
+      // ẩn box btn
+      hiddenBoxBtn: true,
       // mode để check trạng thái form
       mode: 0,
       // ID  thành phần lương
       salaryCompositionID: "",
       // Thành phần lương
-      salaryComposition: {NatureID: 1},
+      salaryComposition: {},
+      // check trùng mã
+      isDuplicate: false,
+      // mảng thành phần lương
+      salaryCompositions: [],
     };
   },
   created() {
+    // lấy danh sách loại thành phần
     this.getSalaryCompositionType();
+    // lấy ra toàn bộ danh sách thành phần lương
+    this.getSalaryComposition();
   },
   mounted() {
     document.addEventListener("click", this.close);
@@ -295,17 +341,95 @@ export default {
      * Hàm check mode
      * CreateBy : LQNHAT(21/09/2021)
      */
-    show(mode,id) {
+    show(mode, id) {
       this.mode = mode;
       this.salaryCompositionID = id;
       if (mode == 0) {
-        this.salaryComposition = {NatureID: 1};
+        this.salaryComposition = {
+          OrganizationUnitID: "c0ff752c-5ff4-4238-998b-4235c9818b00",
+          NatureID: 1,
+          TaxableID: 0,
+        };
         this.$nextTick(() => this.$refs.salaryCompositionName.focus());
       }
       // mode == 1 thì bind data lên form
       else {
         this.bindDataToForm();
       }
+    },
+
+    /**-----------------------------------------------------------------------
+     * Bắt sự kiện click nút lưu
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    saveBtnClick() {
+      // validate check trùng mã
+      if (this.isDuplicate == true) {
+        this.$toast.error("Mã thành phần đã tồn tại", {
+          timeout: 2000,
+        });
+        this.isDuplicate = false;
+        return;
+      }
+      // validate cả form
+      this.$refs.form_salary.validate().then((success) => {
+        if (!success) {
+          return;
+        }
+        if (this.mode == 0) {
+          this.addSalaryComposition();
+          this.salaryComposition = {
+            OrganizationUnitID: "c0ff752c-5ff4-4238-998b-4235c9818b00",
+            NatureID: 1,
+          };
+          this.closeFormDetail();
+        }
+      });
+    },
+
+    /**-------------------------------------------------------
+     * Lấy ra toàn bộ danh sách thành phần lương
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    getSalaryComposition() {
+      var self = this;
+      axios.get(URL_API.API_SALARYCOMPOSITION).then((res) => {
+        self.salaryCompositions = res.data;
+        console.log(self.salaryCompositions);
+      });
+    },
+
+    /**------------------------------------------------------
+     * Check trùng mã
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    checkDuplicateCode() {
+      this.salaryCompositions.forEach((element) => {
+        if (
+          this.salaryComposition.SalaryCompositionCode ==
+            element.SalaryCompositionCode &&
+          this.salaryComposition.SalaryCompositionID !=
+            element.SalaryCompositionID
+        ) {
+          this.isDuplicate = true;
+        }
+      });
+    },
+
+    /**----------------------------------------------------------------------
+     * Thêm mới thành phần lương
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    addSalaryComposition() {
+      var self = this;
+      axios
+        .post(URL_API.API_SALARYCOMPOSITION, self.salaryComposition)
+        .then(() => {
+          self.$emit("reloadTableAndFilter");
+          self.$toast.success("Thêm thành phần lương thành công", {
+            timeout: 2000,
+          });
+        });
     },
 
     /**----------------------------------------------------------------------------
@@ -316,17 +440,20 @@ export default {
       var self = this;
       axios.get(URL_API.API_SALARYCOMPOSITIONTYPE).then((res) => {
         self.dataSourceType = res.data;
-        console.log(self.dataSourceType);
       });
     },
 
-    bindDataToForm()
-    {
+    /**-------------------------------------------------------------------------
+     * Bind dữ liệu lên trên form
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    bindDataToForm() {
       var self = this;
-      axios.get(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
-      .then((res) => {
-        self.salaryComposition = res.data;
-      })
+      axios
+        .get(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
+        .then((res) => {
+          self.salaryComposition = res.data;
+        });
     },
 
     /**------------------------------------------------------------------------------
@@ -341,22 +468,34 @@ export default {
         "salaryComposition.OrganizationUnitID: " +
           this.salaryComposition.OrganizationUnitID
       );
-      console.log(
-        "salaryComposition.SalaryCompositionTypeID: " +
-          this.salaryComposition.SalaryCompositionTypeID
-      );
     },
-    
+
     /**-------------------------------------------------------
      * Bắt sự kiện toggle contextmenu
      * CreatedBy: LQNHAT(21/09/2021)
      */
-    toggleContextMenu()
-    {
+    toggleContextMenu() {
       this.hiddenContextMenu = !this.hiddenContextMenu;
     },
 
-     /**----------------------------------------------------------------------
+    /*------------------------------------------------------------------
+     * Bắt sự kiện close box btn
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    closeBoxBtn() {
+      this.hiddenBoxBtn = true;
+    },
+
+    /*------------------------------------------------------------------
+     * Bắt sự kiện open box btn
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    openBoxBtn() {
+      this.hiddenBoxBtn = false;
+      this.$nextTick(() => this.$refs.salaryCompositionName.focus());
+    },
+
+    /**----------------------------------------------------------------------
      * Hàm check event khi click ra bên ngoài context
      * CreateBy: LQNhat(21/09/2021)
      */

@@ -51,6 +51,11 @@
             </div>
             <div class="box-setting-toolbar" @click="openCustomizeColumn">
               <div class="icon-setting-toolbar"></div>
+              <BaseCustomizeColumn
+                :hiddenCustomizeColumn="hiddenCustomizeColumn"
+                :headers="headers"
+                @closeCustomizeColumn="closeCustomizeColumn"
+              />
             </div>
           </div>
         </div>
@@ -160,11 +165,7 @@
       :isOpenModal="isOpenModal"
       :treeDataSource="treeDataSource"
       @closeForm="closeForm"
-    />
-    <BaseCustomizeColumn
-      :hiddenCustomizeColumn="hiddenCustomizeColumn"
-      :headers="headers"
-      @closeCustomizeColumn="closeCustomizeColumn"
+      @reloadTableAndFilter="reloadTableAndFilter"
     />
   </div>
 </template>
@@ -263,7 +264,7 @@ export default {
           DataField: "Quota",
           Caption: "Định mức",
           DataType: "text",
-          Alignment: "left",
+          Alignment: "right",
           Fixed: false,
           Checked: false,
         },
@@ -332,7 +333,7 @@ export default {
       salaryCompositionID: "",
     };
   },
-   created() {
+  created() {
     // lấy ra toàn bộ danh sách thành phần lương
     this.getSalaryCompositionByFilter(
       this.pageIndex,
@@ -344,7 +345,7 @@ export default {
   },
   mounted() {
     // lấy ra danh sách đơn vị
-     this.getOrganizationUnits();
+    this.getOrganizationUnits();
   },
   methods: {
     /**----------------------------------------------------
@@ -454,8 +455,7 @@ export default {
      * Bắt sự khi dblclick mở form sửa
      * CreatedBy: LQNHAT(21/09/2021)
      */
-    rowDblClick(data)
-    {
+    rowDblClick(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
       this.isOpenModal = !this.isOpenModal;
       this.modeFormDetail = 1;
@@ -538,8 +538,7 @@ export default {
      * CreatedBy:LQNHAT(20/09/2021)
      */
     getValueOrganizationUnit(value) {
-      if(value == null)
-      {
+      if (value == null) {
         value = "";
       }
       this.organizationUnitID = value;
@@ -592,9 +591,15 @@ export default {
      * CreateBy:LQNhat(17/09/2021)
      */
     formatPrice(value) {
-      let val = (value / 1).toFixed(0).replace(".", ",");
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      if (value == 0) {
+        return "-";
+      } else {
+        let val = (value / 1).toFixed(0).replace(".", ",");
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
     },
+
+   
   },
 };
 </script>

@@ -34,10 +34,33 @@ namespace MISA.AMI.TPLUONG.Core.Entities
         /// <summary>
         /// Tính chất
         /// </summary>
+        [NotMap]
+        public string NatureName
+        {
+            get
+            {
+                switch (NatureID)
+                {
+                    case 1:
+                        return "Thu nhập";
+                    case 2:
+                        return "Khấu trừ";
+                    case 3:
+                        return "Khác";
+                    default:
+                        return "";
+                }
+            }
+
+            set { }
+        }
+
+        /// <summary>
+        /// ID tính chất
+        /// </summary>
         [Required]
         [Name("Tính chất")]
-        public string NatureName { get; set; }
-
+        public int NatureID { get; set; }
         /// <summary>
         /// Id loại thành phần
         /// </summary>
@@ -65,14 +88,54 @@ namespace MISA.AMI.TPLUONG.Core.Entities
         public string OrganizationUnitName { get; set; }
 
         /// <summary>
-        /// Chịu thuế
+        ///  Tên chịu thuế
         /// </summary>
-        public string TaxableName { get; set; }
+        [NotMap]
+        public string TaxableName
+        {
+            get
+            {
+                switch (TaxableID)
+                {
+                    case 0:
+                        return "Chịu thuế";
+                    case 1:
+                        return "Không chịu thuế";
+                    default:
+                        return "";
+                }
+            }
 
+            set { }
+        }
+
+        /// <summary>
+        /// ID chịu thuế
+        /// </summary>
+        public int? TaxableID { get; set; }
         /// <summary>
         /// Giảm trừ khi tính thuế
         /// </summary>
-        public string ReduceName { get; set; }
+        [NotMap]
+        public string ReduceName
+        {
+            get
+            {
+                switch (ReduceBoolean)
+                {
+                    case true:
+                        return "Có";
+                    case false:
+                        return "Không";
+                    default:
+                        return "";
+                }
+            }
+
+            set { }
+        }
+
+        public Boolean? ReduceBoolean { get; set; }
 
         /// <summary>
         /// Giá trị

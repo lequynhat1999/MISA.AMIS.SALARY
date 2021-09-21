@@ -8,7 +8,7 @@
       :show-borders="true"
       @content-ready="onContentReady"
       height="100%"
-      :column-width="250"
+      :column-width="200"
       :allow-column-resizing="true"
       :column-resizing-mode="currentMode"
       :column-min-width="180"
@@ -44,7 +44,9 @@
 
       <template #cellTemplate="{ data }">
         <slot :name="data.column.dataField" :data="data.data">
-          <div :title= data.data[data.column.dataField]>{{ data.data[data.column.dataField] }}</div>
+          <div :title="data.data[data.column.dataField]">
+            {{ formatValueNull(data.data[data.column.dataField]) }}
+          </div>
         </slot>
       </template>
 
@@ -130,10 +132,13 @@ export default {
      * Bắt sự kiện click vào row
      * CreatedBy:LQNHAT(21/09/2021)
      */
-    onRowDblClick(e)
-    {
-      this.$emit("onRowDblClick",e.data);
-    }
+    onRowDblClick(e) {
+      this.$emit("onRowDblClick", e.data);
+    },
+    formatValueNull(value) {
+      if (value == 0 || value == "" || value == null) return "-";
+      else return value;
+    },
   },
 };
 </script>

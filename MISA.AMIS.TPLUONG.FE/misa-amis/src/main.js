@@ -9,6 +9,16 @@ import { messages } from 'vee-validate/dist/locale/vi.json';
 import money from 'v-money';
 import Paginate from 'vuejs-paginate'
 import Pagination from 'vue-pagination-2';
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
+
+const options = {
+    position:"top-center"
+};
+Vue.use(Toast, options);
+
+
 Object.keys(rules).forEach(rule => {
   extend(rule, {
     ...rules[rule], // copies rule configuration

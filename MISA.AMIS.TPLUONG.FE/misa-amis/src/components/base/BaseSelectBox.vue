@@ -40,7 +40,6 @@ export default {
      */
     valueChanged(e)
     {
-      // this.$emit("getValueItem",e.value);
       this.$emit("input",e.value);
     }
   },
