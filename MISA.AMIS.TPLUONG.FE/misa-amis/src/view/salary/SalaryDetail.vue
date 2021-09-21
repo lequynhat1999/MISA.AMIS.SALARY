@@ -40,7 +40,7 @@
                 <div class="text-btn">Hủy bỏ</div>
               </button>
             </div>
-            <div class="btn-add-form">
+            <div class="btn-add-form" @click="saveBtnClick">
               <button class="m-btn m-btn-add btn-edit-detail">
                 <div class="text-btn">Lưu</div>
               </button>
@@ -125,7 +125,7 @@
                   :valueDefault="
                     treeDataSource.length > 0
                       ? treeDataSource[6].OrganizationUnitID
-                      : 'c0ff752c-5ff4-4238-998b-4235c9818b00'
+                      : '9b6e83a4-38d5-4184-a44f-2f202ea6c814'
                   "
                   v-model="salaryComposition.OrganizationUnitID"
                   :class="{
@@ -164,18 +164,20 @@
                 <b>Tính chất <span style="color: red">*</span></b>
               </div>
               <ValidationProvider rules="validateRequired" v-slot="{ errors }">
-                <SelectBox
-                  style="margin-left: 25px; width: 237px"
-                  :displayExprProp="'NatureName'"
-                  :valueExprProp="'NatureID'"
-                  :dataSource="dataSourceNature"
-                  :valueDefault="dataSourceNature[0].NatureID"
-                  :disabledProp="false"
-                  v-model="salaryComposition.NatureID"
-                  :class="{
-                    'border-red-component': errors.length > 0 ? true : false,
-                  }"
-                />
+                <div class="box-validate">
+                  <SelectBox
+                    style="margin-left: 25px; width: 237px"
+                    :displayExprProp="'NatureName'"
+                    :valueExprProp="'NatureID'"
+                    :dataSource="dataSourceNature"
+                    :valueDefault="dataSourceNature[0].NatureID"
+                    :disabledProp="false"
+                    v-model="salaryComposition.NatureID"
+                    :class="{
+                      'border-red-component': errors.length > 0 ? true : false,
+                    }"
+                  />
+                </div>
                 <div v-if="errors.length > 0">
                   <div class="text-error">{{ errors[0] }}</div>
                 </div>
@@ -346,9 +348,10 @@ export default {
       this.salaryCompositionID = id;
       if (mode == 0) {
         this.salaryComposition = {
-          OrganizationUnitID: "c0ff752c-5ff4-4238-998b-4235c9818b00",
+          OrganizationUnitID: "9b6e83a4-38d5-4184-a44f-2f202ea6c814",
           NatureID: 1,
           TaxableID: 0,
+          SalaryCompositionTypeID: "",
         };
         this.$nextTick(() => this.$refs.salaryCompositionName.focus());
       }
@@ -383,6 +386,10 @@ export default {
             NatureID: 1,
           };
           this.closeFormDetail();
+        } else {
+          this.editSalaryComposition();
+          this.closeFormDetail();
+          this.hiddenBoxBtn =true;
         }
       });
     },
@@ -426,7 +433,26 @@ export default {
         .post(URL_API.API_SALARYCOMPOSITION, self.salaryComposition)
         .then(() => {
           self.$emit("reloadTableAndFilter");
-          self.$toast.success("Thêm thành phần lương thành công", {
+          self.$toast.success("Cập nhật thành công", {
+            timeout: 2000,
+          });
+        });
+    },
+
+    /**---------------------------------------------------------------------------
+     * Sửa thông tin thành phần lương
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    editSalaryComposition() {
+      var self = this;
+      axios
+        .put(
+          URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID,
+          self.salaryComposition
+        )
+        .then(() => {
+          self.$emit("reloadTableAndFilter");
+          self.$toast.success("Cập nhật thành công", {
             timeout: 2000,
           });
         });
@@ -463,6 +489,7 @@ export default {
     closeFormDetail() {
       // close form
       this.$emit("closeForm");
+      this.salaryComposition = {};
       this.$refs.form_salary.reset();
       console.log(
         "salaryComposition.OrganizationUnitID: " +

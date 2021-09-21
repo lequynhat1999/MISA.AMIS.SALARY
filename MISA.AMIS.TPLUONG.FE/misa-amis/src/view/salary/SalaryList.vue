@@ -84,6 +84,7 @@
             :dataSource="dataSource"
             @getRowChecked="getRowChecked"
             @onRowDblClick="rowDblClick"
+            @openPopupDelete="openPopupDelete"
           >
             <template #StatusName="{ data }">
               <div
@@ -167,6 +168,13 @@
       @closeForm="closeForm"
       @reloadTableAndFilter="reloadTableAndFilter"
     />
+    <BasePopup
+      v-if="!hiddenPopup"
+      :titlePopup="titlePopup"
+      :textPopup="textPopup"
+      @closePopup="closePopup"
+      @deleteRow="deleteRow"
+    />
   </div>
 </template>
 
@@ -180,17 +188,19 @@ import BaseDropdown from "../../components/base/BaseDropdown.vue";
 import BaseCustomizeColumn from "../../components/base/BaseCustomizeColumn.vue";
 import BaseFilter from "../../components/base/BaseFilter.vue";
 import axios from "axios";
+import BasePopup from "../../components/base/BasePopup.vue";
+import stringInject from "stringinject";
 export default {
   name: "SalaryList",
   components: {
     TitleSalary,
-    // BaseDropdown,
     BaseDropdownSingle,
     BaseGrid,
     SalaryDetail,
     BaseDropdown,
     BaseCustomizeColumn,
     BaseFilter,
+    BasePopup,
   },
   data() {
     return {
@@ -329,8 +339,13 @@ export default {
       hiddenCustomizeColumn: true,
       // ẩn popup filter
       hiddenPopupFilter: true,
+      // ẩn popup
+      hiddenPopup: true,
       // ID thành phần lương
       salaryCompositionID: "",
+      // title popup
+      titlePopup: "",
+      textPopup: "",
     };
   },
   created() {
@@ -462,12 +477,47 @@ export default {
       this.$refs.modeForm.show(this.modeFormDetail, this.salaryCompositionID);
     },
 
+    /**------------------------------------------------------------------------
+     * Bắt sự kiện click vào icon xóa
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    openPopupDelete(data) {
+      this.salaryCompositionID = data.SalaryCompositionID;
+      this.hiddenPopup = false;
+      this.titlePopup = "Thông báo";
+      this.textPopup = stringInject(
+        "Bạn có chắc chắn muốn xóa thành phần lương {0} không?",
+        [data.SalaryCompositionName]
+      );
+    },
+
+    deleteRow() {
+      var self = this;
+      axios.delete(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
+      .then(() => {
+        self.$toast.success("Xóa thành công", {
+          timeout: 2000,
+        });
+        self.reloadTableAndFilter();
+        self.hiddenPopup = true;
+      })
+    },
+
+    /**-----------------------------------------------------------------------
+     * Đóng popup
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    closePopup() {
+      this.hiddenPopup = true;
+    },
+
     /**---------------------------------------------------------
      * Bắt sự kiện đóng form chi tiết
      * CreatedBy : LQNHAT(14/09/2021)
      */
     closeForm() {
       this.isOpenModal = true;
+      this.reloadTableAndFilter();
     },
 
     /**----------------------------------------------------------
@@ -598,8 +648,6 @@ export default {
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
     },
-
-   
   },
 };
 </script>

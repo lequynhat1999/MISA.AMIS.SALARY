@@ -53,14 +53,18 @@
       <template #option="{ data }">
         <div class="box-option">
           <div class="box-btn flex a-l-c">
-            <div
-              class="btn-follow"
-              title="Ngừng theo dõi"
-              @click="test(data)"
-            ></div>
+            <div class="btn-follow" title="Ngừng theo dõi"></div>
             <div class="btn-clone" title="Nhân bản"></div>
-            <div class="btn-edit" title="Chỉnh sửa"></div>
-            <div class="btn-delete" title="Xóa"></div>
+            <div
+              class="btn-edit"
+              title="Chỉnh sửa"
+              @click="onRowDblClick(data)"
+            ></div>
+            <div
+              class="btn-delete"
+              title="Xóa"
+              @click="openPopupDelete(data)"
+            ></div>
           </div>
         </div>
       </template>
@@ -108,9 +112,6 @@ export default {
     };
   },
   methods: {
-    test(data) {
-      console.log(data.data.SalaryCompositionID);
-    },
     /**-------------------------------------------------------
      * Gửi những rows được checked sang cha
      * CreatedBy:LQNHAT(17/09/2021)
@@ -135,6 +136,19 @@ export default {
     onRowDblClick(e) {
       this.$emit("onRowDblClick", e.data);
     },
+
+    /**--------------------------------------------------------------
+     * Bắt sự kiện delete row
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    openPopupDelete(e) {
+      this.$emit("openPopupDelete",e.data);
+    },
+
+    /**---------------------------------------------------------------
+     * Format value null
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
     formatValueNull(value) {
       if (value == 0 || value == "" || value == null) return "-";
       else return value;

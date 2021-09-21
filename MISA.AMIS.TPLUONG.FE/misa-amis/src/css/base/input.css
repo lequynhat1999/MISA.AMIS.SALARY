@@ -65,14 +65,7 @@
 .text-error
 {
   color: red;
-  margin-left: 24px;
-  font-size: 13.3333px;
-}
-
-.text-error-component
-{
-  color: red;
-  margin-left: 24px;
+  margin-left: 25px;
   font-size: 13.3333px;
 }
 

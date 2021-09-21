@@ -33,6 +33,7 @@ export default {
 @import "./css/base/align-item.css";
 @import "./css/base/customize-column.css";
 @import "./css/base/filter.css";
+@import "./css/base/popup.css";
 * {
   margin: 0;
   padding: 0;
