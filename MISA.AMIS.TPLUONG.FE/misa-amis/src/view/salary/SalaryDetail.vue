@@ -335,9 +335,7 @@ export default {
     // lấy ra toàn bộ danh sách thành phần lương
     this.getSalaryComposition();
   },
-  mounted() {
-    document.addEventListener("click", this.close);
-  },
+  
   methods: {
     /**--------------------------------------------
      * Hàm check mode
@@ -349,7 +347,7 @@ export default {
       if (mode == 0) {
         this.salaryComposition = {
           OrganizationUnitID: "9b6e83a4-38d5-4184-a44f-2f202ea6c814",
-          NatureID: 1,
+          NatureID: null,
           TaxableID: 0,
           SalaryCompositionTypeID: "",
         };
@@ -389,7 +387,7 @@ export default {
         } else {
           this.editSalaryComposition();
           this.closeFormDetail();
-          this.hiddenBoxBtn =true;
+          this.hiddenBoxBtn = true;
         }
       });
     },
@@ -503,6 +501,7 @@ export default {
      */
     toggleContextMenu() {
       this.hiddenContextMenu = !this.hiddenContextMenu;
+      event.stopPropagation();
     },
 
     /*------------------------------------------------------------------
@@ -526,11 +525,14 @@ export default {
      * Hàm check event khi click ra bên ngoài context
      * CreateBy: LQNhat(21/09/2021)
      */
-    close(e) {
-      if (!this.$el.contains(e.target)) {
+    close() {
+      if (this.hiddenContextMenu == false) {
         this.hiddenContextMenu = true;
       }
     },
+  },
+  mounted() {
+    document.addEventListener("click", this.close);
   },
 };
 </script>

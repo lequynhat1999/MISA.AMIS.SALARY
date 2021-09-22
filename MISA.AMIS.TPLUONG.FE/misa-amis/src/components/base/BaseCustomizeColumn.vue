@@ -80,7 +80,7 @@ export default {
      * CreateBy: LQNhat(20/09/2021)
      */
     close(e) {
-      if (!this.$el.contains(e.target)) {
+      if (!this.$el.contains(e.target) && this.hiddenCustomizeColumn == false) {
         this.$emit("closeCustomizeColumn");
       }
     },

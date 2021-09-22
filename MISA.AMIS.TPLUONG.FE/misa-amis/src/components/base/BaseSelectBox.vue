@@ -4,7 +4,7 @@
       :data-source="dataSource"
       placeholder=""
       :disabled= disabledProp
-      :value="valueDefault"
+      :value="value"
       :display-expr="displayExprProp"
       :value-expr="valueExprProp"
       @value-changed="valueChanged"
@@ -23,7 +23,7 @@ export default {
   components: {
     DxSelectBox,
   },
-  props:["displayExprProp","valueExprProp","dataSource","valueDefault","disabledProp"],
+  props:["displayExprProp","valueExprProp","dataSource","valueDefault","disabledProp","value"],
   data() {
     const items = this.dataSource;
     return {

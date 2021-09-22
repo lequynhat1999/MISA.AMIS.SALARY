@@ -67,11 +67,10 @@ export default {
      */
     syncTreeViewSelection(e) {
       this.$emit("getValueOrganizationUnit", e.value);
-      if (!this.$refs[this.textBoxRefName]) return;
-      if (!this.treeBoxValue) {
-        this.$refs[this.textBoxRefName].instance.unselectAll();
+      if (!e.value) {
+        this.$refs.treeView.instance.unselectAll();
       } else {
-        this.$refs[this.textBoxRefName].instance.selectItem(this.treeBoxValue);
+        this.$refs.treeView.instance.selectItem(e.value);
       }
     },
     /**---------------------------------------------------------------------------------

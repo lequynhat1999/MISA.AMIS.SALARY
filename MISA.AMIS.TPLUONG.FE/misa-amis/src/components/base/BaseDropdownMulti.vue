@@ -1,7 +1,7 @@
 <template>
   <div class="dx-field-value">
     <DxDropDownBox
-      :value="treeBoxValue"
+      :value="value"
       :show-clear-button="true"
       :data-source="treeDataSource"
       :value-expr="valueExprProp"
@@ -13,7 +13,7 @@
       <template #content="{}">
         <DxTreeView
           :searchEnabled="true"
-          :value="treeBoxValue"
+          :value="value"
           root-value="00000000-0000-0000-0000-000000000000"
           placeholder=" Tìm kiếm"
           noDataText="Không có dữ liệu"
@@ -60,11 +60,13 @@ export default {
     "displayExprProp",
     "parentIdExprProp",
     "valueDefault",
+    "value"
   ],
   data() {
     return {
       treeBoxValue: null,
       treeViewName: "treeView",
+      valueEmit: [],
     };
   },
   created() {
@@ -91,8 +93,10 @@ export default {
           for (let index = 0; index < values.length; index++) {
             console.log("values: " + values[index]);
             this.$emit("input", values[index]);
+            this.valueEmit.push(values[index]);
             treeView.selectItem(values[index]);
           }
+          // this.$emit("input",this.valueEmit);
         }
       }
     },

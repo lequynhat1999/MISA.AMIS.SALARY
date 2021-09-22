@@ -346,6 +346,7 @@ export default {
       // title popup
       titlePopup: "",
       textPopup: "",
+      isOpen: false,
     };
   },
   created() {
@@ -493,14 +494,15 @@ export default {
 
     deleteRow() {
       var self = this;
-      axios.delete(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
-      .then(() => {
-        self.$toast.success("Xóa thành công", {
-          timeout: 2000,
+      axios
+        .delete(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
+        .then(() => {
+          self.$toast.success("Xóa thành công", {
+            timeout: 2000,
+          });
+          self.reloadTableAndFilter();
+          self.hiddenPopup = true;
         });
-        self.reloadTableAndFilter();
-        self.hiddenPopup = true;
-      })
     },
 
     /**-----------------------------------------------------------------------
@@ -526,6 +528,7 @@ export default {
      */
     openCustomizeColumn() {
       this.hiddenCustomizeColumn = !this.hiddenCustomizeColumn;
+      event.stopPropagation();
     },
 
     /**----------------------------------------------------------------
@@ -533,7 +536,7 @@ export default {
      * CreatedBy:LQNHAT(20/09/2021)
      */
     closeCustomizeColumn() {
-      // this.hiddenCustomizeColumn = true;
+      this.hiddenCustomizeColumn = true;
     },
 
     /**----------------------------------------------------------------
