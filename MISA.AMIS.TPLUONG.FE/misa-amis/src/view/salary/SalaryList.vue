@@ -1,7 +1,9 @@
 <template>
   <div class="content">
     <div class="header-content flex">
-      <TitleSalary />
+      <TitleSalary 
+        :title="title"
+       />
       <div class="box-btn-add">
         <button class="m-btn btn-add" @click="openModal">
           <div class="icon-add"></div>
@@ -65,13 +67,16 @@
           >
           <span class="uncheck-all" @click="uncheckAll">Bỏ chọn</span>
           <div class="box-btn-unfollow-all">
-            <button class="m-btn btn-unfollow-all">
+            <button
+              class="m-btn btn-unfollow-all"
+              @click="openPopupFollowMulti"
+            >
               <div class="icon-unfollow"></div>
               <div class="text-btn">Ngừng theo dõi</div>
             </button>
           </div>
           <div class="box-btn-deletes">
-            <button class="m-btn btn-deletes">
+            <button class="m-btn btn-deletes" @click="openPopupDeleteMulti">
               <div class="icon-deletes"></div>
               <div class="text-btn">Xoá</div>
             </button>
@@ -85,6 +90,7 @@
             @getRowChecked="getRowChecked"
             @onRowDblClick="rowDblClick"
             @openPopupDelete="openPopupDelete"
+            @openPopupUnfollow="openPopupUnfollow"
           >
             <template #StatusName="{ data }">
               <div
@@ -172,8 +178,12 @@
       v-if="!hiddenPopup"
       :titlePopup="titlePopup"
       :textPopup="textPopup"
+      :statusPopup="statusPopup"
       @closePopup="closePopup"
       @deleteRow="deleteRow"
+      @unfollowRow="unfollowRow"
+      @unfollowMultiRow="unfollowMultiRow"
+      @deleteMultiRow="deleteMultiRow"
     />
   </div>
 </template>
@@ -183,7 +193,12 @@ import TitleSalary from "../../components/base/BaseTitle.vue";
 import BaseDropdownSingle from "../../components/base/BaseDropdownSingle.vue";
 import BaseGrid from "../../components/base/BaseGrid.vue";
 import SalaryDetail from "../salary/SalaryDetail.vue";
-import { URL_API,HEADERS,STATUS_DATA,PAGE_DATA } from "../../js/common/data.js";
+import {
+  URL_API,
+  HEADERS,
+  STATUS_DATA_FILTER,
+  PAGE_DATA,
+} from "../../js/common/data.js";
 import BaseDropdown from "../../components/base/BaseDropdown.vue";
 import BaseCustomizeColumn from "../../components/base/BaseCustomizeColumn.vue";
 import BaseFilter from "../../components/base/BaseFilter.vue";
@@ -204,6 +219,8 @@ export default {
   },
   data() {
     return {
+      // title page
+      title: "Thành phần lương",
       // mở modal
       isOpenModal: true,
       // data source treeview
@@ -214,7 +231,7 @@ export default {
       dataSource: [],
       // header grid
       headers: HEADERS,
-      statusData: STATUS_DATA,
+      statusData: STATUS_DATA_FILTER,
       dataPage: PAGE_DATA,
       // trang hiện tại
       pageIndex: 1,
@@ -248,7 +265,10 @@ export default {
       // title popup
       titlePopup: "",
       textPopup: "",
-      isOpen: false,
+      // trạng thái popup: 0 là delete, 1 là unfollow, 2 là unfollow multi, 3 là delete multi
+      statusPopup: 0,
+      // mảng ID
+      salaryCompositionIDs: [],
     };
   },
   created() {
@@ -386,6 +406,7 @@ export default {
      */
     openPopupDelete(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
+      this.statusPopup = 0;
       this.hiddenPopup = false;
       this.titlePopup = "Thông báo";
       this.textPopup = stringInject(
@@ -394,8 +415,13 @@ export default {
       );
     },
 
+    /**--------------------------------------------------------------------------
+     * Xóa dòng
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
     deleteRow() {
       var self = this;
+      self.hiddenPopup = true;
       axios
         .delete(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
         .then(() => {
@@ -403,7 +429,108 @@ export default {
             timeout: 2000,
           });
           self.reloadTableAndFilter();
-          self.hiddenPopup = true;
+        });
+    },
+
+    /**-----------------------------------------------------------------------------------------------
+     * mở popup unfollow
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    openPopupUnfollow(data) {
+      this.salaryCompositionID = data.SalaryCompositionID;
+      this.statusPopup = 1;
+      this.hiddenPopup = false;
+      this.titlePopup = "Chuyển trạng thái";
+      this.textPopup = stringInject(
+        "Bạn có chắc chắn muốn chuyển trạng thái thành phần lương {0} sang ngừng theo dõi không?",
+        [data.SalaryCompositionName]
+      );
+    },
+
+    /**---------------------------------------------------------------------------------------------------
+     * unfollow
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    unfollowRow() {
+      var self = this;
+      self.hiddenPopup = true;
+      axios
+        .put(
+          URL_API.API_SALARYCOMPOSITION +
+            "/unfollow?salaryCompositionID=" +
+            self.salaryCompositionID
+        )
+        .then(() => {
+          self.$toast.success("Cập nhật thành công", {
+            timeout: 2000,
+          });
+          self.reloadTableAndFilter();
+        });
+    },
+
+    /**----------------------------------------------------------------------------------------------------
+     * Mở popup unfollow multi
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    openPopupFollowMulti() {
+      this.statusPopup = 2;
+      this.hiddenPopup = false;
+      this.titlePopup = "Chuyển trạng thái";
+      this.textPopup =
+        "Bạn có chắc chắn muốn chuyển trạng thái các thành phần lương đã chọn sang ngừng theo dõi không?";
+    },
+
+    /**------------------------------------------------------------------------------------------------------
+     * Unfollow multu
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    unfollowMultiRow() {
+      var self = this;
+      self.hiddenPopup = true;
+      axios
+        .put(
+          URL_API.API_SALARYCOMPOSITION +
+            "/?entitesId=" +
+            self.salaryCompositionIDs
+        )
+        .then(() => {
+          self.$toast.success("Cập nhật thành công", {
+            timeout: 2000,
+          });
+          self.reloadTableAndFilter();
+        });
+    },
+
+    /**-----------------------------------------------------------------------
+     * Mở popup delete multi
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    openPopupDeleteMulti() {
+      this.statusPopup = 3;
+      this.hiddenPopup = false;
+      this.titlePopup = "Thông báo";
+      this.textPopup =
+        "Bạn có chắc chắn muốn xóa các thành phần lương đã chọn không?";
+    },
+
+    /**-----------------------------------------------------------------------
+     * Delete multi
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    deleteMultiRow() {
+      var self = this;
+      self.hiddenPopup = true;
+      axios
+        .delete(
+          URL_API.API_SALARYCOMPOSITION +
+            "/?entitesId=" +
+            self.salaryCompositionIDs
+        )
+        .then(() => {
+          self.$toast.success("Xóa thành công", {
+            timeout: 2000,
+          });
+          self.reloadTableAndFilter();
         });
     },
 
@@ -429,7 +556,7 @@ export default {
      * CreatedBy:LQNHAT(20/09/2021)
      */
     openCustomizeColumn() {
-      this.hiddenCustomizeColumn = !this.hiddenCustomizeColumn;
+      this.hiddenCustomizeColumn = false;
       event.stopPropagation();
     },
 
@@ -439,6 +566,7 @@ export default {
      */
     closeCustomizeColumn() {
       this.hiddenCustomizeColumn = true;
+      event.stopPropagation();
     },
 
     /**----------------------------------------------------------------
@@ -511,7 +639,12 @@ export default {
      * CreatedBy: LQNHAT(17/09/2021)
      */
     getRowChecked(selectedRowsData) {
+      // clear arr
+      this.salaryCompositionIDs = [];
       this.countRowChecked = selectedRowsData.length;
+      selectedRowsData.forEach((element) => {
+        this.salaryCompositionIDs.push(element.SalaryCompositionID);
+      });
     },
 
     /**-----------------------------------------------------------

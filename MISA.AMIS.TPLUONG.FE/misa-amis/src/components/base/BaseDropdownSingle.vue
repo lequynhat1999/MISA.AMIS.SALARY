@@ -42,14 +42,34 @@ export default {
     DxDropDownBox,
     DxTreeView,
   },
-  props: [
-    "treeDataSource",
-    "placeholderProp",
-    "valueExprProp",
-    "displayExprProp",
-    "parentIdExprProp",
-    "valueDefault",
-  ],
+  // props: [
+  //   "treeDataSource",
+  //   "placeholderProp",
+  //   "valueExprProp",
+  //   "displayExprProp",
+  //   "parentIdExprProp",
+  //   "valueDefault",
+  // ],
+  props: {
+    treeDataSource: {
+      type: Array
+    },
+    placeholderProp : {
+      type: String,
+    },
+    valueExprProp: {
+      type: String,
+    },
+    displayExprProp: {
+      type: String,
+    },
+    parentIdExprProp: {
+      type: String,
+    },
+    valueDefault: {
+      type: String,
+    },
+  },
   data() {
     return {
       treeBoxValue: null,

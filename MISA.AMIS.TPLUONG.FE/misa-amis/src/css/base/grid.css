@@ -179,39 +179,36 @@
 }
 
 /* style btn theo dõi */
-.btn-follow
-{
+.btn-follow {
   width: 20px;
   height: 20px;
   -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
   -webkit-mask-repeat: no-repeat;
-  background-color: #f90!important;
+  background-color: #f90 !important;
   -webkit-mask-position: -220px -40px;
   margin-top: 15px;
   margin-right: 20px;
 }
 
 /* style btn nhân bản */
-.btn-clone
-{
+.btn-clone {
   width: 20px;
   height: 20px;
   -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
   -webkit-mask-repeat: no-repeat;
-  background-color: #707070!important;
+  background-color: #707070 !important;
   -webkit-mask-position: -80px 0;
   margin-top: 15px;
   margin-right: 20px;
 }
 
 /* style btn sửa */
-.btn-edit
-{
+.btn-edit {
   width: 20px;
   height: 20px;
   -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
   -webkit-mask-repeat: no-repeat;
-  background-color: #707070!important;
+  background-color: #707070 !important;
   -webkit-mask-position: -60px 0;
   margin-top: 15px;
   margin-right: 20px;
@@ -229,17 +226,27 @@
 }
 
 /* style cho checkbox mới datagrid */
-.dx-datagrid-checkbox-size.dx-checkbox-checked .dx-checkbox-icon 
-{
-    width: 20px !important;
-    height: 20px !important;
-    background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -260px 0px no-repeat;
-    border: none  !important;
-    border-radius: none !important;
+.dx-datagrid-checkbox-size.dx-checkbox-checked .dx-checkbox-icon {
+  width: 20px !important;
+  height: 20px !important;
+  background: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg) -260px
+    0px no-repeat;
+  border: none !important;
+  border-radius: none !important;
 }
 
 /* ẩn dòng cuối cùng */
-.dx-freespace-row
-{
+.dx-freespace-row {
   display: none;
+}
+
+/* z-index của thanh scroll */
+.dx-scrollable-scroll-content {
+  z-index: 2;
+}
+
+/* chỉnh text no data */
+.dx-empty {
+  height: 48px !important;
+  font-style: italic;
 }

@@ -64,7 +64,15 @@
 import BaseSelectBox from "./BaseSelectBox.vue";
 import { FILTER } from "../../js/common/data.js";
 export default {
-  props: ["hiddenPopupFilter", "headers"],
+  // props: ["hiddenPopupFilter", "headers"],
+  props:{
+    hiddenPopupFilter: {
+      type: Boolean,
+    },
+    headers: {
+      type: Array
+    }
+  },
   components: {
     BaseSelectBox,
   },

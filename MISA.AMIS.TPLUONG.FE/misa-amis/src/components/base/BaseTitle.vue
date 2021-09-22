@@ -1,10 +1,15 @@
 <template>
-    <div class="title-salary">Thành phần lương</div>
+    <div class="title-salary">{{title}}</div>
 </template>
 
 <script>
 export default {
-    name: "Salary"
+    name: "Salary",
+    props:{
+        title:{
+            type:String
+        }
+    }
 }
 </script>
 

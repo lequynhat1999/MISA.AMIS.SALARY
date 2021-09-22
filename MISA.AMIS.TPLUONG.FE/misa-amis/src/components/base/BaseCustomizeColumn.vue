@@ -55,7 +55,15 @@
 import draggable from "vuedraggable";
 export default {
   name: "BaseCustomizeColumn",
-  props: ["hiddenCustomizeColumn", "headers"],
+  // props: ["hiddenCustomizeColumn", "headers"],
+  props:{
+    hiddenCustomizeColumn: {
+      type: Boolean,
+    },
+    headers: {
+      type: Array
+    }
+  },
   components: {
     draggable,
   },
@@ -80,7 +88,8 @@ export default {
      * CreateBy: LQNhat(20/09/2021)
      */
     close(e) {
-      if (!this.$el.contains(e.target) && this.hiddenCustomizeColumn == false) {
+      console.log(e);
+      if (!this.$el.contains(e.target)) {
         this.$emit("closeCustomizeColumn");
       }
     },

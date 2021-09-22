@@ -1,6 +1,6 @@
 .modal {
   position: fixed; /* Stay in place */
-  z-index: 2; /* Sit on top */
+  z-index: 999; /* Sit on top */
   padding-top: 55px;
   left: 0;
   top: 0;
@@ -305,4 +305,15 @@
 .text-context-delete
 {
   color: #ff6161;
+}
+
+.box-status-radio
+{
+  margin-left: 12px;
+  margin-top: 20px;
+}
+
+.box-status-radio .dx-radiobutton
+{
+  padding-left: 150px;
 }

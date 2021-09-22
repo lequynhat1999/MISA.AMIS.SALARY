@@ -123,12 +123,8 @@
                   :valueExprProp="'OrganizationUnitID'"
                   :displayExprProp="'OrganizationUnitName'"
                   :parentIdExprProp="'ParentID'"
-                  :valueDefault="
-                    treeDataSource.length > 0
-                      ? treeDataSource[6].OrganizationUnitID
-                      : '9b6e83a4-38d5-4184-a44f-2f202ea6c814'
-                  "
                   v-model="salaryComposition.OrganizationUnitID"
+                  @getTreeBoxValue="getTreeBoxValue($event)"
                   :class="{
                     'border-red-component': errors.length > 0 ? true : false,
                   }"
@@ -148,7 +144,6 @@
                   :dataSource="dataSourceType"
                   :valueExprProp="'SalaryCompositionTypeID'"
                   :displayExprProp="'SalaryCompositionTypeName'"
-                  :valueDefault="false"
                   :disabledProp="false"
                   v-model="salaryComposition.SalaryCompositionTypeID"
                   :class="{
@@ -171,7 +166,6 @@
                     :displayExprProp="'NatureName'"
                     :valueExprProp="'NatureID'"
                     :dataSource="dataSourceNature"
-                    :valueDefault="dataSourceNature[0].NatureID"
                     :disabledProp="false"
                     v-model="salaryComposition.NatureID"
                     :class="{
@@ -233,7 +227,6 @@
                 :displayExprProp="'ValueTypeName'"
                 :valueExprProp="'ValueTypeID'"
                 :dataSource="dataSourceValueType"
-                :valueDefault="dataSourceValueType[0].ValueTypeID"
                 :disabledProp="salaryComposition.NatureID == 3 ? false : true"
                 v-model="salaryComposition.ValueTypeID"
               />
@@ -259,6 +252,16 @@
                 v-model="salaryComposition.Description"
               />
             </div>
+            <div class="box-status-radio" v-if="mode == 1">
+              <DxRadioGroup
+                :dataSource="dataSourceStatus"
+                :display-expr="'Text'"
+                :value-expr="'Value'"
+                :value="dataSourceStatus[0].Value"
+                layout="horizontal"
+                v-model="salaryComposition.StatusID"
+              />
+            </div>
           </div>
         </div>
       </ValidationObserver>
@@ -275,7 +278,12 @@ import { required } from "vee-validate/dist/rules";
 import { DxCheckBox } from "devextreme-vue/check-box";
 import { Money } from "v-money";
 import axios from "axios";
-import { NATURE, VALUE_TYPE, URL_API } from "../../js/common/data.js";
+import {
+  NATURE,
+  VALUE_TYPE,
+  URL_API,
+  STATUS_DATA,
+} from "../../js/common/data.js";
 // import VueAutonumeric from '../src/components/VueAutonumeric.vue';
 extend("validateRequired", {
   ...required,
@@ -292,7 +300,15 @@ export default {
     Money,
     // VueAutonumeric,
   },
-  props: ["isOpenModal", "treeDataSource"],
+  // props: ["isOpenModal", "treeDataSource"],
+  props:{
+    isOpenModal:{
+      type: Boolean,
+    },
+    treeDataSource: {
+      type: Array,
+    }
+  },
   data() {
     return {
       // v-money
@@ -306,6 +322,7 @@ export default {
       dataSourceType: [],
       dataSourceNature: NATURE,
       dataSourceValueType: VALUE_TYPE,
+      dataSourceStatus: STATUS_DATA,
       // id của item
       isShowRadio: false,
       // value default cho input tính chất
@@ -345,6 +362,7 @@ export default {
     show(mode, id) {
       this.mode = mode;
       this.salaryCompositionID = id;
+      // mode == 0 thì add
       if (mode == 0) {
         this.salaryComposition = {
           OrganizationUnitID: "9b6e83a4-38d5-4184-a44f-2f202ea6c814",
@@ -358,6 +376,7 @@ export default {
       }
       // mode == 1 thì bind data lên form
       else {
+        this.hiddenBoxBtn = true;
         this.bindDataToForm();
       }
     },
@@ -483,9 +502,47 @@ export default {
         });
     },
 
-    generateCode()
-    {
-      this.$set(this.salaryComposition,'SalaryCompositionCode',(this.salaryComposition.SalaryCompositionName).toUpperCase());
+    // getTreeBoxValue(value)
+    // {
+    //   this.salaryComposition.OrganizationUnitID = value;
+    // },
+
+    /*--------------------------------------
+     * Sinh mã code
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    generateCode() {
+      this.$set(
+        this.salaryComposition,
+        "SalaryCompositionCode",
+        this.nonAccentVietnamese(this.salaryComposition.SalaryCompositionName)
+          .toUpperCase()
+          .split(" ")
+          .join()
+          .replaceAll(",", "_")
+      );
+    },
+
+    /**------------------------------------------------------------------------------------------
+     * Chuyển tiếng việt thành tiếng anh
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    nonAccentVietnamese(str) {
+      str = str.toLowerCase();
+      str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+      str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+      str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+      str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+      str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+      str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+      str = str.replace(/đ/g, "d");
+      str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng
+      str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
+      return str;
+    },
+
+    formatCode(value) {
+      return value.toUpperCase().split(" ").join().replaceAll(",", "_");
     },
 
     /**------------------------------------------------------------------------------
@@ -503,15 +560,6 @@ export default {
       );
     },
 
-    /**-------------------------------------------------------
-     * Bắt sự kiện toggle contextmenu
-     * CreatedBy: LQNHAT(21/09/2021)
-     */
-    toggleContextMenu() {
-      this.hiddenContextMenu = !this.hiddenContextMenu;
-      event.stopPropagation();
-    },
-
     /*------------------------------------------------------------------
      * Bắt sự kiện close box btn
      * CreatedBy: LQNHAT(21/09/2021)
@@ -527,6 +575,15 @@ export default {
     openBoxBtn() {
       this.hiddenBoxBtn = false;
       this.$nextTick(() => this.$refs.salaryCompositionName.focus());
+    },
+
+    /**-------------------------------------------------------
+     * Bắt sự kiện toggle contextmenu
+     * CreatedBy: LQNHAT(21/09/2021)
+     */
+    toggleContextMenu() {
+      this.hiddenContextMenu = !this.hiddenContextMenu;
+      event.stopPropagation();
     },
 
     /**----------------------------------------------------------------------

@@ -6,6 +6,7 @@
       :remote-operations="false"
       :allow-column-reordering="true"
       :show-borders="true"
+      noDataText="Không có dữ liệu"
       @content-ready="onContentReady"
       height="100%"
       :column-width="200"
@@ -53,7 +54,12 @@
       <template #option="{ data }">
         <div class="box-option">
           <div class="box-btn flex a-l-c">
-            <div class="btn-follow" title="Ngừng theo dõi"></div>
+            <div
+              v-if="data.data.StatusName == 'Đang theo dõi'"
+              class="btn-follow"
+              title="Ngừng theo dõi"
+              @click="openPopupUnfollow(data)"
+            ></div>
             <div class="btn-clone" title="Nhân bản"></div>
             <div
               class="btn-edit"
@@ -93,7 +99,15 @@ export default {
     DxScrolling,
     DxSelection,
   },
-  props: ["headers", "dataSource"],
+  // props: ["headers", "dataSource"],
+  props:{
+    dataSource: {
+      type: Array,
+    },
+    headers: {
+      type: Array
+    }
+  },
   data() {
     return {
       titleTd: "Hello",
@@ -142,7 +156,15 @@ export default {
      * CreatedBy: LQNHAT(21/09/2021)
      */
     openPopupDelete(e) {
-      this.$emit("openPopupDelete",e.data);
+      this.$emit("openPopupDelete", e.data);
+    },
+
+    /**---------------------------------------------------------------
+     * Bắt sự kiện unfollow
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    openPopupUnfollow(e) {
+      this.$emit("openPopupUnfollow", e.data);
     },
 
     /**---------------------------------------------------------------

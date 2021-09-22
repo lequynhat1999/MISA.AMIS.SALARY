@@ -11,15 +11,37 @@
         <div>{{ textPopup }}</div>
       </div>
       <div class="footer-popup relative flex a-l-c">
-        <div class="box-btn-popup flex a-l-c">
-          <div class="btn-cancel-form m-r-8">
+        <div class="box-btn-popup flex a-l-c" >
+          <div class="btn-cancel-form m-r-8" v-if="statusPopup == 0 || statusPopup == 3">
             <button class="m-btn-white btn-cancel-popup" @click="closePopup">
               <div class="text-btn">Hủy</div>
             </button>
           </div>
-          <div class="box-btn-delete-popup">
+          <div class="box-btn-delete-popup" v-if="statusPopup == 0">
             <button class="m-btn btn-delete-popup" @click="deleteRow">
               <div class="text-btn">Xóa</div>
+            </button>
+          </div>
+          <div class="box-btn-delete-popup" v-if="statusPopup == 3">
+            <button class="m-btn btn-delete-popup" @click="deleteMultiRow">
+              <div class="text-btn">Xóa</div>
+            </button>
+          </div>
+        </div>
+        <div class="box-btn-popup flex a-l-c">
+          <div class="btn-cancel-form m-r-8" @click="closePopup" v-if="statusPopup == 1 || statusPopup == 2">
+            <button class="m-btn-white">
+              <div class="text-btn">Hủy bỏ</div>
+            </button>
+          </div>
+          <div class="btn-add-form" @click="unfollowRow" v-if="statusPopup == 1">
+            <button class="m-btn m-btn-add btn-confirm-unfollow">
+              <div class="text-btn">Đồng ý</div>
+            </button>
+          </div>
+          <div class="btn-add-form" @click="unfollowMultiRow" v-if="statusPopup == 2">
+            <button class="m-btn m-btn-add btn-confirm-unfollow">
+              <div class="text-btn">Đồng ý</div>
             </button>
           </div>
         </div>
@@ -31,7 +53,18 @@
 <script>
 export default {
   name: "BasePopup",
-  props: ["titlePopup", "textPopup"],
+  // props: ["titlePopup", "textPopup", "statusPopup"],
+  props:{
+    titlePopup: {
+      type: String,
+    },
+    textPopup: {
+      type: String
+    },
+    statusPopup: {
+      type: Number
+    }
+  },
   methods: {
     /**-----------------------------------
      * Đóng popup
@@ -40,9 +73,40 @@ export default {
     closePopup() {
       this.$emit("closePopup");
     },
-    deleteRow()
+
+    /**----------------------------------
+     * Xóa dòng
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    deleteRow() {
+      this.$emit("deleteRow");
+    },
+
+    /**-----------------------------------
+     * Unfollow
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    unfollowRow()
     {
-        this.$emit("deleteRow");
+      this.$emit("unfollowRow");
+    },
+
+    /**---------------------------------
+     * Unfollow multi
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    unfollowMultiRow()
+    {
+      this.$emit("unfollowMultiRow");
+    },
+
+    /**--------------------------------
+     * Delete multi
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
+    deleteMultiRow()
+    {
+      this.$emit("deleteMultiRow");
     }
   },
 };

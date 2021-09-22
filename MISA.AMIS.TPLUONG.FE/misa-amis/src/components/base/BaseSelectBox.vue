@@ -23,7 +23,27 @@ export default {
   components: {
     DxSelectBox,
   },
-  props:["displayExprProp","valueExprProp","dataSource","valueDefault","disabledProp","value"],
+  // props:["displayExprProp","valueExprProp","dataSource","valueDefault","disabledProp","value"],
+  props: {
+    dataSource: {
+      type: Array
+    },
+    valueExprProp: {
+      type: String,
+    },
+    displayExprProp: {
+      type: String,
+    },
+    parentIdExprProp: {
+      type: String,
+    },
+    value: {
+      type: String
+    },
+    disabledProp:{
+      type: Boolean
+    }
+  },
   data() {
     const items = this.dataSource;
     return {

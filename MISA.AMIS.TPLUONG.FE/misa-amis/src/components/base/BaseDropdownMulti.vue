@@ -53,15 +53,35 @@ export default {
     DxTreeView,
     // DxTextBox
   },
-  props: [
-    "treeDataSource",
-    "placeholderProp",
-    "valueExprProp",
-    "displayExprProp",
-    "parentIdExprProp",
-    "valueDefault",
-    "value",
-  ],
+  // props: [
+  //   "treeDataSource",
+  //   "placeholderProp",
+  //   "valueExprProp",
+  //   "displayExprProp",
+  //   "parentIdExprProp",
+  //   "valueDefault",
+  //   "value",
+  // ],
+  props: {
+    treeDataSource: {
+      type: Array
+    },
+    placeholderProp : {
+      type: String,
+    },
+    valueExprProp: {
+      type: String,
+    },
+    displayExprProp: {
+      type: String,
+    },
+    parentIdExprProp: {
+      type: String,
+    },
+    value: {
+      type: String
+    },
+  },
   data() {
     return {
       treeBoxValue: null,
@@ -104,6 +124,7 @@ export default {
      */
     treeView_itemSelectionChanged(e) {
       this.treeBoxValue = e.component.getSelectedNodeKeys();
+      // this.$emit("getTreeBoxValue",this.treeBoxValue);
     },
   },
 };
