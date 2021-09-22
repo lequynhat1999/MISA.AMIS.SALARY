@@ -60,13 +60,12 @@ export default {
     "displayExprProp",
     "parentIdExprProp",
     "valueDefault",
-    "value"
+    "value",
   ],
   data() {
     return {
       treeBoxValue: null,
       treeViewName: "treeView",
-      valueEmit: [],
     };
   },
   created() {
@@ -79,7 +78,8 @@ export default {
      * CreatedBy:LQNHAT(16/09/2021)
      */
     syncTreeViewSelection(e) {
-      // console.log("value-changed: " + e.value);
+      console.log("value-changed: " + e.value);
+      // this.$emit("input", e.value);
       let treeView =
         (e.component.selectItem && e.component) ||
         (this.$refs[this.treeViewName] &&
@@ -89,14 +89,11 @@ export default {
         if (e.value === null) {
           treeView.unselectAll();
         } else {
-          let values = e.value || this.treeBoxValue;
+          let values = e.value || this.value;
           for (let index = 0; index < values.length; index++) {
-            console.log("values: " + values[index]);
             this.$emit("input", values[index]);
-            this.valueEmit.push(values[index]);
             treeView.selectItem(values[index]);
           }
-          // this.$emit("input",this.valueEmit);
         }
       }
     },

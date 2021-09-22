@@ -137,6 +137,33 @@ namespace MISA.AMI.TPLUONG.Core.Entities
 
         public Boolean? ReduceBoolean { get; set; }
 
+        [NotMap]
+        public string ValueTypeName
+        {
+            get
+            {
+                switch (ValueTypeID)
+                {
+                    case 1:
+                        return "Số";
+                    case 2:
+                        return "Tiền tệ";
+                    case 3:
+                        return "Phần trăm";
+                    case 4:
+                        return "Chữ";
+                    case 5:
+                        return "Ngày";
+                    default:
+                        return "";
+                }
+            }
+
+            set { }
+        }
+
+        public int? ValueTypeID { get; set; }
+
         /// <summary>
         /// Giá trị
         /// </summary>

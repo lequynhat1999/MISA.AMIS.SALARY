@@ -84,6 +84,7 @@
                   :class="{
                     'border-red': errors.length > 0 ? true : false,
                   }"
+                  @input="generateCode"
                 />
                 <div v-if="errors.length > 0">
                   <div class="text-error">{{ errors[0] }}</div>
@@ -205,7 +206,7 @@
                 </div>
               </div>
             </div>
-            <div class="input-form flex">
+            <div class="input-form flex" v-if="salaryComposition.NatureID != 3">
               <div class="text-input flex">
                 <b>Định mức</b>
                 <div
@@ -233,7 +234,8 @@
                 :valueExprProp="'ValueTypeID'"
                 :dataSource="dataSourceValueType"
                 :valueDefault="dataSourceValueType[0].ValueTypeID"
-                :disabledProp="true"
+                :disabledProp="salaryComposition.NatureID == 3 ? false : true"
+                v-model="salaryComposition.ValueTypeID"
               />
             </div>
             <div class="input-form flex">
@@ -335,7 +337,6 @@ export default {
     // lấy ra toàn bộ danh sách thành phần lương
     this.getSalaryComposition();
   },
-  
   methods: {
     /**--------------------------------------------
      * Hàm check mode
@@ -347,9 +348,11 @@ export default {
       if (mode == 0) {
         this.salaryComposition = {
           OrganizationUnitID: "9b6e83a4-38d5-4184-a44f-2f202ea6c814",
-          NatureID: null,
+          SalaryCompositionTypeID: "172f9510-7e29-4de3-9e0a-f66a84d58eb3",
+          NatureID: 1,
           TaxableID: 0,
-          SalaryCompositionTypeID: "",
+          ValueTypeID: 2,
+          ReduceBoolean: false,
         };
         this.$nextTick(() => this.$refs.salaryCompositionName.focus());
       }
@@ -431,7 +434,7 @@ export default {
         .post(URL_API.API_SALARYCOMPOSITION, self.salaryComposition)
         .then(() => {
           self.$emit("reloadTableAndFilter");
-          self.$toast.success("Cập nhật thành công", {
+          self.$toast.success("Thêm thành công", {
             timeout: 2000,
           });
         });
@@ -450,7 +453,7 @@ export default {
         )
         .then(() => {
           self.$emit("reloadTableAndFilter");
-          self.$toast.success("Cập nhật thành công", {
+          self.$toast.success("Sửa thành công", {
             timeout: 2000,
           });
         });
@@ -478,6 +481,11 @@ export default {
         .then((res) => {
           self.salaryComposition = res.data;
         });
+    },
+
+    generateCode()
+    {
+      this.$set(this.salaryComposition,'SalaryCompositionCode',(this.salaryComposition.SalaryCompositionName).toUpperCase());
     },
 
     /**------------------------------------------------------------------------------

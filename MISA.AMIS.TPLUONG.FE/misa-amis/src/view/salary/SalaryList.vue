@@ -183,7 +183,7 @@ import TitleSalary from "../../components/base/BaseTitle.vue";
 import BaseDropdownSingle from "../../components/base/BaseDropdownSingle.vue";
 import BaseGrid from "../../components/base/BaseGrid.vue";
 import SalaryDetail from "../salary/SalaryDetail.vue";
-import { URL_API } from "../../js/common/data.js";
+import { URL_API,HEADERS,STATUS_DATA,PAGE_DATA } from "../../js/common/data.js";
 import BaseDropdown from "../../components/base/BaseDropdown.vue";
 import BaseCustomizeColumn from "../../components/base/BaseCustomizeColumn.vue";
 import BaseFilter from "../../components/base/BaseFilter.vue";
@@ -213,107 +213,9 @@ export default {
       // data source grid
       dataSource: [],
       // header grid
-      headers: [
-        {
-          DataField: "SalaryCompositionCode",
-          Caption: "Mã thành phần",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: true,
-          Checked: false,
-        },
-        {
-          DataField: "SalaryCompositionName",
-          Caption: "Tên thành phần",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: true,
-          Checked: false,
-        },
-        {
-          DataField: "SalaryCompositionTypeName",
-          Caption: "Loại thành phần",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: false,
-          Checked: false,
-        },
-        {
-          DataField: "NatureName",
-          Caption: "Tính chất",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: false,
-          Checked: false,
-        },
-        {
-          DataField: "OrganizationUnitName",
-          Caption: "Đơn vị áp dụng",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: false,
-          Checked: false,
-        },
-        {
-          DataField: "TaxableName",
-          Caption: "Chịu thuế",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: false,
-          Checked: false,
-        },
-        {
-          DataField: "ReduceName",
-          Caption: "Giảm trừ khi tính thuế",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: false,
-          Checked: false,
-        },
-        {
-          DataField: "Quota",
-          Caption: "Định mức",
-          DataType: "text",
-          Alignment: "right",
-          Fixed: false,
-          Checked: false,
-        },
-        {
-          DataField: "Cost",
-          Caption: "Giá trị",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: false,
-          Checked: false,
-        },
-        {
-          DataField: "Description",
-          Caption: "Mô tả",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: false,
-          Checked: false,
-        },
-        {
-          DataField: "StatusName",
-          Caption: "Trạng thái",
-          DataType: "text",
-          Alignment: "left",
-          Fixed: false,
-          Checked: false,
-        },
-      ],
-      statusData: [
-        { Text: "Tất cả trạng thái", Value: "" },
-        { Text: "Đang theo dõi", Value: 0 },
-        { Text: "Ngừng theo dõi", Value: 1 },
-      ],
-      dataPage: [
-        { Text: "15", Value: 15 },
-        { Text: "25", Value: 25 },
-        { Text: "50", Value: 50 },
-        { Text: "100", Value: 100 },
-      ],
+      headers: HEADERS,
+      statusData: STATUS_DATA,
+      dataPage: PAGE_DATA,
       // trang hiện tại
       pageIndex: 1,
       // value pageSize
