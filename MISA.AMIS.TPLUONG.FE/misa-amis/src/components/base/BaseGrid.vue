@@ -9,7 +9,7 @@
       noDataText="Không có dữ liệu"
       @content-ready="onContentReady"
       height="100%"
-      :column-width="200"
+      :column-width="230"
       :allow-column-resizing="true"
       :column-resizing-mode="currentMode"
       :column-min-width="180"
@@ -60,11 +60,15 @@
               title="Ngừng theo dõi"
               @click="openPopupUnfollow(data)"
             ></div>
-            <div class="btn-clone" title="Nhân bản"></div>
+            <div
+              class="btn-clone"
+              title="Nhân bản"
+              @click="cloneRow(data)"
+            ></div>
             <div
               class="btn-edit"
               title="Chỉnh sửa"
-              @click="onRowDblClick(data)"
+              @click="openFormDetail(data)"
             ></div>
             <div
               class="btn-delete"
@@ -100,13 +104,13 @@ export default {
     DxSelection,
   },
   // props: ["headers", "dataSource"],
-  props:{
+  props: {
     dataSource: {
       type: Array,
     },
     headers: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   data() {
     return {
@@ -151,6 +155,14 @@ export default {
       this.$emit("onRowDblClick", e.data);
     },
 
+    /**-----------------------------------------------------------
+     * Mở form detail
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    openFormDetail(e) {
+      this.$emit("openFormDetail", e.data);
+    },
+
     /**--------------------------------------------------------------
      * Bắt sự kiện delete row
      * CreatedBy: LQNHAT(21/09/2021)
@@ -165,6 +177,14 @@ export default {
      */
     openPopupUnfollow(e) {
       this.$emit("openPopupUnfollow", e.data);
+    },
+
+    /**-----------------------------------------------------------------
+     * Bắt sự kiện nhân bản
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    cloneRow(e) {
+      this.$emit("cloneRow", e.data);
     },
 
     /**---------------------------------------------------------------

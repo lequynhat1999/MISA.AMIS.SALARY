@@ -106,3 +106,9 @@
 {
     border: 1px solid #34b057 !important;
 }
+
+/* set bg khi hover vào item treeview */
+.dx-treeview-item.dx-state-hover
+{
+    background-color: #eafbf2 !important;
+}

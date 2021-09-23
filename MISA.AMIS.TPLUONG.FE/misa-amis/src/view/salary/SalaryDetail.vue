@@ -55,11 +55,11 @@
             <div class="icon-context"></div>
             <div class="context-menu-data" v-if="!hiddenContextMenu">
               <div class="box-item-context">
-                <div class="item-context flex a-l-c">
+                <div class="item-context flex a-l-c"  @click="cloneSalaryToForm">
                   <div class="icon-item-context"></div>
                   <div class="text-item-context">Nhân bản</div>
                 </div>
-                <div class="item-context flex a-l-c">
+                <div class="item-context flex a-l-c" @click="deleteToForm">
                   <div class="icon-item-context icon-context-delete"></div>
                   <div class="text-item-context text-context-delete">Xóa</div>
                 </div>
@@ -382,6 +382,7 @@ export default {
           this.salaryCompositionOriginalAdd,
           this.salaryComposition
         );
+        // focus vào ô tên thành phần
         this.$nextTick(() => this.$refs.salaryCompositionName.focus());
       }
       // mode == 1 thì bind data lên form
@@ -391,11 +392,40 @@ export default {
       }
     },
 
+    /**-------------------------------------------------------------------------------------
+     * Nhân bản
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    cloneSalaryComposition(data) {
+      this.mode = 0;
+      this.salaryComposition = {};
+      this.$refs.form_salary.reset();
+      this.salaryComposition.SalaryCompositionID =
+        "00000000-0000-0000-0000-000000000000";
+      this.$set(
+        this.salaryComposition,
+        "OrganizationUnitID",
+        data.OrganizationUnitID
+      );
+      this.$set(
+        this.salaryComposition,
+        "SalaryCompositionTypeID",
+        data.SalaryCompositionTypeID
+      );
+      this.$set(this.salaryComposition, "NatureID", data.NatureID);
+      this.$set(this.salaryComposition, "TaxableID", data.TaxableID);
+      this.$set(this.salaryComposition, "ReduceBoolean", data.ReduceBoolean);
+      this.$set(this.salaryComposition, "ValueTypeID", data.ValueTypeID);
+      // focus vào ô tên thành phần
+      this.$nextTick(() => this.$refs.salaryCompositionName.focus());
+    },
+
     /**-----------------------------------------------------------------------
      * Bắt sự kiện click nút lưu
      * CreatedBy: LQNHAT(21/09/2021)
      */
     saveBtnClick() {
+      console.log("click nút lưu");
       // validate check trùng mã
       if (this.isDuplicate == true) {
         this.$toast.error("Mã thành phần đã tồn tại", {
@@ -512,6 +542,22 @@ export default {
         });
     },
 
+    /**---------------------------------------------------------------------------
+     * Nhân bản trong form detail
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    cloneSalaryToForm() {
+      this.cloneSalaryComposition(this.salaryCompositionOriginalEdit);
+    },
+
+    /**----------------------------------------------------------------------------
+     * Xóa trong form detail
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    deleteToForm() {
+      this.$emit("openPopupDelete", this.salaryComposition);
+    },
+
     // getTreeBoxValue(value)
     // {
     //   this.salaryComposition.OrganizationUnitID = value;
@@ -551,6 +597,10 @@ export default {
       return str;
     },
 
+    /**-----------------------------------------------------------------------------------------
+     * Format SalaryCompositionCode
+     * CreatedBy: LQNHAT(22/09/2021)
+     */
     formatCode(value) {
       return value.toUpperCase().split(" ").join().replaceAll(",", "_");
     },
@@ -560,8 +610,6 @@ export default {
      * CreatedBy: LQNHAT(15/09/2021)
      */
     closeFormDetail() {
-      console.log(this.salaryCompositionOriginalAdd);
-      console.log(this.salaryComposition);
       // check mode = 0
       if (this.mode == 0) {
         // check data change
@@ -575,10 +623,8 @@ export default {
           // mở popup
           this.$emit("openPopupDataChange");
         }
-      }
-      else
-      {
-         // check data change
+      } else {
+        // check data change
         if (
           JSON.stringify(Object.values(this.salaryCompositionOriginalEdit)) ===
           JSON.stringify(Object.values(this.salaryComposition))

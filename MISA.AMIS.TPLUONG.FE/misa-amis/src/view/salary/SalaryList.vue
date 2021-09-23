@@ -87,8 +87,10 @@
             :dataSource="dataSource"
             @getRowChecked="getRowChecked"
             @onRowDblClick="rowDblClick"
+            @openFormDetail="openFormDetail"
             @openPopupDelete="openPopupDelete"
             @openPopupUnfollow="openPopupUnfollow"
+            @cloneRow="cloneRow"
           >
             <template #StatusName="{ data }">
               <div
@@ -173,6 +175,8 @@
       @closeForm="closeForm"
       @reloadTableAndFilter="reloadTableAndFilter"
       @openPopupDataChange="openPopupDataChange"
+      @cloneRow="cloneRow"
+      @openPopupDelete="openPopupDelete"
     />
     <BasePopup
       v-if="!hiddenPopup"
@@ -392,7 +396,7 @@ export default {
     },
 
     /**--------------------------------------------------------
-     * Bắt sự khi dblclick mở form sửa
+     * Bắt sự kiện khi dblclick mở form sửa
      * CreatedBy: LQNHAT(21/09/2021)
      */
     rowDblClick(data) {
@@ -400,6 +404,28 @@ export default {
       this.isOpenModal = !this.isOpenModal;
       this.modeFormDetail = 1;
       this.$refs.modeForm.show(this.modeFormDetail, this.salaryCompositionID);
+    },
+
+    /**------------------------------------------------------------------------
+     * Bắt sự kiện khi click icon sửa
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    openFormDetail(data)
+    {
+      this.salaryCompositionID = data.SalaryCompositionID;
+      this.isOpenModal = !this.isOpenModal;
+      this.modeFormDetail = 1;
+      this.$refs.modeForm.show(this.modeFormDetail, this.salaryCompositionID);
+      this.$refs.modeForm.openBoxBtn();
+    },
+
+    /**---------------------------------------------------------------------------
+     * Bắt sự kiện nhân bản
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    cloneRow(data) {
+      this.isOpenModal = ! this.isOpenModal;
+      this.$refs.modeForm.cloneSalaryComposition(data);
     },
 
     /**------------------------------------------------------------------------
@@ -431,6 +457,7 @@ export default {
             timeout: 2000,
           });
           self.reloadTableAndFilter();
+          self.closeForm();
         });
     },
 
