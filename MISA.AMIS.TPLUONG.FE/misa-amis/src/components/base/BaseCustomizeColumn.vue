@@ -88,7 +88,6 @@ export default {
      * CreateBy: LQNhat(20/09/2021)
      */
     close(e) {
-      console.log(e);
       if (!this.$el.contains(e.target)) {
         this.$emit("closeCustomizeColumn");
       }

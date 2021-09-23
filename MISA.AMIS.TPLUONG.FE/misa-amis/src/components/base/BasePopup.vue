@@ -12,7 +12,7 @@
       </div>
       <div class="footer-popup relative flex a-l-c">
         <div class="box-btn-popup flex a-l-c" >
-          <div class="btn-cancel-form m-r-8" v-if="statusPopup == 0 || statusPopup == 3">
+          <div class="btn-cancel-form m-r-8" v-if="statusPopup == 0 || statusPopup == 3 || statusPopup == 4">
             <button class="m-btn-white btn-cancel-popup" @click="closePopup">
               <div class="text-btn">Hủy</div>
             </button>
@@ -25,6 +25,16 @@
           <div class="box-btn-delete-popup" v-if="statusPopup == 3">
             <button class="m-btn btn-delete-popup" @click="deleteMultiRow">
               <div class="text-btn">Xóa</div>
+            </button>
+          </div>
+          <div class="btn-cancel-form m-r-8" v-if="statusPopup == 4">
+            <button class="m-btn-white" @click="cancelSave">
+              <div class="text-btn">Không lưu</div>
+            </button>
+          </div>
+          <div class="btn-add-form" v-if="statusPopup == 4">
+            <button class="m-btn m-btn-add" @click="saveBtnClickPopup">
+              <div class="text-btn">Lưu</div>
             </button>
           </div>
         </div>
@@ -107,7 +117,27 @@ export default {
     deleteMultiRow()
     {
       this.$emit("deleteMultiRow");
-    }
+    },
+
+    /**-----------------------------------
+     * Bắt sự kiện không lưu
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    cancelSave()
+    {
+      this.$emit("closeForm");
+      this.$emit("closePopup");
+    },
+
+    /**-------------------------------------
+     * Bắt sự kiện nút lưu
+     * Createdby: LQNHAT(23/09/2021)
+     */
+    saveBtnClickPopup()
+    {
+      this.$emit("closePopup");
+      this.$emit("saveBtnClick");
+    },
   },
 };
 </script>

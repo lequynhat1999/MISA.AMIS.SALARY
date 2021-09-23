@@ -1,9 +1,7 @@
 <template>
   <div class="content">
     <div class="header-content flex">
-      <TitleSalary 
-        :title="title"
-       />
+      <TitleSalary :title="title" />
       <div class="box-btn-add">
         <button class="m-btn btn-add" @click="openModal">
           <div class="icon-add"></div>
@@ -171,8 +169,10 @@
       ref="modeForm"
       :isOpenModal="isOpenModal"
       :treeDataSource="treeDataSource"
+      @closePopup="closePopup"
       @closeForm="closeForm"
       @reloadTableAndFilter="reloadTableAndFilter"
+      @openPopupDataChange="openPopupDataChange"
     />
     <BasePopup
       v-if="!hiddenPopup"
@@ -184,6 +184,8 @@
       @unfollowRow="unfollowRow"
       @unfollowMultiRow="unfollowMultiRow"
       @deleteMultiRow="deleteMultiRow"
+      @closeForm="closeForm"
+      @saveBtnClick="saveBtnClick"
     />
   </div>
 </template>
@@ -265,7 +267,7 @@ export default {
       // title popup
       titlePopup: "",
       textPopup: "",
-      // trạng thái popup: 0 là delete, 1 là unfollow, 2 là unfollow multi, 3 là delete multi
+      // trạng thái popup: 0 là delete, 1 là unfollow, 2 là unfollow multi, 3 là delete multi, 4 là datachange
       statusPopup: 0,
       // mảng ID
       salaryCompositionIDs: [],
@@ -532,6 +534,25 @@ export default {
           });
           self.reloadTableAndFilter();
         });
+    },
+
+    /**---------------------------------------------------------------------
+     * Mở popup khi dữ liệu thay đổi
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    openPopupDataChange() {
+      this.statusPopup = 4;
+      this.hiddenPopup = false;
+      this.titlePopup = "Thông báo";
+      this.textPopup = "Thông tin đã được thay đổi. Bạn có muốn lưu lại không?";
+    },
+
+    /**-------------------------------------------------------------------------
+     * Bắt sự kiện nút lưu bên popup data  change
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    saveBtnClick() {
+      this.$refs.modeForm.saveBtnClick();
     },
 
     /**-----------------------------------------------------------------------

@@ -13,7 +13,7 @@
         </div>
         <div class="box-btn-header flex" v-if="mode == 0">
           <div class="btn-cancel-form m-r-8">
-            <button class="m-btn-white">
+            <button class="m-btn-white" @click="closeFormDetail">
               <div class="text-btn">Hủy bỏ</div>
             </button>
           </div>
@@ -301,13 +301,13 @@ export default {
     // VueAutonumeric,
   },
   // props: ["isOpenModal", "treeDataSource"],
-  props:{
-    isOpenModal:{
+  props: {
+    isOpenModal: {
       type: Boolean,
     },
     treeDataSource: {
       type: Array,
-    }
+    },
   },
   data() {
     return {
@@ -346,6 +346,9 @@ export default {
       isDuplicate: false,
       // mảng thành phần lương
       salaryCompositions: [],
+      // object check data change
+      salaryCompositionOriginalAdd: {},
+      salaryCompositionOriginalEdit: {},
     };
   },
   created() {
@@ -354,6 +357,7 @@ export default {
     // lấy ra toàn bộ danh sách thành phần lương
     this.getSalaryComposition();
   },
+
   methods: {
     /**--------------------------------------------
      * Hàm check mode
@@ -362,16 +366,22 @@ export default {
     show(mode, id) {
       this.mode = mode;
       this.salaryCompositionID = id;
+      this.$refs.form_salary.reset();
       // mode == 0 thì add
       if (mode == 0) {
         this.salaryComposition = {
           OrganizationUnitID: "9b6e83a4-38d5-4184-a44f-2f202ea6c814",
-          SalaryCompositionTypeID: "172f9510-7e29-4de3-9e0a-f66a84d58eb3",
+          SalaryCompositionTypeID: "",
           NatureID: 1,
           TaxableID: 0,
           ValueTypeID: 2,
           ReduceBoolean: false,
+          Quota: 0,
         };
+        Object.assign(
+          this.salaryCompositionOriginalAdd,
+          this.salaryComposition
+        );
         this.$nextTick(() => this.$refs.salaryCompositionName.focus());
       }
       // mode == 1 thì bind data lên form
@@ -405,10 +415,10 @@ export default {
             OrganizationUnitID: "c0ff752c-5ff4-4238-998b-4235c9818b00",
             NatureID: 1,
           };
-          this.closeFormDetail();
+          this.closeForm();
         } else {
           this.editSalaryComposition();
-          this.closeFormDetail();
+          this.closeForm();
           this.hiddenBoxBtn = true;
         }
       });
@@ -422,7 +432,6 @@ export default {
       var self = this;
       axios.get(URL_API.API_SALARYCOMPOSITION).then((res) => {
         self.salaryCompositions = res.data;
-        console.log(self.salaryCompositions);
       });
     },
 
@@ -499,6 +508,7 @@ export default {
         .get(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
         .then((res) => {
           self.salaryComposition = res.data;
+          Object.assign(self.salaryCompositionOriginalEdit, res.data);
         });
     },
 
@@ -550,14 +560,45 @@ export default {
      * CreatedBy: LQNHAT(15/09/2021)
      */
     closeFormDetail() {
-      // close form
+      console.log(this.salaryCompositionOriginalAdd);
+      console.log(this.salaryComposition);
+      // check mode = 0
+      if (this.mode == 0) {
+        // check data change
+        if (
+          JSON.stringify(Object.values(this.salaryCompositionOriginalAdd)) ===
+          JSON.stringify(Object.values(this.salaryComposition))
+        ) {
+          // close form
+          this.closeForm();
+        } else {
+          // mở popup
+          this.$emit("openPopupDataChange");
+        }
+      }
+      else
+      {
+         // check data change
+        if (
+          JSON.stringify(Object.values(this.salaryCompositionOriginalEdit)) ===
+          JSON.stringify(Object.values(this.salaryComposition))
+        ) {
+          // close form
+          this.closeForm();
+        } else {
+          // mở popup
+          this.$emit("openPopupDataChange");
+        }
+      }
+    },
+
+    /**---------------------------------------------------------------------------
+     * Đóng form
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    closeForm() {
       this.$emit("closeForm");
-      this.salaryComposition = {};
       this.$refs.form_salary.reset();
-      console.log(
-        "salaryComposition.OrganizationUnitID: " +
-          this.salaryComposition.OrganizationUnitID
-      );
     },
 
     /*------------------------------------------------------------------
