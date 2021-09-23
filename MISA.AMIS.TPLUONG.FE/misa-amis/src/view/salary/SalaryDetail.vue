@@ -18,7 +18,7 @@
             </button>
           </div>
           <div class="btn-save-add-form m-r-8">
-            <button class="m-btn-white">
+            <button class="m-btn-white" @click="saveAndAddClick">
               <div class="text-btn">Lưu và thêm</div>
             </button>
           </div>
@@ -55,7 +55,7 @@
             <div class="icon-context"></div>
             <div class="context-menu-data" v-if="!hiddenContextMenu">
               <div class="box-item-context">
-                <div class="item-context flex a-l-c"  @click="cloneSalaryToForm">
+                <div class="item-context flex a-l-c" @click="cloneSalaryToForm">
                   <div class="icon-item-context"></div>
                   <div class="text-item-context">Nhân bản</div>
                 </div>
@@ -441,15 +441,48 @@ export default {
         }
         if (this.mode == 0) {
           this.addSalaryComposition();
-          this.salaryComposition = {
-            OrganizationUnitID: "c0ff752c-5ff4-4238-998b-4235c9818b00",
-            NatureID: 1,
-          };
           this.closeForm();
         } else {
           this.editSalaryComposition();
           this.closeForm();
           this.hiddenBoxBtn = true;
+        }
+      });
+    },
+
+    /**-----------------------------------------------------------------
+     * Bắt sự kiện click lưu và thêm
+     * CreatedBy: LQNHAT(23/09/2021)
+     */
+    saveAndAddClick() {
+      // validate check trùng mã
+      if (this.isDuplicate == true) {
+        this.$toast.error("Mã thành phần đã tồn tại", {
+          timeout: 2000,
+        });
+        this.isDuplicate = false;
+        return;
+      }
+      // validate cả form
+      this.$refs.form_salary.validate().then((success) => {
+        if (!success) {
+          return;
+        }
+        if (this.mode == 0) {
+          this.addSalaryComposition();
+          this.salaryComposition = {};
+          this.salaryComposition = {
+            OrganizationUnitID: "9b6e83a4-38d5-4184-a44f-2f202ea6c814",
+            SalaryCompositionTypeID: "",
+            NatureID: 1,
+            TaxableID: 0,
+            ValueTypeID: 2,
+            ReduceBoolean: false,
+            Quota: 0,
+          };
+          this.mode = 0;
+          this.$refs.form_salary.reset();
+          this.$nextTick(() => this.$refs.salaryCompositionName.focus());
         }
       });
     },
@@ -595,14 +628,6 @@ export default {
       str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng
       str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
       return str;
-    },
-
-    /**-----------------------------------------------------------------------------------------
-     * Format SalaryCompositionCode
-     * CreatedBy: LQNHAT(22/09/2021)
-     */
-    formatCode(value) {
-      return value.toUpperCase().split(" ").join().replaceAll(",", "_");
     },
 
     /**------------------------------------------------------------------------------
