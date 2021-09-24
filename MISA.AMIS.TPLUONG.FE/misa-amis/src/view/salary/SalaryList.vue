@@ -67,10 +67,19 @@
           <div class="box-btn-unfollow-all">
             <button
               class="m-btn btn-unfollow-all"
-              @click="openPopupFollowMulti"
+              @click="openPopupUnfollowMulti"
             >
               <div class="icon-unfollow"></div>
               <div class="text-btn">Ngừng theo dõi</div>
+            </button>
+          </div>
+          <div class="box-btn-follow-all">
+            <button
+              class="m-btn btn-follow-all"
+              @click="openPopupFollowMulti"
+            >
+              <div class="icon-follow"></div>
+              <div class="text-btn">Đang theo dõi</div>
             </button>
           </div>
           <div class="box-btn-deletes">
@@ -91,6 +100,7 @@
             @openPopupDelete="openPopupDelete"
             @openPopupUnfollow="openPopupUnfollow"
             @cloneRow="cloneRow"
+            @openPopupFollow="openPopupFollow"
           >
             <template #StatusName="{ data }">
               <div
@@ -190,6 +200,8 @@
       @deleteMultiRow="deleteMultiRow"
       @closeForm="closeForm"
       @saveBtnClick="saveBtnClick"
+      @followRow="followRow"
+      @followMultiRow="followMultiRow"
     />
   </div>
 </template>
@@ -271,7 +283,7 @@ export default {
       // title popup
       titlePopup: "",
       textPopup: "",
-      // trạng thái popup: 0 là delete, 1 là unfollow, 2 là unfollow multi, 3 là delete multi, 4 là datachange
+      // trạng thái popup: 0 là delete, 1 là unfollow, 2 là unfollow multi, 3 là delete multi, 4 là datachange, 5 là follow, 6 là follow multi
       statusPopup: 0,
       // mảng ID
       salaryCompositionIDs: [],
@@ -410,8 +422,7 @@ export default {
      * Bắt sự kiện khi click icon sửa
      * CreatedBy: LQNHAT(23/09/2021)
      */
-    openFormDetail(data)
-    {
+    openFormDetail(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
       this.isOpenModal = !this.isOpenModal;
       this.modeFormDetail = 1;
@@ -424,7 +435,7 @@ export default {
      * CreatedBy: LQNHAT(23/09/2021)
      */
     cloneRow(data) {
-      this.isOpenModal = ! this.isOpenModal;
+      this.isOpenModal = !this.isOpenModal;
       this.$refs.modeForm.cloneSalaryComposition(data);
     },
 
@@ -497,11 +508,43 @@ export default {
         });
     },
 
+    /**---------------------------------------------------------------------------------------------
+     * Mở popup follow
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    openPopupFollow(data) {
+      this.salaryCompositionID = data.SalaryCompositionID;
+      this.statusPopup = 5;
+      this.hiddenPopup = false;
+      this.titlePopup = "Chuyển trạng thái";
+      this.textPopup = stringInject(
+        "Bạn có chắc chắn muốn chuyển trạng thái thành phần lương {0} sang đang theo dõi không?",
+        [data.SalaryCompositionName]
+      );
+    },
+
+    followRow() {
+      var self = this;
+      self.hiddenPopup = true;
+      axios
+        .put(
+          URL_API.API_SALARYCOMPOSITION +
+            "/follow?salaryCompositionID=" +
+            self.salaryCompositionID
+        )
+        .then(() => {
+          self.$toast.success("Cập nhật thành công", {
+            timeout: 2000,
+          });
+          self.reloadTableAndFilter();
+        });
+    },
+
     /**----------------------------------------------------------------------------------------------------
      * Mở popup unfollow multi
      * CreatedBy: LQNHAT(22/09/2021)
      */
-    openPopupFollowMulti() {
+    openPopupUnfollowMulti() {
       this.statusPopup = 2;
       this.hiddenPopup = false;
       this.titlePopup = "Chuyển trạng thái";
@@ -520,6 +563,41 @@ export default {
         .put(
           URL_API.API_SALARYCOMPOSITION +
             "/?entitesId=" +
+            self.salaryCompositionIDs
+        )
+        .then(() => {
+          self.$toast.success("Cập nhật thành công", {
+            timeout: 2000,
+          });
+          self.reloadTableAndFilter();
+        });
+    },
+
+    /**---------------------------------------------------------------------------------------------------
+     * Mở popup follow multi
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    openPopupFollowMulti()
+    {
+      this.statusPopup = 6;
+      this.hiddenPopup = false;
+      this.titlePopup = "Chuyển trạng thái";
+      this.textPopup =
+        "Bạn có chắc chắn muốn chuyển trạng thái các thành phần lương đã chọn sang đang theo dõi không?";
+    },
+
+    /**----------------------------------------------------------------------------------------------------
+     * Follow multi
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    followMultiRow()
+    {
+      var self = this;
+      self.hiddenPopup = true;
+      axios
+        .put(
+          URL_API.API_SALARYCOMPOSITION +
+            "/followMulti?entitesId=" +
             self.salaryCompositionIDs
         )
         .then(() => {

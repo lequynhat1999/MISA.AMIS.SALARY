@@ -56,9 +56,15 @@
           <div class="box-btn flex a-l-c">
             <div
               v-if="data.data.StatusName == 'Đang theo dõi'"
-              class="btn-follow"
+              class="btn-unfollow"
               title="Ngừng theo dõi"
               @click="openPopupUnfollow(data)"
+            ></div>
+            <div
+              class="btn-follow"
+              title="Đang theo dõi"
+              @click="openPopupFollow(data)"
+              v-else
             ></div>
             <div
               class="btn-clone"
@@ -114,7 +120,6 @@ export default {
   },
   data() {
     return {
-      titleTd: "Hello",
       // data cho checkbox
       allMode: "page",
       checkBoxesMode: "always",
@@ -177,6 +182,14 @@ export default {
      */
     openPopupUnfollow(e) {
       this.$emit("openPopupUnfollow", e.data);
+    },
+
+    /*-----------------------------------------------------------
+     * Bắt sự kiện follow
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    openPopupFollow(e) {
+      this.$emit("openPopupFollow", e.data);
     },
 
     /**-----------------------------------------------------------------

@@ -22,6 +22,8 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
         {
 
         }
+
+
         #endregion
 
         #region Methods
@@ -133,6 +135,12 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
             }
         }
 
+        /// <summary>
+        /// Ngừng theo dõi nhiều thành phần lương
+        /// </summary>
+        /// <param name="entitesId">ID các thành phần lương</param>
+        /// <returns>Số bản ghi đã được thao tác</returns>
+        /// CreatedBy: LQNHAT(24/09/2021)
         public int UnfollowSalaryCompositions(List<Guid> entitesId)
         {
             var count = 0;
@@ -163,6 +171,104 @@ namespace MISA.AMIS.TPLUONG.Infrastructure.Repository
                                 if (propName == "StatusID" && (int)propValue == 0)
                                 {
                                     propValue = 1;
+                                }
+                                columnsName += $"{propName} = @{propName},";
+                                param.Add($"@{propName}", propValue);
+                            }
+                        }
+
+                        // cắt dấu phẩy cuối chuỗi
+                        columnsName = columnsName.Remove(columnsName.Length - 1, 1);
+
+                        // sửa dữ liệu
+                        var sqlQuery = $"UPDATE SalaryComposition SET {columnsName} WHERE SalaryCompositionID = '{item}'";
+                        var result = _dbConnection.Execute(sqlQuery, param: param);
+                        count += result;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return count;
+        }
+
+        public int Follow(Guid salaryCompositionID)
+        {
+            var entityCurrent = GetById(salaryCompositionID);
+            if (entityCurrent != null)
+            {
+                var columnsName = string.Empty;
+                var param = new DynamicParameters();
+                var properties = entityCurrent.GetType().GetProperties();
+                foreach (var prop in properties)
+                {
+                    var propertyAttrNotMap = prop.GetCustomAttributes(typeof(NotMap), true);
+                    if (propertyAttrNotMap.Length == 0)
+                    {
+                        var propName = prop.Name;
+                        var propValue = prop.GetValue(entityCurrent);
+                        //ngày chỉnh sửa
+                        if (propName == "ModifedDate")
+                        {
+                            propValue = DateTime.UtcNow;
+                        }
+
+                        //  theo dõi
+                        if (propName == "StatusID" && (int)propValue == 1)
+                        {
+                            propValue = 0;
+                        }
+                        columnsName += $"{propName} = @{propName},";
+                        param.Add($"@{propName}", propValue);
+                    }
+                }
+
+                // cắt dấu phẩy cuối chuỗi
+                columnsName = columnsName.Remove(columnsName.Length - 1, 1);
+
+                // sửa dữ liệu
+                var sqlQuery = $"UPDATE SalaryComposition SET {columnsName} WHERE SalaryCompositionID = '{salaryCompositionID}'";
+                var result = _dbConnection.Execute(sqlQuery, param: param);
+                return result;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public int FollowSalaryCompositions(List<Guid> entitesId)
+        {
+            var count = 0;
+            try
+            {
+                foreach (var item in entitesId)
+                {
+                    var entityCurrent = GetById(item);
+                    if (entityCurrent != null)
+                    {
+                        var columnsName = string.Empty;
+                        var param = new DynamicParameters();
+                        var properties = entityCurrent.GetType().GetProperties();
+                        foreach (var prop in properties)
+                        {
+                            var propertyAttrNotMap = prop.GetCustomAttributes(typeof(NotMap), true);
+                            if (propertyAttrNotMap.Length == 0)
+                            {
+                                var propName = prop.Name;
+                                var propValue = prop.GetValue(entityCurrent);
+                                //ngày chỉnh sửa
+                                if (propName == "ModifedDate")
+                                {
+                                    propValue = DateTime.UtcNow;
+                                }
+
+                                // theo dõi
+                                if (propName == "StatusID" && (int)propValue == 1)
+                                {
+                                    propValue = 0;
                                 }
                                 columnsName += $"{propName} = @{propName},";
                                 param.Add($"@{propName}", propValue);

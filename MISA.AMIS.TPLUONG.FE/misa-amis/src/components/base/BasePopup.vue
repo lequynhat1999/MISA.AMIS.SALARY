@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="box-btn-popup flex a-l-c">
-          <div class="btn-cancel-form m-r-8" @click="closePopup" v-if="statusPopup == 1 || statusPopup == 2">
+          <div class="btn-cancel-form m-r-8" @click="closePopup" v-if="statusPopup == 1 || statusPopup == 2 || statusPopup == 5 || statusPopup == 6">
             <button class="m-btn-white">
               <div class="text-btn">Hủy bỏ</div>
             </button>
@@ -50,6 +50,16 @@
             </button>
           </div>
           <div class="btn-add-form" @click="unfollowMultiRow" v-if="statusPopup == 2">
+            <button class="m-btn m-btn-add btn-confirm-unfollow">
+              <div class="text-btn">Đồng ý</div>
+            </button>
+          </div>
+          <div class="btn-add-form" @click="followRow" v-if="statusPopup == 5">
+            <button class="m-btn m-btn-add btn-confirm-unfollow">
+              <div class="text-btn">Đồng ý</div>
+            </button>
+          </div>
+          <div class="btn-add-form" @click="followMultiRow" v-if="statusPopup == 6">
             <button class="m-btn m-btn-add btn-confirm-unfollow">
               <div class="text-btn">Đồng ý</div>
             </button>
@@ -101,6 +111,15 @@ export default {
       this.$emit("unfollowRow");
     },
 
+    /**--------------------------------
+     * Follow
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    followRow()
+    {
+      this.$emit("followRow");
+    },
+
     /**---------------------------------
      * Unfollow multi
      * CreatedBy: LQNHAT(22/09/2021)
@@ -108,6 +127,15 @@ export default {
     unfollowMultiRow()
     {
       this.$emit("unfollowMultiRow");
+    },
+
+    /**-----------------------------------
+     * Follow multi
+     * Createdby: LQNHAT(24/09/2021)
+     */
+    followMultiRow()
+    {
+      this.$emit("followMultiRow");
     },
 
     /**--------------------------------

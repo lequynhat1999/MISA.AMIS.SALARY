@@ -84,6 +84,30 @@
   border: 1px solid #f90;
 }
 
+.icon-follow
+{
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-repeat: no-repeat;
+  background-color: #25b973!important;
+  -webkit-mask-position: -182px -42px;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.btn-follow-all {
+  background-color: #fff;
+  color: #34b057;
+  border: 1px solid #34b057;
+}
+
+.btn-follow-all:hover,
+.btn-follow-all:active {
+  background-color: #fff;
+  color: #34b057;
+  border: 1px solid #34b057;
+}
+
 .icon-deletes {
   -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
   -webkit-mask-position: -120px -23px;
@@ -116,12 +140,10 @@
   margin-left: 8px;
 }
 
-.btn-save-column
-{
+.btn-save-column {
   padding: 0 29px;
 }
 
-.btn-confirm-unfollow
-{
+.btn-confirm-unfollow {
   padding: 0 19px !important;
 }

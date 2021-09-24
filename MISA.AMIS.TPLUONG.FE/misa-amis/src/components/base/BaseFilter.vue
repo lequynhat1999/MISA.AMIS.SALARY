@@ -45,6 +45,7 @@
                 :dataSource="dataSourceFilter"
                 :valueDefault="dataSourceFilter[2].FilterID"
                 :disabledProp="false"
+                v-model="filter.FilterID"
               />
             </div>
             <div class="box-input-filter" v-if="element.Checked == true">
@@ -79,6 +80,7 @@ export default {
   data() {
     return {
       dataSourceFilter: FILTER,
+      filter:{FilterID : 3},
     };
   },
   methods: {

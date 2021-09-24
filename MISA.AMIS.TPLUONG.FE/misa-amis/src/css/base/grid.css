@@ -184,6 +184,18 @@
   height: 20px;
   -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
   -webkit-mask-repeat: no-repeat;
+  background-color: #25b973!important;
+  -webkit-mask-position: -180px -40px;
+  margin-top: 15px;
+  margin-right: 20px;
+}
+
+.btn-unfollow
+{
+  width: 20px;
+  height: 20px;
+  -webkit-mask-image: url(https://testcdnamisapp.misa.vn/apps/payroll/static/img/Icon.9254d79.svg);
+  -webkit-mask-repeat: no-repeat;
   background-color: #f90 !important;
   -webkit-mask-position: -220px -40px;
   margin-top: 15px;

@@ -1,6 +1,6 @@
 <template>
   <div class="dx-field-value">
-    <DxDropDownBox
+    <DxDropDownBox 
       :value="value"
       :show-clear-button="true"
       :data-source="treeDataSource"
@@ -79,7 +79,7 @@ export default {
       type: String,
     },
     value: {
-      type: String
+      type: [Array,String],
     },
   },
   data() {
@@ -98,7 +98,7 @@ export default {
      * CreatedBy:LQNHAT(16/09/2021)
      */
     syncTreeViewSelection(e) {
-      console.log("value-changed: " + e.value);
+      // console.log("value-changed: " + e.value);
       // this.$emit("input", e.value);
       let treeView =
         (e.component.selectItem && e.component) ||
@@ -111,7 +111,7 @@ export default {
         } else {
           let values = e.value || this.value;
           for (let index = 0; index < values.length; index++) {
-            this.$emit("input", values[index]);
+            // this.$emit("input", values[index]);
             treeView.selectItem(values[index]);
           }
         }
@@ -124,7 +124,8 @@ export default {
      */
     treeView_itemSelectionChanged(e) {
       this.treeBoxValue = e.component.getSelectedNodeKeys();
-      // this.$emit("getTreeBoxValue",this.treeBoxValue);
+      console.log("treeBoxValue: " + this.treeBoxValue);
+      this.$emit("getTreeBoxValue",this.treeBoxValue);
     },
   },
 };

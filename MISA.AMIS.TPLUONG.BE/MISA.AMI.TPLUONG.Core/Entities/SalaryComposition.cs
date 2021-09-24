@@ -79,7 +79,7 @@ namespace MISA.AMI.TPLUONG.Core.Entities
         /// </summary>
         [Required]
         [Name("ID đơn vị")]
-        public Guid OrganizationUnitID { get; set; }
+        public string OrganizationUnitID { get; set; }
 
         /// <summary>
         /// Tên đơn vị

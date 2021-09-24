@@ -126,6 +126,65 @@ namespace MISA.AMIS.TPLUONG.Api.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Theo dõi thành phần lương
+        /// </summary>
+        /// <param name="salaryCompositionID">ID thành phần lương</param>
+        /// <returns>Số bản ghi đã thao tác</returns>
+        /// CreatedBy:LQNHAT(19/09/2021)
+        [HttpPut("follow")]
+        public IActionResult FollowSalaryComposition(Guid salaryCompositionID)
+        {
+            try
+            {
+                var result = _salaryCompositionRepository.Follow(salaryCompositionID);
+                return StatusCode(200, result);
+            }
+            catch (Exception ex)
+            {
+                var msg = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Properties.ResourceSalaryComposition.Exception_ErrorMsg,
+                };
+                return StatusCode(500, msg);
+            }
+        }
+
+        /// <summary>
+        /// Ngừng theo dõi nhiều đối tượng
+        /// </summary>
+        /// <param name="entitesId">Id các đối tượng</param>
+        /// <returns></returns>
+        /// CreatedBy: LQNHAT(27/08/2021)
+        [HttpPut("followMulti")]
+        public IActionResult FollowSalaryCompositions(string entitesId)
+        {
+            try
+            {
+                var serviceResult = _salaryCompositionService.FollowSalaryCompositions(entitesId);
+                if (serviceResult.MISACode == AMI.TPLUONG.Core.MISAEnum.EnumServiceResult.Success)
+                {
+                    return StatusCode(200, serviceResult);
+                }
+                else
+                {
+                    return BadRequest(serviceResult.Message);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var msg = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Properties.ResourceSalaryComposition.Exception_ErrorMsg,
+                };
+                return StatusCode(500, msg);
+            }
+        }
+
         #endregion
     }
 }

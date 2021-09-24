@@ -22,6 +22,8 @@ namespace MISA.AMI.TPLUONG.Core.Services
             _serviceResult = new ServiceResult();
             _salaryCompositionRepository = salaryCompositionRepository;
         }
+
+
         #endregion
 
         #region Methods
@@ -62,6 +64,47 @@ namespace MISA.AMI.TPLUONG.Core.Services
                 {
                     _serviceResult.Data = result;
                     _serviceResult.Message = "Ngừng theo dõi nhiều thành phần lương thành công";
+                    _serviceResult.MISACode = MISAEnum.EnumServiceResult.Success;
+                }
+            }
+            else
+            {
+                _serviceResult.MISACode = MISAEnum.EnumServiceResult.BadRequest;
+                _serviceResult.Message = "Id sai hoặc không tồn tại";
+            }
+            return _serviceResult;
+        }
+
+        public ServiceResult FollowSalaryCompositions(string entitesId)
+        {
+            string[] arrId = entitesId.Split(",");
+            List<Guid> idList = new List<Guid>();
+            bool flag = true;
+            for (int i = 0; i < arrId.Length; i++)
+            {
+                Guid temp = new Guid();
+                if (Guid.TryParse(arrId[i], out temp))
+                {
+                    idList.Add(temp);
+                }
+                else
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                var result = _salaryCompositionRepository.FollowSalaryCompositions(idList);
+                if (result == 0)
+                {
+                    _serviceResult.MISACode = MISAEnum.EnumServiceResult.BadRequest;
+                    _serviceResult.Message = "Id sai hoặc không tồn tại";
+                }
+                else
+                {
+                    _serviceResult.Data = result;
+                    _serviceResult.Message = "Đang theo dõi nhiều thành phần lương thành công";
                     _serviceResult.MISACode = MISAEnum.EnumServiceResult.Success;
                 }
             }

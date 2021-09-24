@@ -117,7 +117,7 @@
               </div>
               <ValidationProvider rules="validateRequired" v-slot="{ errors }">
                 <DropdownMulti
-                  style="margin-left: 24px; width: 629px"
+                  style="margin-left: 24px; width: 629px;"
                   :treeDataSource="treeDataSource"
                   :placeholderProp="''"
                   :valueExprProp="'OrganizationUnitID'"
@@ -591,10 +591,10 @@ export default {
       this.$emit("openPopupDelete", this.salaryComposition);
     },
 
-    // getTreeBoxValue(value)
-    // {
-    //   this.salaryComposition.OrganizationUnitID = value;
-    // },
+    getTreeBoxValue(value)
+    {
+      this.salaryComposition.OrganizationUnitID = value;
+    },
 
     /*--------------------------------------
      * Sinh mã code
