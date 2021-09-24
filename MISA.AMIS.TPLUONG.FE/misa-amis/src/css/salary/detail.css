@@ -317,3 +317,74 @@
 {
   padding-left: 150px;
 }
+
+/* border input read  */
+.view-read
+{
+  border-left: 1px solid transparent;
+  border-right:1px solid transparent;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #e0e0e0 !important;
+  border-radius: 0px !important;
+  color: #6e6a67 !important;
+}
+
+/* khi hover vào input read */
+.view-read:hover
+{
+  border-left: 1px solid transparent;
+  border-right:1px solid transparent;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #e0e0e0 !important;
+  border-radius: 0px !important;
+}
+
+/* border component read */
+.view-read .dx-texteditor.dx-editor-outlined
+{
+  border-left: 1px solid transparent !important;
+  border-right:1px solid transparent !important;
+  border-top: 1px solid transparent !important;
+  /* border-bottom: 1px solid #e0e0e0 !important; */
+  border-radius: 0px !important;
+}
+
+/* khi hover component read */
+.view-read:hover .dx-state-hover 
+{
+  border-left: 1px solid transparent !important;
+  border-right:1px solid transparent !important;
+  border-top: 1px solid transparent !important;
+  border-bottom: none !important;
+  border-radius: 0px !important;
+}
+
+/* ẩn icon */
+.view-read .dx-icon-clear
+{
+  display: none !important;
+}
+
+/* ẩn icon */
+.view-read .dx-dropdowneditor-icon
+{
+  display: none !important;
+}
+
+/* fix lại heigth textarea read */
+.height-textarea
+{
+  height: 40px !important;
+}
+
+.border-red
+{
+  border: 1px solid red !important ;
+  border-radius: 4px;
+}
+
+.border-red-component .dx-texteditor.dx-editor-outlined
+{
+  border: 1px solid red !important;
+}
+

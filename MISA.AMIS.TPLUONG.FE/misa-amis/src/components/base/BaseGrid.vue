@@ -25,7 +25,7 @@
         :fixed="true"
       />
       <DxColumn
-        v-for="(item, index) in headers"
+        v-for="(item, index) in headerGrid"
         :key="index"
         :data-field="item.DataField"
         :caption="item.Caption"
@@ -117,6 +117,9 @@ export default {
     headers: {
       type: Array,
     },
+    headersDefault: {
+      type: Array,
+    },
   },
   data() {
     return {
@@ -132,9 +135,37 @@ export default {
           collapsed = true;
         }
       },
+      headerGrid: this.headers,
     };
   },
+  computed: {
+    // headerGrid: function () {
+    //   return this.headers.filter((i) => i.Checked === true);
+    // },
+  },
   methods: {
+    /**--------------------------------------------------------------------------
+     * Customize column
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    customizeColumn() {
+      this.headerGrid = this.headers.filter((i) => i.Checked === true);
+    },
+
+    /**--------------------------------------------------------------------------
+     * Refresh column
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    refreshColumn() {
+      // this.headers.forEach((item) => {
+      //   if (item.Checked == false) {
+      //     item.Checked = true;
+      //   }
+      // });
+      this.headerGrid = [...this.headersDefault];
+      // this.headerGrid = this.headers;
+    },
+
     /**-------------------------------------------------------
      * Gửi những rows được checked sang cha
      * CreatedBy:LQNHAT(17/09/2021)

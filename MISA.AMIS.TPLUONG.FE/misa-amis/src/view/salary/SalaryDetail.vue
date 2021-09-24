@@ -83,8 +83,10 @@
                   class="m-input input-text-form"
                   :class="{
                     'border-red': errors.length > 0 ? true : false,
+                    'view-read': hiddenBoxBtn,
                   }"
                   @input="generateCode"
+                  :disabled="hiddenBoxBtn"
                 />
                 <div v-if="errors.length > 0">
                   <div class="text-error">{{ errors[0] }}</div>
@@ -103,8 +105,10 @@
                   placeholder="Nhập mã viết liền"
                   :class="{
                     'border-red': errors.length > 0 ? true : false,
+                    'view-read': hiddenBoxBtn,
                   }"
                   @blur="checkDuplicateCode"
+                  :disabled="hiddenBoxBtn"
                 />
                 <div v-if="errors.length > 0">
                   <div class="text-error">{{ errors[0] }}</div>
@@ -117,17 +121,19 @@
               </div>
               <ValidationProvider rules="validateRequired" v-slot="{ errors }">
                 <DropdownMulti
-                  style="margin-left: 24px; width: 629px;"
+                  style="margin-left: 24px; width: 629px"
                   :treeDataSource="treeDataSource"
                   :placeholderProp="''"
                   :valueExprProp="'OrganizationUnitID'"
                   :displayExprProp="'OrganizationUnitName'"
                   :parentIdExprProp="'ParentID'"
+                  :hiddenBoxBtn="hiddenBoxBtn"
                   v-model="salaryComposition.OrganizationUnitID"
                   @getTreeBoxValue="getTreeBoxValue($event)"
                   :class="{
                     'border-red-component': errors.length > 0 ? true : false,
                   }"
+                  @getListSelected="getListSelected"
                 />
                 <div v-if="errors.length > 0">
                   <div class="text-error">{{ errors[0] }}</div>
@@ -142,13 +148,15 @@
                 <SelectBox
                   style="margin-left: 25px; width: 237px"
                   :dataSource="dataSourceType"
+                  :hiddenBoxBtn="hiddenBoxBtn"
                   :valueExprProp="'SalaryCompositionTypeID'"
                   :displayExprProp="'SalaryCompositionTypeName'"
-                  :disabledProp="false"
+                  :disabledProp="hiddenBoxBtn"
                   v-model="salaryComposition.SalaryCompositionTypeID"
                   :class="{
                     'border-red-component': errors.length > 0 ? true : false,
                   }"
+                  :borderRed="errors.length > 0 ? true : false"
                 />
                 <div v-if="errors.length > 0">
                   <div class="text-error">{{ errors[0] }}</div>
@@ -164,9 +172,10 @@
                   <SelectBox
                     style="margin-left: 25px; width: 237px"
                     :displayExprProp="'NatureName'"
+                    :hiddenBoxBtn="hiddenBoxBtn"
                     :valueExprProp="'NatureID'"
                     :dataSource="dataSourceNature"
-                    :disabledProp="false"
+                    :disabledProp="hiddenBoxBtn"
                     v-model="salaryComposition.NatureID"
                     :class="{
                       'border-red-component': errors.length > 0 ? true : false,
@@ -211,12 +220,13 @@
               <money
                 type="text"
                 class="m-input input-text-form"
+                :class="{ 'view-read': hiddenBoxBtn }"
+                :disabled="hiddenBoxBtn"
                 style="text-align: right"
                 value=""
                 v-bind="money"
                 v-model="salaryComposition.Quota"
               ></money>
-              <!-- <vue-autonumeric :options="'integer'" v-model="salaryComposition.Quota"></vue-autonumeric> -->
             </div>
             <div class="input-form flex">
               <div class="text-input">
@@ -224,6 +234,7 @@
               </div>
               <SelectBox
                 style="margin-left: 25px; max-width: 237px"
+                :hiddenBoxBtn="hiddenBoxBtn"
                 :displayExprProp="'ValueTypeName'"
                 :valueExprProp="'ValueTypeID'"
                 :dataSource="dataSourceValueType"
@@ -237,6 +248,11 @@
               </div>
               <textarea
                 class="m-input input-text-form"
+                :class="{
+                  'view-read': hiddenBoxBtn,
+                  'height-textarea': hiddenBoxBtn,
+                }"
+                :disabled="hiddenBoxBtn"
                 placeholder="Tự động gợi ý công thức và tham số khi gõ"
                 style="height: 71px"
                 v-model="salaryComposition.Cost"
@@ -248,6 +264,11 @@
               </div>
               <textarea
                 class="m-input input-text-form"
+                :class="{
+                  'view-read': hiddenBoxBtn,
+                  'height-textarea': hiddenBoxBtn,
+                }"
+                :disabled="hiddenBoxBtn"
                 style="height: 71px"
                 v-model="salaryComposition.Description"
               />
@@ -364,6 +385,7 @@ export default {
      * CreateBy : LQNHAT(21/09/2021)
      */
     show(mode, id) {
+      this.hiddenBoxBtn = false;
       this.mode = mode;
       this.salaryCompositionID = id;
       this.$refs.form_salary.reset();
@@ -371,6 +393,7 @@ export default {
       if (mode == 0) {
         this.salaryComposition = {
           OrganizationUnitID: "9b6e83a4-38d5-4184-a44f-2f202ea6c814",
+          OrganizationUnitName: "",
           SalaryCompositionTypeID: "",
           NatureID: 1,
           TaxableID: 0,
@@ -426,6 +449,7 @@ export default {
      */
     saveBtnClick() {
       console.log("click nút lưu");
+      this.checkDuplicateCode();
       // validate check trùng mã
       if (this.isDuplicate == true) {
         this.$toast.error("Mã thành phần đã tồn tại", {
@@ -497,7 +521,14 @@ export default {
         self.salaryCompositions = res.data;
       });
     },
-
+    getListSelected(value) {
+      this.salaryComposition.OrganizationUnitID = value.map(
+        (x) => x.OrganizationUnitID
+      ).join(",");
+      this.salaryComposition.OrganizationUnitName = value.map(
+        (x) => x.OrganizationUnitName
+      ).join(",");
+    },
     /**------------------------------------------------------
      * Check trùng mã
      * CreatedBy: LQNHAT(21/09/2021)
@@ -580,6 +611,7 @@ export default {
      * CreatedBy: LQNHAT(23/09/2021)
      */
     cloneSalaryToForm() {
+      this.hiddenBoxBtn = false;
       this.cloneSalaryComposition(this.salaryCompositionOriginalEdit);
     },
 
@@ -591,8 +623,7 @@ export default {
       this.$emit("openPopupDelete", this.salaryComposition);
     },
 
-    getTreeBoxValue(value)
-    {
+    getTreeBoxValue(value) {
       this.salaryComposition.OrganizationUnitID = value;
     },
 
@@ -706,6 +737,9 @@ export default {
       if (this.hiddenContextMenu == false) {
         this.hiddenContextMenu = true;
       }
+    },
+    preventClick() {
+      alert("hello");
     },
   },
   mounted() {

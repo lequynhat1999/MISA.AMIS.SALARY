@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="content-popup flex a-l-c">
-        <div>{{ textPopup }}</div>
+        <div v-html="textPopup"></div>
       </div>
       <div class="footer-popup relative flex a-l-c">
         <div class="box-btn-popup flex a-l-c" >

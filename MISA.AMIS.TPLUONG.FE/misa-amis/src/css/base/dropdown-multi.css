@@ -41,3 +41,9 @@
     background-color: #eafbf2 !important;
     color: #34b057 !important;
 }
+
+/* màu chữ component */
+.dx-texteditor-input
+{
+    color:  black !important;
+}

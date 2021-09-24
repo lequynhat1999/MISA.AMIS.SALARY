@@ -1,8 +1,9 @@
 <template>
-  <div class="dx-field-value">
+  <div class="dx-field-value" :class="{'view-read' : hiddenBoxBtn}">
     <DxDropDownBox 
       :value="value"
       :show-clear-button="true"
+      :disabled="hiddenBoxBtn"
       :data-source="treeDataSource"
       :value-expr="valueExprProp"
       :display-expr="displayExprProp"
@@ -81,6 +82,9 @@ export default {
     value: {
       type: [Array,String],
     },
+    hiddenBoxBtn:{
+      type: Boolean,
+    }
   },
   data() {
     return {
@@ -125,7 +129,9 @@ export default {
     treeView_itemSelectionChanged(e) {
       this.treeBoxValue = e.component.getSelectedNodeKeys();
       console.log("treeBoxValue: " + this.treeBoxValue);
-      this.$emit("getTreeBoxValue",this.treeBoxValue);
+      this.$emit("input",this.treeBoxValue);
+      var listSelected = this.treeDataSource.filter(x => this.treeBoxValue && this.treeBoxValue.include(x.OrganizationUnitID));
+      this.$emit("getListSelected",listSelected);
     },
   },
 };

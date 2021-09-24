@@ -44,7 +44,6 @@
                   ? treeDataSource[7].OrganizationUnitID
                   : null
               "
-              @getValueOrganizationUnit="getValueOrganizationUnit"
             />
             <div class="box-filter-toolbar" @click="openPopupFilter">
               <div class="icon-filter-toolbar"></div>
@@ -54,7 +53,10 @@
               <BaseCustomizeColumn
                 :hiddenCustomizeColumn="hiddenCustomizeColumn"
                 :headers="headers"
+                :headersDefault="headersDefault"
                 @closeCustomizeColumn="closeCustomizeColumn"
+                @customizeColumn="customizeColumn"
+                @refreshColumn="refreshColumn"
               />
             </div>
           </div>
@@ -74,10 +76,7 @@
             </button>
           </div>
           <div class="box-btn-follow-all">
-            <button
-              class="m-btn btn-follow-all"
-              @click="openPopupFollowMulti"
-            >
+            <button class="m-btn btn-follow-all" @click="openPopupFollowMulti">
               <div class="icon-follow"></div>
               <div class="text-btn">Đang theo dõi</div>
             </button>
@@ -93,6 +92,7 @@
           <BaseGrid
             ref="baseGrid"
             :headers="headers"
+            :headersDefault="headersDefault"
             :dataSource="dataSource"
             @getRowChecked="getRowChecked"
             @onRowDblClick="rowDblClick"
@@ -214,6 +214,7 @@ import SalaryDetail from "../salary/SalaryDetail.vue";
 import {
   URL_API,
   HEADERS,
+  HEADERS_DEFAULT,
   STATUS_DATA_FILTER,
   PAGE_DATA,
 } from "../../js/common/data.js";
@@ -249,6 +250,7 @@ export default {
       dataSource: [],
       // header grid
       headers: HEADERS,
+      headersDefault: HEADERS_DEFAULT,
       statusData: STATUS_DATA_FILTER,
       dataPage: PAGE_DATA,
       // trang hiện tại
@@ -398,6 +400,23 @@ export default {
     },
 
     /**------------------------------------------------
+     * Customize column
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    customizeColumn() {
+      this.$refs.baseGrid.customizeColumn();
+    },
+    
+    /**----------------------------------------------
+     * Refresh column
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    refreshColumn()
+    {
+      this.$refs.baseGrid.refreshColumn();
+    },
+
+    /**------------------------------------------------
      * Bắt sự kiện mở form chi tiết
      * CreatedBy: LQNHAT(14/09/2021)
      */
@@ -449,7 +468,7 @@ export default {
       this.hiddenPopup = false;
       this.titlePopup = "Thông báo";
       this.textPopup = stringInject(
-        "Bạn có chắc chắn muốn xóa thành phần lương {0} không?",
+        "Bạn có chắc chắn muốn xóa thành phần lương <b>{0}</b> không?",
         [data.SalaryCompositionName]
       );
     },
@@ -577,8 +596,7 @@ export default {
      * Mở popup follow multi
      * CreatedBy: LQNHAT(24/09/2021)
      */
-    openPopupFollowMulti()
-    {
+    openPopupFollowMulti() {
       this.statusPopup = 6;
       this.hiddenPopup = false;
       this.titlePopup = "Chuyển trạng thái";
@@ -590,8 +608,7 @@ export default {
      * Follow multi
      * CreatedBy: LQNHAT(24/09/2021)
      */
-    followMultiRow()
-    {
+    followMultiRow() {
       var self = this;
       self.hiddenPopup = true;
       axios

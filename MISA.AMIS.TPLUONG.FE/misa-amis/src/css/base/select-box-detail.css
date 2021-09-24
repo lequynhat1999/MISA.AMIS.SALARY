@@ -27,6 +27,13 @@
   color: #6e6a67 !important;
 }
 
+/* component disabled */
+.view-read .dx-state-disabled
+{
+  background-color: transparent !important;
+  opacity: 0.8 !important;
+}
+
 /* khi hover vào selectbox */
 .dx-state-hover
 {

@@ -1,5 +1,5 @@
 <template>
-  <div class="dx-field-value">
+  <div class="dx-field-value" :class="{'view-read' : hiddenBoxBtn,'border-red-component':borderRed}">
     <DxSelectBox class="scroll-content"
       :data-source="dataSource"
       placeholder=""
@@ -42,6 +42,12 @@ export default {
     },
     disabledProp:{
       type: Boolean
+    },
+    hiddenBoxBtn:{
+      type: Boolean,
+    },
+    borderRed:{
+      type: Boolean,
     }
   },
   data() {

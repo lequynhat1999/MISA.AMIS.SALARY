@@ -6,7 +6,11 @@
     <div class="content-customize">
       <div class="header-customize flex a-l-c">
         <div class="title-header">Tùy chỉnh cột</div>
-        <div class="icon-refresh" title="Lấy lại mặc định"></div>
+        <div
+          class="icon-refresh"
+          title="Lấy lại mặc định"
+          @click="refreshColumn"
+        ></div>
       </div>
       <div class="box-search relative box-search-column">
         <input
@@ -17,9 +21,9 @@
         <div class="icon-search-column"></div>
       </div>
       <div class="box-cloumn-header">
-        <draggable v-model="listHeader">
+        <draggable v-model="headers" >
           <transition-group>
-            <div v-for="element in listHeader" :key="element.DataField">
+            <div v-for="element in headers" :key="element.DataField">
               <div
                 class="item-column relative flex a-l-c"
                 @click="toggleCheckbox(element)"
@@ -42,7 +46,7 @@
       </div>
       <div class="footer-customize-column">
         <div class="box-btn-add box-btn-save-column">
-          <button class="m-btn btn-add btn-save-column">
+          <button class="m-btn btn-add btn-save-column" @click="saveColumn">
             <div class="text-btn">Lưu</div>
           </button>
         </div>
@@ -56,22 +60,23 @@ import draggable from "vuedraggable";
 export default {
   name: "BaseCustomizeColumn",
   // props: ["hiddenCustomizeColumn", "headers"],
-  props:{
+  props: {
     hiddenCustomizeColumn: {
       type: Boolean,
     },
     headers: {
-      type: Array
-    }
+      type: Array,
+    },
+    headersDefault: {
+      type: Array,
+    },
   },
   components: {
     draggable,
   },
   data() {
     return {
-      listHeader: this.headers,
       showIconDefault: false,
-      isHiddenColumn: this.hiddenCustomizeColumn,
     };
   },
   methods: {
@@ -81,6 +86,24 @@ export default {
      */
     toggleCheckbox(element) {
       element.Checked = !element.Checked;
+    },
+
+    /**----------------------------------------------------------------------
+     * Lưu trạng thái column
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    saveColumn() {
+      this.$emit("closeCustomizeColumn");
+      this.$emit("customizeColumn");
+    },
+
+    /**---------------------------------------------------------------------
+     * Refresh column
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
+    refreshColumn() {
+      this.$emit("closeCustomizeColumn");
+      this.$emit("refreshColumn");
     },
 
     /**----------------------------------------------------------------------
