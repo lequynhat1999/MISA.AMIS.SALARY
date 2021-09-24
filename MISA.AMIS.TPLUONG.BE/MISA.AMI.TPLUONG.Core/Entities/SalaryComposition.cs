@@ -84,7 +84,6 @@ namespace MISA.AMI.TPLUONG.Core.Entities
         /// <summary>
         /// Tên đơn vị
         /// </summary>
-        [NotMap]
         public string OrganizationUnitName { get; set; }
 
         /// <summary>

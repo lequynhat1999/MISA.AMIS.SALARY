@@ -86,11 +86,13 @@ export default {
      * CreatedBy: LQNHAT(15/09/2021)
      */
     syncTreeViewSelection(e) {
-      this.$emit("getValueOrganizationUnit", e.value);
+      // this.$emit("getValueOrganizationUnit", e.value);
       if (!e.value) {
         this.$refs.treeView.instance.unselectAll();
+        this.$emit("getValueOrganizationUnit","");
       } else {
         this.$refs.treeView.instance.selectItem(e.value);
+         this.$emit("getValueOrganizationUnit",(e.value));
       }
     },
     /**---------------------------------------------------------------------------------
@@ -99,6 +101,7 @@ export default {
      */
     treeView_itemSelectionChanged(e) {
       this.treeBoxValue = e.component.getSelectedNodeKeys();
+      // this.$emit("getValueOrganizationUnit",this.treeBoxValue);
     },
 
     /**--------------------------------------------------------------------------------

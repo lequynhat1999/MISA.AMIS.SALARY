@@ -88,7 +88,7 @@ export default {
   },
   data() {
     return {
-      treeBoxValue: null,
+      treeBoxValue: this.value,
       treeViewName: "treeView",
     };
   },
@@ -102,8 +102,6 @@ export default {
      * CreatedBy:LQNHAT(16/09/2021)
      */
     syncTreeViewSelection(e) {
-      // console.log("value-changed: " + e.value);
-      // this.$emit("input", e.value);
       let treeView =
         (e.component.selectItem && e.component) ||
         (this.$refs[this.treeViewName] &&
@@ -115,7 +113,6 @@ export default {
         } else {
           let values = e.value || this.value;
           for (let index = 0; index < values.length; index++) {
-            // this.$emit("input", values[index]);
             treeView.selectItem(values[index]);
           }
         }
@@ -127,11 +124,15 @@ export default {
      * CreatedBy:LQNHAT(17/09/2021)
      */
     treeView_itemSelectionChanged(e) {
-      this.treeBoxValue = e.component.getSelectedNodeKeys();
-      console.log("treeBoxValue: " + this.treeBoxValue);
-      this.$emit("input",this.treeBoxValue);
-      var listSelected = this.treeDataSource.filter(x => this.treeBoxValue && this.treeBoxValue.include(x.OrganizationUnitID));
-      this.$emit("getListSelected",listSelected);
+      // this.treeBoxValue = e.component.getSelectedNodeKeys();
+      // this.$emit("input",e.component.getSelectedNodes());
+      this.$emit("getListSelected",e.component.getSelectedNodes());
+      let arrID = [];
+      let nodeValue = e.component.getSelectedNodes();
+      nodeValue.forEach(element => {
+        arrID.push(element.key);
+      });
+      this.treeBoxValue = arrID;
     },
   },
 };

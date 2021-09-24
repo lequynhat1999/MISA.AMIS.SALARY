@@ -7,14 +7,13 @@
       :allow-column-reordering="true"
       :show-borders="true"
       noDataText="Không có dữ liệu"
-      @content-ready="onContentReady"
       height="100%"
-      :column-width="230"
       :allow-column-resizing="true"
       :column-resizing-mode="currentMode"
-      :column-min-width="180"
+      :column-min-width="100"
       :column-auto-width="true"
       :hover-state-enabled="true"
+      @content-ready="onContentReady"
       @selection-changed="onSelectionChanged"
       @row-dbl-click="onRowDblClick"
     >
@@ -29,6 +28,7 @@
         :key="index"
         :data-field="item.DataField"
         :caption="item.Caption"
+        :width="item.Width"
         :data-type="item.DataType"
         :alignment="item.Alignment"
         :fixed="item.Fixed"
@@ -120,6 +120,9 @@ export default {
     headersDefault: {
       type: Array,
     },
+    headerGrid: {
+      type: Array,
+    },
   },
   data() {
     return {
@@ -135,37 +138,9 @@ export default {
           collapsed = true;
         }
       },
-      headerGrid: this.headers,
     };
   },
-  computed: {
-    // headerGrid: function () {
-    //   return this.headers.filter((i) => i.Checked === true);
-    // },
-  },
   methods: {
-    /**--------------------------------------------------------------------------
-     * Customize column
-     * CreatedBy: LQNHAT(24/09/2021)
-     */
-    customizeColumn() {
-      this.headerGrid = this.headers.filter((i) => i.Checked === true);
-    },
-
-    /**--------------------------------------------------------------------------
-     * Refresh column
-     * CreatedBy: LQNHAT(24/09/2021)
-     */
-    refreshColumn() {
-      // this.headers.forEach((item) => {
-      //   if (item.Checked == false) {
-      //     item.Checked = true;
-      //   }
-      // });
-      this.headerGrid = [...this.headersDefault];
-      // this.headerGrid = this.headers;
-    },
-
     /**-------------------------------------------------------
      * Gửi những rows được checked sang cha
      * CreatedBy:LQNHAT(17/09/2021)

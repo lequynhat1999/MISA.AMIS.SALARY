@@ -21,7 +21,7 @@
         <div class="icon-search-column"></div>
       </div>
       <div class="box-cloumn-header">
-        <draggable v-model="headers" >
+        <draggable v-model="headers">
           <transition-group>
             <div v-for="element in headers" :key="element.DataField">
               <div
@@ -67,6 +67,9 @@ export default {
     headers: {
       type: Array,
     },
+    headerGrid: {
+      type: Array,
+    },
     headersDefault: {
       type: Array,
     },
@@ -95,6 +98,7 @@ export default {
     saveColumn() {
       this.$emit("closeCustomizeColumn");
       this.$emit("customizeColumn");
+      this.$emit("sortColumn",this.headers);
     },
 
     /**---------------------------------------------------------------------

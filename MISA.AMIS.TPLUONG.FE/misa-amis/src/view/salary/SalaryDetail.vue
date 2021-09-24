@@ -107,7 +107,6 @@
                     'border-red': errors.length > 0 ? true : false,
                     'view-read': hiddenBoxBtn,
                   }"
-                  @blur="checkDuplicateCode"
                   :disabled="hiddenBoxBtn"
                 />
                 <div v-if="errors.length > 0">
@@ -129,7 +128,6 @@
                   :parentIdExprProp="'ParentID'"
                   :hiddenBoxBtn="hiddenBoxBtn"
                   v-model="salaryComposition.OrganizationUnitID"
-                  @getTreeBoxValue="getTreeBoxValue($event)"
                   :class="{
                     'border-red-component': errors.length > 0 ? true : false,
                   }"
@@ -370,6 +368,7 @@ export default {
       // object check data change
       salaryCompositionOriginalAdd: {},
       salaryCompositionOriginalEdit: {},
+      value: [],
     };
   },
   created() {
@@ -392,8 +391,8 @@ export default {
       // mode == 0 thì add
       if (mode == 0) {
         this.salaryComposition = {
-          OrganizationUnitID: "9b6e83a4-38d5-4184-a44f-2f202ea6c814",
-          OrganizationUnitName: "",
+          OrganizationUnitID: ["9b6e83a4-38d5-4184-a44f-2f202ea6c814"],
+          OrganizationUnitName: [""],
           SalaryCompositionTypeID: "",
           NatureID: 1,
           TaxableID: 0,
@@ -521,14 +520,26 @@ export default {
         self.salaryCompositions = res.data;
       });
     },
+
+    /**---------------------------------------------------------------
+     * Lấy ra mảng dữ liệu đã chọn
+     * CreatedBy: LQNHAT(24/09/2021)
+     */
     getListSelected(value) {
-      this.salaryComposition.OrganizationUnitID = value.map(
-        (x) => x.OrganizationUnitID
-      ).join(",");
-      this.salaryComposition.OrganizationUnitName = value.map(
-        (x) => x.OrganizationUnitName
-      ).join(",");
+      this.value = value;
+      // gán array
+      let arrID = [];
+      value.forEach((element) => {
+        arrID.push(element.key);
+      });
+      let arrName = [];
+      value.forEach((element) => {
+        arrName.push(element.text);
+      });
+      this.salaryComposition.OrganizationUnitID = arrID;
+      this.salaryComposition.OrganizationUnitName = arrName;
     },
+
     /**------------------------------------------------------
      * Check trùng mã
      * CreatedBy: LQNHAT(21/09/2021)
@@ -552,6 +563,19 @@ export default {
      */
     addSalaryComposition() {
       var self = this;
+      // chuyển thành string
+      let strID = "";
+      this.value.forEach((element) => {
+        strID += element.key + ",";
+      });
+      let strName = "";
+      this.value.forEach((element) => {
+        strName += element.text + ",";
+      });
+      strID = strID.slice(0, -1);
+      this.salaryComposition.OrganizationUnitID = strID;
+      strName = strName.slice(0, -1);
+      this.salaryComposition.OrganizationUnitName = strName;
       axios
         .post(URL_API.API_SALARYCOMPOSITION, self.salaryComposition)
         .then(() => {
@@ -568,6 +592,24 @@ export default {
      */
     editSalaryComposition() {
       var self = this;
+      let strID = "";
+      let strName = "";
+      let arrID = self.salaryComposition.OrganizationUnitID;
+      let arrName = self.salaryComposition.OrganizationUnitName;
+      // ID string
+      arrID.forEach((element) => {
+        strID += element + ",";
+      });
+      strID = strID.slice(0, -1);
+      self.salaryComposition.OrganizationUnitID = strID;
+
+      // Name string
+      arrName.forEach((element) => {
+        strName += element + ",";
+      });
+      strName = strName.slice(0, -1);
+      self.salaryComposition.OrganizationUnitName = strName;
+
       axios
         .put(
           URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID,
@@ -602,6 +644,13 @@ export default {
         .get(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
         .then((res) => {
           self.salaryComposition = res.data;
+          let arrID = res.data.OrganizationUnitID;
+          let arrName = res.data.OrganizationUnitName;
+          arrID = arrID.split(",");
+          arrName = arrName.split(",");
+          // dạng array
+          self.salaryComposition.OrganizationUnitID = arrID;
+          self.salaryComposition.OrganizationUnitName = arrName;
           Object.assign(self.salaryCompositionOriginalEdit, res.data);
         });
     },

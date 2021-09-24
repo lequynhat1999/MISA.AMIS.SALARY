@@ -64,6 +64,11 @@
   cursor: pointer;
 }
 
+/* .dx-datagrid-rowsview .dx-row > td, .dx-datagrid-rowsview .dx-row > tr > td {
+  text-overflow: ellipsis !important;  
+  overflow: hidden !important;  
+} */
+
 /* padding */
 .dx-datagrid .dx-row > td {
   padding: 0 16px !important;

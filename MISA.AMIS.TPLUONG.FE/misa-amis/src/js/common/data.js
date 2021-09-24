@@ -50,6 +50,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: true,
     Checked: true,
+    Width: 200,
   },
   {
     DataField: "SalaryCompositionName",
@@ -58,6 +59,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: true,
     Checked: true,
+    Width: 200,
   },
   {
     DataField: "SalaryCompositionTypeName",
@@ -66,6 +68,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
+    Width: 200,
   },
   {
     DataField: "NatureName",
@@ -74,6 +77,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
+    Width: 135,
   },
   {
     DataField: "OrganizationUnitName",
@@ -82,6 +86,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
+    Width: 320,
   },
   {
     DataField: "TaxableName",
@@ -90,6 +95,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
+    Width: 160,
   },
   {
     DataField: "ReduceName",
@@ -98,6 +104,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
+    Width: 185,
   },
   {
     DataField: "Quota",
@@ -106,6 +113,7 @@ export const HEADERS = [
     Alignment: "right",
     Fixed: false,
     Checked: true,
+    Width: 160,
   },
   {
     DataField: "Cost",
@@ -114,6 +122,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
+    Width: 200,
   },
   {
     DataField: "Description",
@@ -122,6 +131,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
+    Width: 200,
   },
   {
     DataField: "StatusName",
@@ -130,6 +140,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
+    Width: 160,
   },
 ]
 

@@ -44,6 +44,7 @@
                   ? treeDataSource[7].OrganizationUnitID
                   : null
               "
+              @getValueOrganizationUnit="getValueOrganizationUnit"
             />
             <div class="box-filter-toolbar" @click="openPopupFilter">
               <div class="icon-filter-toolbar"></div>
@@ -52,11 +53,13 @@
               <div class="icon-setting-toolbar"></div>
               <BaseCustomizeColumn
                 :hiddenCustomizeColumn="hiddenCustomizeColumn"
-                :headers="headers"
                 :headersDefault="headersDefault"
+                :headers="headers"
+                :headerGrid="headerGrid"
                 @closeCustomizeColumn="closeCustomizeColumn"
                 @customizeColumn="customizeColumn"
                 @refreshColumn="refreshColumn"
+                @sortColumn="sortColumn"
               />
             </div>
           </div>
@@ -93,6 +96,7 @@
             ref="baseGrid"
             :headers="headers"
             :headersDefault="headersDefault"
+            :headerGrid="headerGrid"
             :dataSource="dataSource"
             @getRowChecked="getRowChecked"
             @onRowDblClick="rowDblClick"
@@ -251,6 +255,7 @@ export default {
       // header grid
       headers: HEADERS,
       headersDefault: HEADERS_DEFAULT,
+      headerGrid: HEADERS,
       statusData: STATUS_DATA_FILTER,
       dataPage: PAGE_DATA,
       // trang hiện tại
@@ -404,16 +409,21 @@ export default {
      * CreatedBy: LQNHAT(24/09/2021)
      */
     customizeColumn() {
-      this.$refs.baseGrid.customizeColumn();
+      this.headerGrid = this.headers.filter((i) => i.Checked === true);
     },
-    
+
     /**----------------------------------------------
      * Refresh column
      * CreatedBy: LQNHAT(24/09/2021)
      */
-    refreshColumn()
-    {
-      this.$refs.baseGrid.refreshColumn();
+    refreshColumn() {
+      this.headerGrid = [...this.headersDefault];
+      this.headers = [...this.headersDefault];
+    },
+
+    sortColumn(value) {
+      this.headerGrid = [...value];
+      this.headers = [...value];
     },
 
     /**------------------------------------------------
@@ -764,17 +774,25 @@ export default {
      * CreatedBy:LQNHAT(20/09/2021)
      */
     getValueOrganizationUnit(value) {
-      if (value == null) {
-        value = "";
+      if (value == "") {
+        this.organizationUnitID = "";
+        this.getSalaryCompositionByFilter(
+          this.pageIndex,
+          this.pageSize,
+          this.statusID,
+          this.organizationUnitID,
+          this.keysearch
+        );
+      } else {
+        this.organizationUnitID = value;
+        this.getSalaryCompositionByFilter(
+          this.pageIndex,
+          this.pageSize,
+          this.statusID,
+          this.organizationUnitID,
+          this.keysearch
+        );
       }
-      this.organizationUnitID = value;
-      this.getSalaryCompositionByFilter(
-        this.pageIndex,
-        this.pageSize,
-        this.statusID,
-        this.organizationUnitID,
-        this.keysearch
-      );
     },
 
     /**---------------------------------------------------------
