@@ -124,15 +124,8 @@ export default {
      * CreatedBy:LQNHAT(17/09/2021)
      */
     treeView_itemSelectionChanged(e) {
-      // this.treeBoxValue = e.component.getSelectedNodeKeys();
-      // this.$emit("input",e.component.getSelectedNodes());
       this.$emit("getListSelected",e.component.getSelectedNodes());
-      let arrID = [];
-      let nodeValue = e.component.getSelectedNodes();
-      nodeValue.forEach(element => {
-        arrID.push(element.key);
-      });
-      this.treeBoxValue = arrID;
+      console.log(e.component.getSelectedNodes());
     },
   },
 };

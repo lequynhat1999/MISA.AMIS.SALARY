@@ -303,7 +303,6 @@ import {
   URL_API,
   STATUS_DATA,
 } from "../../js/common/data.js";
-// import VueAutonumeric from '../src/components/VueAutonumeric.vue';
 extend("validateRequired", {
   ...required,
   message: "Không được để trống",
@@ -420,14 +419,26 @@ export default {
      */
     cloneSalaryComposition(data) {
       this.mode = 0;
+      this.hiddenBoxBtn = false;
       this.salaryComposition = {};
       this.$refs.form_salary.reset();
+      // chuyển thành arr
+      let arrID = data.OrganizationUnitID;
+      let arrName = data.OrganizationUnitName;
+      arrID = arrID.split(",");
+      arrName = arrName.split(",");
+
       this.salaryComposition.SalaryCompositionID =
         "00000000-0000-0000-0000-000000000000";
       this.$set(
         this.salaryComposition,
         "OrganizationUnitID",
-        data.OrganizationUnitID
+        arrID
+      );
+      this.$set(
+        this.salaryComposition,
+        "OrganizationUnitName",
+        arrName
       );
       this.$set(
         this.salaryComposition,
@@ -522,7 +533,7 @@ export default {
     },
 
     /**---------------------------------------------------------------
-     * Lấy ra mảng dữ liệu đã chọn
+     * Lấy ra mảng dữ liệu đã chọn từ dropdown multi
      * CreatedBy: LQNHAT(24/09/2021)
      */
     getListSelected(value) {

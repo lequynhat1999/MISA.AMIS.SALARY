@@ -16,7 +16,7 @@
         <div class="icon-search-filter"></div>
       </div>
       <div class="content-filter">
-        <div v-for="element in headers" :key="element.DataField">
+        <div v-for="element in headerFilter" :key="element.DataField">
           <div
             class="box-item-filter"
             :class="{
@@ -70,7 +70,7 @@ export default {
     hiddenPopupFilter: {
       type: Boolean,
     },
-    headers: {
+    headerFilter: {
       type: Array
     }
   },

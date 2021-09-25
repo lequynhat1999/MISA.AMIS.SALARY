@@ -21,9 +21,9 @@
         <div class="icon-search-column"></div>
       </div>
       <div class="box-cloumn-header">
-        <draggable v-model="headers">
+        <draggable v-model="headersSalary">
           <transition-group>
-            <div v-for="element in headers" :key="element.DataField">
+            <div v-for="element in headersSalary" :key="element.DataField">
               <div
                 class="item-column relative flex a-l-c"
                 @click="toggleCheckbox(element)"
@@ -80,7 +80,14 @@ export default {
   data() {
     return {
       showIconDefault: false,
+      headersSalary: this.headers
     };
+  },
+  watch:{
+    headers()
+    {
+      this.headersSalary = this.headers;
+    }
   },
   methods: {
     /**----------------------------------------------------------------------
@@ -97,8 +104,7 @@ export default {
      */
     saveColumn() {
       this.$emit("closeCustomizeColumn");
-      this.$emit("customizeColumn");
-      this.$emit("sortColumn",this.headers);
+      this.$emit("customizeColumn",this.headersSalary);
     },
 
     /**---------------------------------------------------------------------

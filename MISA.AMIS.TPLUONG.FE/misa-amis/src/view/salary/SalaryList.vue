@@ -59,7 +59,6 @@
                 @closeCustomizeColumn="closeCustomizeColumn"
                 @customizeColumn="customizeColumn"
                 @refreshColumn="refreshColumn"
-                @sortColumn="sortColumn"
               />
             </div>
           </div>
@@ -176,7 +175,7 @@
       >
         <BaseFilter
           :hiddenPopupFilter="hiddenPopupFilter"
-          :headers="headers"
+          :headerFilter="headerFilter"
           @closePopupFilter="closePopupFilter"
         />
       </div>
@@ -219,6 +218,7 @@ import {
   URL_API,
   HEADERS,
   HEADERS_DEFAULT,
+  HEADERS_FILTER,
   STATUS_DATA_FILTER,
   PAGE_DATA,
 } from "../../js/common/data.js";
@@ -255,7 +255,8 @@ export default {
       // header grid
       headers: HEADERS,
       headersDefault: HEADERS_DEFAULT,
-      headerGrid: HEADERS,
+      headerGrid: HEADERS_DEFAULT,
+      headerFilter: HEADERS_FILTER,
       statusData: STATUS_DATA_FILTER,
       dataPage: PAGE_DATA,
       // trang hiện tại
@@ -408,8 +409,9 @@ export default {
      * Customize column
      * CreatedBy: LQNHAT(24/09/2021)
      */
-    customizeColumn() {
-      this.headerGrid = this.headers.filter((i) => i.Checked === true);
+    customizeColumn(headers) {
+      this.headerGrid = [...headers.filter((i) => i.Checked === true)];
+      this.headers = [...headers];
     },
 
     /**----------------------------------------------
@@ -417,13 +419,9 @@ export default {
      * CreatedBy: LQNHAT(24/09/2021)
      */
     refreshColumn() {
+      this.headersDefault = [...HEADERS_DEFAULT];
       this.headerGrid = [...this.headersDefault];
       this.headers = [...this.headersDefault];
-    },
-
-    sortColumn(value) {
-      this.headerGrid = [...value];
-      this.headers = [...value];
     },
 
     /**------------------------------------------------
