@@ -41,6 +41,10 @@ export const FILTER = [
   { FilterName: "Không trống", FilterID: 7 },
 ];
 
+export const TAX = [
+  { TaxableName: "Chịu thuế", TaxableID: 0 },
+  { TaxableName: "Không chịu thuế", TaxableID: 1 },
+]
 
 export const HEADERS = [
   {
@@ -188,7 +192,7 @@ export const HEADERS_DEFAULT = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
-    Width: 320,
+    Width: 329,
   },
   {
     DataField: "TaxableName",

@@ -2,7 +2,13 @@
   <div id="myModal" class="modal" :class="{ 'hidden-modal': isOpenModal }">
     <div class="modal-content">
       <div class="header-form flex">
-        <div class="box-icon-back" title="Quay lại" @click="closeFormDetail">
+        <div
+          class="box-icon-back"
+          v-shortkey="['esc']"
+          @shortkey="closeFormDetail"
+          title="Quay lại (ESC)"
+          @click="closeFormDetail"
+        >
           <div class="icon-back"></div>
         </div>
         <div class="title-form" v-if="mode == 0">
@@ -18,11 +24,23 @@
             </button>
           </div>
           <div class="btn-save-add-form m-r-8">
-            <button class="m-btn-white" @click="saveAndAddClick">
+            <button
+              class="m-btn-white"
+              @click="saveAndAddClick"
+              title="Lưu và thêm (Ctrl + Shift + S)"
+              v-shortkey="['ctrl', 'shift', 's']"
+              @shortkey="saveAndAddClick"
+            >
               <div class="text-btn">Lưu và thêm</div>
             </button>
           </div>
-          <div class="btn-add-form" @click="saveBtnClick">
+          <div
+            class="btn-add-form"
+            @click="saveBtnClick"
+            title="Lưu (Ctrl + S)"
+            v-shortkey="['ctrl', 's']"
+            @shortkey="saveBtnClick"
+          >
             <button class="m-btn m-btn-add">
               <div class="text-btn">Lưu</div>
             </button>
@@ -296,13 +314,16 @@ import { extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 import { DxCheckBox } from "devextreme-vue/check-box";
 import { Money } from "v-money";
+import {MODE} from "../../js/common/mode";
 import axios from "axios";
 import {
   NATURE,
   VALUE_TYPE,
   URL_API,
   STATUS_DATA,
+  TAX,
 } from "../../js/common/data.js";
+import {MESSAGE} from "../../js/common/message";
 extend("validateRequired", {
   ...required,
   message: "Không được để trống",
@@ -316,7 +337,6 @@ export default {
     DxCheckBox,
     DxRadioGroup,
     Money,
-    // VueAutonumeric,
   },
   // props: ["isOpenModal", "treeDataSource"],
   props: {
@@ -346,16 +366,13 @@ export default {
       // value default cho input tính chất
       itemID: 1,
       // data cho radio
-      dataSourceTax: [
-        { TaxableName: "Chịu thuế", TaxableID: 0 },
-        { TaxableName: "Không chịu thuế", TaxableID: 1 },
-      ],
+      dataSourceTax: TAX,
       // ẩn contextmenu
       hiddenContextMenu: true,
       // ẩn box btn
       hiddenBoxBtn: true,
       // mode để check trạng thái form
-      mode: 0,
+      mode: MODE.ADD,
       // ID  thành phần lương
       salaryCompositionID: "",
       // Thành phần lương
@@ -388,7 +405,7 @@ export default {
       this.salaryCompositionID = id;
       this.$refs.form_salary.reset();
       // mode == 0 thì add
-      if (mode == 0) {
+      if (mode == MODE.ADD) {
         this.salaryComposition = {
           OrganizationUnitID: ["9b6e83a4-38d5-4184-a44f-2f202ea6c814"],
           OrganizationUnitName: [""],
@@ -418,7 +435,7 @@ export default {
      * CreatedBy: LQNHAT(23/09/2021)
      */
     cloneSalaryComposition(data) {
-      this.mode = 0;
+      this.mode = MODE.ADD;
       this.hiddenBoxBtn = false;
       this.salaryComposition = {};
       this.$refs.form_salary.reset();
@@ -430,16 +447,8 @@ export default {
 
       this.salaryComposition.SalaryCompositionID =
         "00000000-0000-0000-0000-000000000000";
-      this.$set(
-        this.salaryComposition,
-        "OrganizationUnitID",
-        arrID
-      );
-      this.$set(
-        this.salaryComposition,
-        "OrganizationUnitName",
-        arrName
-      );
+      this.$set(this.salaryComposition, "OrganizationUnitID", arrID);
+      this.$set(this.salaryComposition, "OrganizationUnitName", arrName);
       this.$set(
         this.salaryComposition,
         "SalaryCompositionTypeID",
@@ -458,11 +467,10 @@ export default {
      * CreatedBy: LQNHAT(21/09/2021)
      */
     saveBtnClick() {
-      console.log("click nút lưu");
       this.checkDuplicateCode();
       // validate check trùng mã
       if (this.isDuplicate == true) {
-        this.$toast.error("Mã thành phần đã tồn tại", {
+        this.$toast.error(MESSAGE.TEXT_ERROR_DUPLICATE_CODE, {
           timeout: 2000,
         });
         this.isDuplicate = false;
@@ -473,7 +481,7 @@ export default {
         if (!success) {
           return;
         }
-        if (this.mode == 0) {
+        if (this.mode == MODE.ADD) {
           this.addSalaryComposition();
           this.closeForm();
         } else {
@@ -491,7 +499,7 @@ export default {
     saveAndAddClick() {
       // validate check trùng mã
       if (this.isDuplicate == true) {
-        this.$toast.error("Mã thành phần đã tồn tại", {
+        this.$toast.error(MESSAGE.TEXT_ERROR_DUPLICATE_CODE, {
           timeout: 2000,
         });
         this.isDuplicate = false;
@@ -502,19 +510,19 @@ export default {
         if (!success) {
           return;
         }
-        if (this.mode == 0) {
+        if (this.mode == MODE.ADD) {
           this.addSalaryComposition();
           this.salaryComposition = {};
           this.salaryComposition = {
-            OrganizationUnitID: "9b6e83a4-38d5-4184-a44f-2f202ea6c814",
-            SalaryCompositionTypeID: "",
+            OrganizationUnitID: ["9b6e83a4-38d5-4184-a44f-2f202ea6c814"],
+            SalaryCompositionTypeID: [""],
             NatureID: 1,
             TaxableID: 0,
             ValueTypeID: 2,
             ReduceBoolean: false,
             Quota: 0,
           };
-          this.mode = 0;
+          this.mode = MODE.ADD;
           this.$refs.form_salary.reset();
           this.$nextTick(() => this.$refs.salaryCompositionName.focus());
         }
@@ -591,7 +599,7 @@ export default {
         .post(URL_API.API_SALARYCOMPOSITION, self.salaryComposition)
         .then(() => {
           self.$emit("reloadTableAndFilter");
-          self.$toast.success("Thêm thành công", {
+          self.$toast.success(MESSAGE.TEXT_SUCCESS_ADD, {
             timeout: 2000,
           });
         });
@@ -628,7 +636,7 @@ export default {
         )
         .then(() => {
           self.$emit("reloadTableAndFilter");
-          self.$toast.success("Sửa thành công", {
+          self.$toast.success(MESSAGE.TEXT_SUCCESS_EDIT, {
             timeout: 2000,
           });
         });
@@ -672,7 +680,48 @@ export default {
      */
     cloneSalaryToForm() {
       this.hiddenBoxBtn = false;
-      this.cloneSalaryComposition(this.salaryCompositionOriginalEdit);
+      this.mode = MODE.ADD;
+      this.salaryComposition = {};
+      this.$refs.form_salary.reset();
+      this.salaryComposition.SalaryCompositionID =
+        "00000000-0000-0000-0000-000000000000";
+      this.$set(
+        this.salaryComposition,
+        "OrganizationUnitID",
+        this.salaryCompositionOriginalEdit.OrganizationUnitID
+      );
+      this.$set(
+        this.salaryComposition,
+        "OrganizationUnitName",
+        this.salaryCompositionOriginalEdit.OrganizationUnitName
+      );
+      this.$set(
+        this.salaryComposition,
+        "SalaryCompositionTypeID",
+        this.salaryCompositionOriginalEdit.SalaryCompositionTypeID
+      );
+      this.$set(
+        this.salaryComposition,
+        "NatureID",
+        this.salaryCompositionOriginalEdit.NatureID
+      );
+      this.$set(
+        this.salaryComposition,
+        "TaxableID",
+        this.salaryCompositionOriginalEdit.TaxableID
+      );
+      this.$set(
+        this.salaryComposition,
+        "ReduceBoolean",
+        this.salaryCompositionOriginalEdit.ReduceBoolean
+      );
+      this.$set(
+        this.salaryComposition,
+        "ValueTypeID",
+        this.salaryCompositionOriginalEdit.ValueTypeID
+      );
+      // focus vào ô tên thành phần
+      this.$nextTick(() => this.$refs.salaryCompositionName.focus());
     },
 
     /**----------------------------------------------------------------------------
@@ -683,6 +732,10 @@ export default {
       this.$emit("openPopupDelete", this.salaryComposition);
     },
 
+    /*-----------------------------------------------------------------------------
+     * Lấy ra value của dropdown multi
+     * CreatedBy: LQNHAT(26/09/2021)
+     */
     getTreeBoxValue(value) {
       this.salaryComposition.OrganizationUnitID = value;
     },
@@ -727,7 +780,7 @@ export default {
      */
     closeFormDetail() {
       // check mode = 0
-      if (this.mode == 0) {
+      if (this.mode == MODE.ADD) {
         // check data change
         if (
           JSON.stringify(Object.values(this.salaryCompositionOriginalAdd)) ===
@@ -797,9 +850,6 @@ export default {
       if (this.hiddenContextMenu == false) {
         this.hiddenContextMenu = true;
       }
-    },
-    preventClick() {
-      alert("hello");
     },
   },
   mounted() {

@@ -228,6 +228,8 @@ import BaseFilter from "../../components/base/BaseFilter.vue";
 import axios from "axios";
 import BasePopup from "../../components/base/BasePopup.vue";
 import stringInject from "stringinject";
+import {MODE,STATUS_POPUP} from "../../js/common/mode";
+import {MESSAGE} from "../../js/common/message";
 export default {
   name: "SalaryList",
   components: {
@@ -279,7 +281,7 @@ export default {
       endRecord: 0,
       page: 1,
       // mode form detail : 0 là add, 1 là edit
-      modeFormDetail: 0,
+      modeFormDetail: MODE.ADD,
       // ẩn tùy chỉnh cột
       hiddenCustomizeColumn: true,
       // ẩn popup filter
@@ -292,7 +294,7 @@ export default {
       titlePopup: "",
       textPopup: "",
       // trạng thái popup: 0 là delete, 1 là unfollow, 2 là unfollow multi, 3 là delete multi, 4 là datachange, 5 là follow, 6 là follow multi
-      statusPopup: 0,
+      statusPopup: STATUS_POPUP.DELETE,
       // mảng ID
       salaryCompositionIDs: [],
     };
@@ -430,7 +432,7 @@ export default {
      */
     openModal() {
       this.isOpenModal = !this.isOpenModal;
-      this.modeFormDetail = 0;
+      this.modeFormDetail = MODE.ADD;
       this.$refs.modeForm.show(this.modeFormDetail);
     },
 
@@ -441,7 +443,7 @@ export default {
     rowDblClick(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
       this.isOpenModal = !this.isOpenModal;
-      this.modeFormDetail = 1;
+      this.modeFormDetail = MODE.EDIT;
       this.$refs.modeForm.show(this.modeFormDetail, this.salaryCompositionID);
     },
 
@@ -452,7 +454,7 @@ export default {
     openFormDetail(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
       this.isOpenModal = !this.isOpenModal;
-      this.modeFormDetail = 1;
+      this.modeFormDetail = MODE.EDIT;
       this.$refs.modeForm.show(this.modeFormDetail, this.salaryCompositionID);
       this.$refs.modeForm.openBoxBtn();
     },
@@ -472,11 +474,11 @@ export default {
      */
     openPopupDelete(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
-      this.statusPopup = 0;
+      this.statusPopup = STATUS_POPUP.DELETE;
       this.hiddenPopup = false;
-      this.titlePopup = "Thông báo";
+      this.titlePopup = MESSAGE.TITLE_POPUP_NOTICE;
       this.textPopup = stringInject(
-        "Bạn có chắc chắn muốn xóa thành phần lương <b>{0}</b> không?",
+        MESSAGE.TEXT_POPUP_DELETE,
         [data.SalaryCompositionName]
       );
     },
@@ -491,7 +493,7 @@ export default {
       axios
         .delete(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
         .then(() => {
-          self.$toast.success("Xóa thành công", {
+          self.$toast.success(MESSAGE.TEXT_SUCCES_DELETE, {
             timeout: 2000,
           });
           self.reloadTableAndFilter();
@@ -505,11 +507,11 @@ export default {
      */
     openPopupUnfollow(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
-      this.statusPopup = 1;
+      this.statusPopup = STATUS_POPUP.UNFOLLOW;
       this.hiddenPopup = false;
-      this.titlePopup = "Chuyển trạng thái";
+      this.titlePopup = MESSAGE.TITLE_POPUP_CHANGE_STATUS;
       this.textPopup = stringInject(
-        "Bạn có chắc chắn muốn chuyển trạng thái thành phần lương {0} sang ngừng theo dõi không?",
+        MESSAGE.TEXT_POPUP_UNFOLLOW,
         [data.SalaryCompositionName]
       );
     },
@@ -528,7 +530,7 @@ export default {
             self.salaryCompositionID
         )
         .then(() => {
-          self.$toast.success("Cập nhật thành công", {
+          self.$toast.success(MESSAGE.TEXT_SUCCESS_UPDATE, {
             timeout: 2000,
           });
           self.reloadTableAndFilter();
@@ -541,15 +543,19 @@ export default {
      */
     openPopupFollow(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
-      this.statusPopup = 5;
+      this.statusPopup = STATUS_POPUP.FOLLOW;
       this.hiddenPopup = false;
-      this.titlePopup = "Chuyển trạng thái";
+      this.titlePopup = MESSAGE.TITLE_POPUP_CHANGE_STATUS;
       this.textPopup = stringInject(
-        "Bạn có chắc chắn muốn chuyển trạng thái thành phần lương {0} sang đang theo dõi không?",
+        MESSAGE.TEXT_POPUP_FOLLOW,
         [data.SalaryCompositionName]
       );
     },
 
+    /**------------------------------------------------------------------------------------------------------
+     * Đang theo dõi 
+     * CreatedBy: LQNHAT(26/09/2021)
+     */
     followRow() {
       var self = this;
       self.hiddenPopup = true;
@@ -560,7 +566,7 @@ export default {
             self.salaryCompositionID
         )
         .then(() => {
-          self.$toast.success("Cập nhật thành công", {
+          self.$toast.success(MESSAGE.TEXT_SUCCESS_UPDATE, {
             timeout: 2000,
           });
           self.reloadTableAndFilter();
@@ -572,11 +578,11 @@ export default {
      * CreatedBy: LQNHAT(22/09/2021)
      */
     openPopupUnfollowMulti() {
-      this.statusPopup = 2;
+      this.statusPopup = STATUS_POPUP.UNFOLLOW_MULTI;
       this.hiddenPopup = false;
-      this.titlePopup = "Chuyển trạng thái";
+      this.titlePopup = MESSAGE.TITLE_POPUP_CHANGE_STATUS;
       this.textPopup =
-        "Bạn có chắc chắn muốn chuyển trạng thái các thành phần lương đã chọn sang ngừng theo dõi không?";
+        MESSAGE.TEXT_POPUP_UNFOLLOW_MULTI;
     },
 
     /**------------------------------------------------------------------------------------------------------
@@ -593,7 +599,7 @@ export default {
             self.salaryCompositionIDs
         )
         .then(() => {
-          self.$toast.success("Cập nhật thành công", {
+          self.$toast.success(MESSAGE.TEXT_SUCCESS_UPDATE, {
             timeout: 2000,
           });
           self.reloadTableAndFilter();
@@ -605,11 +611,11 @@ export default {
      * CreatedBy: LQNHAT(24/09/2021)
      */
     openPopupFollowMulti() {
-      this.statusPopup = 6;
+      this.statusPopup = STATUS_POPUP.FOLLOW_MULTI;
       this.hiddenPopup = false;
-      this.titlePopup = "Chuyển trạng thái";
+      this.titlePopup = MESSAGE.TITLE_POPUP_CHANGE_STATUS;
       this.textPopup =
-        "Bạn có chắc chắn muốn chuyển trạng thái các thành phần lương đã chọn sang đang theo dõi không?";
+        MESSAGE.TEXT_POPUP_FOLLOW_MULTI;
     },
 
     /**----------------------------------------------------------------------------------------------------
@@ -626,7 +632,7 @@ export default {
             self.salaryCompositionIDs
         )
         .then(() => {
-          self.$toast.success("Cập nhật thành công", {
+          self.$toast.success(MESSAGE.TEXT_SUCCESS_UPDATE, {
             timeout: 2000,
           });
           self.reloadTableAndFilter();
@@ -638,11 +644,11 @@ export default {
      * CreatedBy: LQNHAT(22/09/2021)
      */
     openPopupDeleteMulti() {
-      this.statusPopup = 3;
+      this.statusPopup = STATUS_POPUP.DELETE_MULTI;
       this.hiddenPopup = false;
-      this.titlePopup = "Thông báo";
+      this.titlePopup = MESSAGE.TITLE_POPUP_NOTICE;
       this.textPopup =
-        "Bạn có chắc chắn muốn xóa các thành phần lương đã chọn không?";
+        MESSAGE.TEXT_POPUP_DELETE_MULTI;
     },
 
     /**-----------------------------------------------------------------------
@@ -659,7 +665,7 @@ export default {
             self.salaryCompositionIDs
         )
         .then(() => {
-          self.$toast.success("Xóa thành công", {
+          self.$toast.success(MESSAGE.TEXT_SUCCESS_DELETE, {
             timeout: 2000,
           });
           self.reloadTableAndFilter();
@@ -671,10 +677,10 @@ export default {
      * CreatedBy: LQNHAT(23/09/2021)
      */
     openPopupDataChange() {
-      this.statusPopup = 4;
+      this.statusPopup = STATUS_POPUP.DATA_CHANGE;
       this.hiddenPopup = false;
-      this.titlePopup = "Thông báo";
-      this.textPopup = "Thông tin đã được thay đổi. Bạn có muốn lưu lại không?";
+      this.titlePopup = MESSAGE.TITLE_POPUP_NOTICE;
+      this.textPopup = MESSAGE.TEXT_POPUP_DATE_CHANGE;
     },
 
     /**-------------------------------------------------------------------------

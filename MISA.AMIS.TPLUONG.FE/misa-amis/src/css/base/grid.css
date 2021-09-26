@@ -64,16 +64,19 @@
   cursor: pointer;
 }
 
-/* .dx-datagrid-rowsview .dx-row > td, .dx-datagrid-rowsview .dx-row > tr > td {
-  text-overflow: ellipsis !important;  
-  overflow: hidden !important;  
-} */
+.dx-template-wrapper
+{
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
 
 /* padding */
 .dx-datagrid .dx-row > td {
   padding: 0 16px !important;
   line-height: 47px;
   cursor: pointer;
+  
 }
 
 /* padding text td */

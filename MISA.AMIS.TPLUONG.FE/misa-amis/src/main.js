@@ -33,6 +33,7 @@ Vue.component('pagination', Pagination);
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 Vue.use(money)
+Vue.use(require('vue-shortkey'))
 Vue.component('paginate', Paginate)
 new Vue({
   render: h => h(App),

@@ -16,6 +16,7 @@
         <input
           type="text"
           class="m-input input-search input-search-column"
+          v-model="keysearch"
           placeholder="Tìm kiếm"
         />
         <div class="icon-search-column"></div>
@@ -80,16 +81,41 @@ export default {
   data() {
     return {
       showIconDefault: false,
-      headersSalary: this.headers
+      headersSalary: this.headers,
+      keysearch: "",
     };
   },
-  watch:{
-    headers()
-    {
+  watch: {
+    headers() {
       this.headersSalary = this.headers;
-    }
+    },
+    keysearch() {
+      this.searchByKeysearch();
+    },
   },
   methods: {
+    /**-----------------------------------------------------------------------------
+     * Filter theo keysearch
+     * CreatedBy: LQNHAT(26/09/2021)
+     */
+    searchByKeysearch() {
+      if (this.keysearch != null && this.keysearch.length > 0) {
+        this.headersSalary = [];
+        this.headers.forEach((element) => {
+          if (
+            element.Caption.toLowerCase().includes(this.keysearch.toLowerCase())
+          )
+           {
+             this.headersSalary.push(element);
+          }
+        });
+      }
+      else
+      {
+        this.headersSalary = this.headers;
+        this.keysearch = null;
+      }
+    },
     /**----------------------------------------------------------------------
      * Ẩn hiện icon checkbox
      * CreatedBy: LQNHAT(20/09/2021)
@@ -104,7 +130,7 @@ export default {
      */
     saveColumn() {
       this.$emit("closeCustomizeColumn");
-      this.$emit("customizeColumn",this.headersSalary);
+      this.$emit("customizeColumn", this.headersSalary);
     },
 
     /**---------------------------------------------------------------------
@@ -123,6 +149,7 @@ export default {
     close(e) {
       if (!this.$el.contains(e.target)) {
         this.$emit("closeCustomizeColumn");
+        this.keysearch = null;
       }
     },
   },

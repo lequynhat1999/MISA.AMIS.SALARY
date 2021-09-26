@@ -70,6 +70,15 @@ namespace MISA.AMI.TPLUONG.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID sai hoặc không tồn tại.
+        /// </summary>
+        public static string Error_ID {
+            get {
+                return ResourceManager.GetString("Error_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to thông tin {0} không được để trống.
         /// </summary>
         public static string Error_Required {
@@ -84,6 +93,24 @@ namespace MISA.AMI.TPLUONG.Core.Resources {
         public static string Error_Validate {
             get {
                 return ResourceManager.GetString("Error_Validate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đang theo dõi nhiều thành phần lương thành công.
+        /// </summary>
+        public static string Success_Follow_Multi {
+            get {
+                return ResourceManager.GetString("Success_Follow_Multi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngừng theo dõi nhiều thành phần lương thành công.
+        /// </summary>
+        public static string Success_Unfollow_Multi {
+            get {
+                return ResourceManager.GetString("Success_Unfollow_Multi", resourceCulture);
             }
         }
     }

@@ -120,10 +120,19 @@
   <data name="Error_Exist" xml:space="preserve">
     <value>Thông tin {0} đã tồn tại</value>
   </data>
+  <data name="Error_ID" xml:space="preserve">
+    <value>ID sai hoặc không tồn tại</value>
+  </data>
   <data name="Error_Required" xml:space="preserve">
     <value>thông tin {0} không được để trống</value>
   </data>
   <data name="Error_Validate" xml:space="preserve">
     <value>Dữ liệu nhập vào không hợp lệ</value>
+  </data>
+  <data name="Success_Follow_Multi" xml:space="preserve">
+    <value>Đang theo dõi nhiều thành phần lương thành công</value>
+  </data>
+  <data name="Success_Unfollow_Multi" xml:space="preserve">
+    <value>Ngừng theo dõi nhiều thành phần lương thành công</value>
   </data>
 </root>

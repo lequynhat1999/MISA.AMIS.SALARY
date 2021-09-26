@@ -58,19 +58,19 @@ namespace MISA.AMI.TPLUONG.Core.Services
                 if (result == 0)
                 {
                     _serviceResult.MISACode = MISAEnum.EnumServiceResult.BadRequest;
-                    _serviceResult.Message = "Id sai hoặc không tồn tại";
+                    _serviceResult.Message = Resources.ResourceSalaryComposition.Error_ID;
                 }
                 else
                 {
                     _serviceResult.Data = result;
-                    _serviceResult.Message = "Ngừng theo dõi nhiều thành phần lương thành công";
+                    _serviceResult.Message = Resources.ResourceSalaryComposition.Success_Unfollow_Multi;
                     _serviceResult.MISACode = MISAEnum.EnumServiceResult.Success;
                 }
             }
             else
             {
                 _serviceResult.MISACode = MISAEnum.EnumServiceResult.BadRequest;
-                _serviceResult.Message = "Id sai hoặc không tồn tại";
+                _serviceResult.Message = Resources.ResourceSalaryComposition.Error_ID;
             }
             return _serviceResult;
         }
@@ -99,19 +99,19 @@ namespace MISA.AMI.TPLUONG.Core.Services
                 if (result == 0)
                 {
                     _serviceResult.MISACode = MISAEnum.EnumServiceResult.BadRequest;
-                    _serviceResult.Message = "Id sai hoặc không tồn tại";
+                    _serviceResult.Message = Resources.ResourceSalaryComposition.Error_ID;
                 }
                 else
                 {
                     _serviceResult.Data = result;
-                    _serviceResult.Message = "Đang theo dõi nhiều thành phần lương thành công";
+                    _serviceResult.Message = Resources.ResourceSalaryComposition.Success_Follow_Multi;
                     _serviceResult.MISACode = MISAEnum.EnumServiceResult.Success;
                 }
             }
             else
             {
                 _serviceResult.MISACode = MISAEnum.EnumServiceResult.BadRequest;
-                _serviceResult.Message = "Id sai hoặc không tồn tại";
+                _serviceResult.Message = Resources.ResourceSalaryComposition.Error_ID;
             }
             return _serviceResult;
         }
