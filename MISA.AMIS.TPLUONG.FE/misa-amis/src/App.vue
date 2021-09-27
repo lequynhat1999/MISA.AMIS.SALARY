@@ -34,6 +34,7 @@ export default {
 @import "./css/base/customize-column.css";
 @import "./css/base/filter.css";
 @import "./css/base/popup.css";
+@import "./css/base/loading.css";
 * {
   margin: 0;
   padding: 0;

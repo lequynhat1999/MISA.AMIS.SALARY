@@ -90,35 +90,15 @@ export default {
     headers(data) {
       this.headersSalary = data;
     },
-    keysearch() {
-      this.searchByKeysearch();
-    },
   },
   methods: {
-    /**-----------------------------------------------------------------------------
-     * Filter theo keysearch
-     * CreatedBy: LQNHAT(26/09/2021)
+    /**---------------------------------------------------------------------------
+     * Filter
+     * CreatedBy: LQNHAT(27/09/2021)
      */
-    searchByKeysearch() {
-      if (this.keysearch != null && this.keysearch.length > 0) {
-        this.headersSalary = [];
-        this.headers.forEach((element) => {
-          if (
-            element.Caption.toLowerCase().includes(this.keysearch.toLowerCase())
-          )
-           {
-             this.headersSalary.push(element);
-          }
-        });
-      }
-      else
-      {
-        this.headersSalary = this.headers;
-      }
-    },
-    show(item)
+    show(element)
     {
-      return item.Caption.toLowerCase().includes(this.keysearch.toLowerCase());
+      return element.Caption.toLowerCase().includes(this.keysearch.toLowerCase());
     },
     /**----------------------------------------------------------------------
      * Ẩn hiện icon checkbox

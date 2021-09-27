@@ -85,8 +85,14 @@
         </div>
       </template>
 
-      <DxLoadPanel :enabled="true"
-       />
+      <!-- <DxLoadPanel
+        :enabled="true"
+        :show-pane="showPane"
+        :height="100"
+        :width="250"
+        indicator-src="https://js.devexpress.com/Content/data/loadingIcons/rolling.svg"
+        message= null
+      /> -->
       <DxScrolling column-rendering-mode="virtual" />
       <DxGrouping :auto-expand-all="false" />
     </DxDataGrid>
@@ -100,7 +106,7 @@ import {
   DxGrouping,
   DxSelection,
   DxScrolling,
-  DxLoadPanel,
+  // DxLoadPanel,
 } from "devextreme-vue/data-grid";
 import "devextreme/data/odata/store";
 let collapsed = false;
@@ -111,7 +117,7 @@ export default {
     DxGrouping,
     DxScrolling,
     DxSelection,
-    DxLoadPanel,
+    // DxLoadPanel,
   },
   // props: ["headers", "dataSource"],
   props: {
@@ -130,6 +136,7 @@ export default {
   },
   data() {
     return {
+      showPane: false,
       // data cho checkbox
       allMode: "page",
       checkBoxesMode: "always",

@@ -206,6 +206,7 @@
       @followRow="followRow"
       @followMultiRow="followMultiRow"
     />
+    <BaseLoading :isLoading="isLoading" />
   </div>
 </template>
 
@@ -230,6 +231,7 @@ import BasePopup from "../../components/base/BasePopup.vue";
 import stringInject from "stringinject";
 import { MODE, STATUS_POPUP } from "../../js/common/mode";
 import { MESSAGE } from "../../js/common/message";
+import BaseLoading from "../../components/base/BaseLoading.vue";
 export default {
   name: "SalaryList",
   components: {
@@ -241,9 +243,11 @@ export default {
     BaseCustomizeColumn,
     BaseFilter,
     BasePopup,
+    BaseLoading,
   },
   data() {
     return {
+      isLoading: false,
       // title page
       title: "Thành phần lương",
       // mở modal
@@ -320,6 +324,7 @@ export default {
      */
     getSalaryCompositionByFilter() {
       var self = this;
+      self.isLoading = true;
       axios
         .get(
           URL_API.API_SALARYCOMPOSITION +
@@ -347,6 +352,7 @@ export default {
             self.amountPage < self.pageSize * self.pageIndex
               ? self.amountPage
               : self.pageSize * self.pageIndex;
+          self.isLoading = false;
         });
     },
 
@@ -356,6 +362,7 @@ export default {
      */
     reloadTableAndFilter() {
       var self = this;
+      self.isLoading = true;
       axios
         .get(
           URL_API.API_SALARYCOMPOSITION +
@@ -377,7 +384,7 @@ export default {
             self.amountPage < self.pageSize * self.pageIndex
               ? self.amountPage
               : self.pageSize * self.pageIndex;
-
+          self.isLoading = false;
           // quay về trang đầu tiên
           self.$refs.pagination.selectFirstPage();
         });
