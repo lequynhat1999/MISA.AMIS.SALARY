@@ -228,8 +228,8 @@ import BaseFilter from "../../components/base/BaseFilter.vue";
 import axios from "axios";
 import BasePopup from "../../components/base/BasePopup.vue";
 import stringInject from "stringinject";
-import {MODE,STATUS_POPUP} from "../../js/common/mode";
-import {MESSAGE} from "../../js/common/message";
+import { MODE, STATUS_POPUP } from "../../js/common/mode";
+import { MESSAGE } from "../../js/common/message";
 export default {
   name: "SalaryList",
   components: {
@@ -255,9 +255,9 @@ export default {
       // data source grid
       dataSource: [],
       // header grid
-      headers: HEADERS,
-      headersDefault: HEADERS_DEFAULT,
-      headerGrid: HEADERS_DEFAULT,
+      headers: [...HEADERS],
+      headersDefault: [...HEADERS_DEFAULT],
+      headerGrid: [...HEADERS_DEFAULT],
       headerFilter: HEADERS_FILTER,
       statusData: STATUS_DATA_FILTER,
       dataPage: PAGE_DATA,
@@ -377,6 +377,8 @@ export default {
             self.amountPage < self.pageSize * self.pageIndex
               ? self.amountPage
               : self.pageSize * self.pageIndex;
+
+          // quay về trang đầu tiên
           self.$refs.pagination.selectFirstPage();
         });
     },
@@ -477,10 +479,9 @@ export default {
       this.statusPopup = STATUS_POPUP.DELETE;
       this.hiddenPopup = false;
       this.titlePopup = MESSAGE.TITLE_POPUP_NOTICE;
-      this.textPopup = stringInject(
-        MESSAGE.TEXT_POPUP_DELETE,
-        [data.SalaryCompositionName]
-      );
+      this.textPopup = stringInject(MESSAGE.TEXT_POPUP_DELETE, [
+        data.SalaryCompositionName,
+      ]);
     },
 
     /**--------------------------------------------------------------------------
@@ -493,7 +494,7 @@ export default {
       axios
         .delete(URL_API.API_SALARYCOMPOSITION + "/" + self.salaryCompositionID)
         .then(() => {
-          self.$toast.success(MESSAGE.TEXT_SUCCES_DELETE, {
+          self.$toast.success(MESSAGE.TEXT_SUCCESS_DELETE, {
             timeout: 2000,
           });
           self.reloadTableAndFilter();
@@ -510,10 +511,9 @@ export default {
       this.statusPopup = STATUS_POPUP.UNFOLLOW;
       this.hiddenPopup = false;
       this.titlePopup = MESSAGE.TITLE_POPUP_CHANGE_STATUS;
-      this.textPopup = stringInject(
-        MESSAGE.TEXT_POPUP_UNFOLLOW,
-        [data.SalaryCompositionName]
-      );
+      this.textPopup = stringInject(MESSAGE.TEXT_POPUP_UNFOLLOW, [
+        data.SalaryCompositionName,
+      ]);
     },
 
     /**---------------------------------------------------------------------------------------------------
@@ -546,14 +546,13 @@ export default {
       this.statusPopup = STATUS_POPUP.FOLLOW;
       this.hiddenPopup = false;
       this.titlePopup = MESSAGE.TITLE_POPUP_CHANGE_STATUS;
-      this.textPopup = stringInject(
-        MESSAGE.TEXT_POPUP_FOLLOW,
-        [data.SalaryCompositionName]
-      );
+      this.textPopup = stringInject(MESSAGE.TEXT_POPUP_FOLLOW, [
+        data.SalaryCompositionName,
+      ]);
     },
 
     /**------------------------------------------------------------------------------------------------------
-     * Đang theo dõi 
+     * Đang theo dõi
      * CreatedBy: LQNHAT(26/09/2021)
      */
     followRow() {
@@ -581,8 +580,7 @@ export default {
       this.statusPopup = STATUS_POPUP.UNFOLLOW_MULTI;
       this.hiddenPopup = false;
       this.titlePopup = MESSAGE.TITLE_POPUP_CHANGE_STATUS;
-      this.textPopup =
-        MESSAGE.TEXT_POPUP_UNFOLLOW_MULTI;
+      this.textPopup = MESSAGE.TEXT_POPUP_UNFOLLOW_MULTI;
     },
 
     /**------------------------------------------------------------------------------------------------------
@@ -614,8 +612,7 @@ export default {
       this.statusPopup = STATUS_POPUP.FOLLOW_MULTI;
       this.hiddenPopup = false;
       this.titlePopup = MESSAGE.TITLE_POPUP_CHANGE_STATUS;
-      this.textPopup =
-        MESSAGE.TEXT_POPUP_FOLLOW_MULTI;
+      this.textPopup = MESSAGE.TEXT_POPUP_FOLLOW_MULTI;
     },
 
     /**----------------------------------------------------------------------------------------------------
@@ -647,8 +644,7 @@ export default {
       this.statusPopup = STATUS_POPUP.DELETE_MULTI;
       this.hiddenPopup = false;
       this.titlePopup = MESSAGE.TITLE_POPUP_NOTICE;
-      this.textPopup =
-        MESSAGE.TEXT_POPUP_DELETE_MULTI;
+      this.textPopup = MESSAGE.TEXT_POPUP_DELETE_MULTI;
     },
 
     /**-----------------------------------------------------------------------
@@ -748,6 +744,8 @@ export default {
      */
     getValueStatus(value) {
       this.statusID = value;
+      // quay về trang đầu tiên
+      this.$refs.pagination.selectFirstPage();
       this.getSalaryCompositionByFilter(
         this.pageIndex,
         this.pageSize,
@@ -780,6 +778,7 @@ export default {
     getValueOrganizationUnit(value) {
       if (value == "") {
         this.organizationUnitID = "";
+        this.$refs.pagination.selectFirstPage();
         this.getSalaryCompositionByFilter(
           this.pageIndex,
           this.pageSize,
@@ -789,6 +788,7 @@ export default {
         );
       } else {
         this.organizationUnitID = value;
+        this.$refs.pagination.selectFirstPage();
         this.getSalaryCompositionByFilter(
           this.pageIndex,
           this.pageSize,
@@ -820,7 +820,7 @@ export default {
       if (this.keysearch == "") {
         this.reloadTableAndFilter();
       } else {
-        this.pageIndex = 1;
+        this.$refs.pagination.selectFirstPage();
         this.getSalaryCompositionByFilter(
           this.pageIndex,
           this.pageSize,

@@ -26,6 +26,7 @@
           <transition-group>
             <div v-for="element in headersSalary" :key="element.DataField">
               <div
+              v-if="show(element)"
                 class="item-column relative flex a-l-c"
                 @click="toggleCheckbox(element)"
               >
@@ -86,8 +87,8 @@ export default {
     };
   },
   watch: {
-    headers() {
-      this.headersSalary = this.headers;
+    headers(data) {
+      this.headersSalary = data;
     },
     keysearch() {
       this.searchByKeysearch();
@@ -113,8 +114,11 @@ export default {
       else
       {
         this.headersSalary = this.headers;
-        this.keysearch = null;
       }
+    },
+    show(item)
+    {
+      return item.Caption.toLowerCase().includes(this.keysearch.toLowerCase());
     },
     /**----------------------------------------------------------------------
      * Ẩn hiện icon checkbox
@@ -129,8 +133,9 @@ export default {
      * CreatedBy: LQNHAT(24/09/2021)
      */
     saveColumn() {
-      this.$emit("closeCustomizeColumn");
+      this.keysearch = "";
       this.$emit("customizeColumn", this.headersSalary);
+      this.$emit("closeCustomizeColumn");
     },
 
     /**---------------------------------------------------------------------
@@ -138,8 +143,8 @@ export default {
      * CreatedBy: LQNHAT(24/09/2021)
      */
     refreshColumn() {
-      this.$emit("closeCustomizeColumn");
       this.$emit("refreshColumn");
+      this.$emit("closeCustomizeColumn");
     },
 
     /**----------------------------------------------------------------------

@@ -126,7 +126,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
-    Width: 200,
+    Width: 150,
   },
   {
     DataField: "Description",
@@ -135,7 +135,7 @@ export const HEADERS = [
     Alignment: "left",
     Fixed: false,
     Checked: true,
-    Width: 200,
+    Width: 270,
   },
   {
     DataField: "StatusName",

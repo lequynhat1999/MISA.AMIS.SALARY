@@ -94,7 +94,7 @@ export default {
   },
   created() {
     // set value default cho dropdown single
-    this.treeBoxValue = [this.valueDefault];
+    //this.treeBoxValue = [this.valueDefault];
   },
   methods: {
     /**--------------------------------------------------------------

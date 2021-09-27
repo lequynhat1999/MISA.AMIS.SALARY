@@ -314,7 +314,7 @@ import { extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 import { DxCheckBox } from "devextreme-vue/check-box";
 import { Money } from "v-money";
-import {MODE} from "../../js/common/mode";
+import { MODE } from "../../js/common/mode";
 import axios from "axios";
 import {
   NATURE,
@@ -323,7 +323,7 @@ import {
   STATUS_DATA,
   TAX,
 } from "../../js/common/data.js";
-import {MESSAGE} from "../../js/common/message";
+import { MESSAGE } from "../../js/common/message";
 extend("validateRequired", {
   ...required,
   message: "Không được để trống",
@@ -404,10 +404,11 @@ export default {
       this.mode = mode;
       this.salaryCompositionID = id;
       this.$refs.form_salary.reset();
+      this.salaryComposition = {}
       // mode == 0 thì add
       if (mode == MODE.ADD) {
         this.salaryComposition = {
-          OrganizationUnitID: ["9b6e83a4-38d5-4184-a44f-2f202ea6c814"],
+          OrganizationUnitID: null,
           OrganizationUnitName: [""],
           SalaryCompositionTypeID: "",
           NatureID: 1,
@@ -458,6 +459,21 @@ export default {
       this.$set(this.salaryComposition, "TaxableID", data.TaxableID);
       this.$set(this.salaryComposition, "ReduceBoolean", data.ReduceBoolean);
       this.$set(this.salaryComposition, "ValueTypeID", data.ValueTypeID);
+      this.$set(
+        this.salaryComposition,
+        "Quota",
+        data.Quota
+      );
+      this.$set(
+        this.salaryComposition,
+        "Cost",
+        data.Cost
+      );
+      this.$set(
+        this.salaryComposition,
+        "Description",
+        data.Description
+      );
       // focus vào ô tên thành phần
       this.$nextTick(() => this.$refs.salaryCompositionName.focus());
     },
@@ -719,6 +735,21 @@ export default {
         this.salaryComposition,
         "ValueTypeID",
         this.salaryCompositionOriginalEdit.ValueTypeID
+      );
+      this.$set(
+        this.salaryComposition,
+        "Quota",
+        this.salaryCompositionOriginalEdit.Quota
+      );
+      this.$set(
+        this.salaryComposition,
+        "Cost",
+        this.salaryCompositionOriginalEdit.Cost
+      );
+      this.$set(
+        this.salaryComposition,
+        "Description",
+        this.salaryCompositionOriginalEdit.Description
       );
       // focus vào ô tên thành phần
       this.$nextTick(() => this.$refs.salaryCompositionName.focus());

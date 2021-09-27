@@ -85,6 +85,8 @@
         </div>
       </template>
 
+      <DxLoadPanel :enabled="true"
+       />
       <DxScrolling column-rendering-mode="virtual" />
       <DxGrouping :auto-expand-all="false" />
     </DxDataGrid>
@@ -98,6 +100,7 @@ import {
   DxGrouping,
   DxSelection,
   DxScrolling,
+  DxLoadPanel,
 } from "devextreme-vue/data-grid";
 import "devextreme/data/odata/store";
 let collapsed = false;
@@ -108,6 +111,7 @@ export default {
     DxGrouping,
     DxScrolling,
     DxSelection,
+    DxLoadPanel,
   },
   // props: ["headers", "dataSource"],
   props: {
