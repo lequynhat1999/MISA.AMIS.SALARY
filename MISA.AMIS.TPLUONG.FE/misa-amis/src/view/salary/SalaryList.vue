@@ -53,9 +53,8 @@
               <div class="icon-setting-toolbar"></div>
               <BaseCustomizeColumn
                 :hiddenCustomizeColumn="hiddenCustomizeColumn"
-                :headersDefault="headersDefault"
                 :headers="headers"
-                :headerGrid="headerGrid"
+                :headersDefault="headersDefault"
                 @closeCustomizeColumn="closeCustomizeColumn"
                 @customizeColumn="customizeColumn"
                 @refreshColumn="refreshColumn"
@@ -94,7 +93,6 @@
           <BaseGrid
             ref="baseGrid"
             :headers="headers"
-            :headersDefault="headersDefault"
             :headerGrid="headerGrid"
             :dataSource="dataSource"
             @getRowChecked="getRowChecked"
@@ -181,8 +179,8 @@
       </div>
     </div>
     <SalaryDetail
+      v-if="isOpenModal"
       ref="modeForm"
-      :isOpenModal="isOpenModal"
       :treeDataSource="treeDataSource"
       @closePopup="closePopup"
       @closeForm="closeForm"
@@ -251,7 +249,7 @@ export default {
       // title page
       title: "Thành phần lương",
       // mở modal
-      isOpenModal: true,
+      isOpenModal: false,
       // data source treeview
       treeDataSource: [],
       // count rowchecked
@@ -362,32 +360,34 @@ export default {
      */
     reloadTableAndFilter() {
       var self = this;
-      self.isLoading = true;
-      axios
-        .get(
-          URL_API.API_SALARYCOMPOSITION +
-            "/filter?pageIndex=" +
-            self.pageIndex +
-            "&pageSize=" +
-            self.pageSize
-        )
-        .then((res) => {
-          // lấy ra data
-          self.dataSource = res.data.Data;
-          // lấy ra tổng số bản ghi
-          self.amountPage = res.data.TotalRecord;
-          // lấy ra số lượng trang
-          self.numPages = res.data.TotalPage;
-          // set value startRecord, endRecord
-          self.startRecord = (self.pageIndex - 1) * self.pageSize + 1;
-          self.endRecord =
-            self.amountPage < self.pageSize * self.pageIndex
-              ? self.amountPage
-              : self.pageSize * self.pageIndex;
-          self.isLoading = false;
-          // quay về trang đầu tiên
-          self.$refs.pagination.selectFirstPage();
-        });
+      setTimeout(() => {
+        self.isLoading = true;
+        axios
+          .get(
+            URL_API.API_SALARYCOMPOSITION +
+              "/filter?pageIndex=" +
+              self.pageIndex +
+              "&pageSize=" +
+              self.pageSize
+          )
+          .then((res) => {
+            // lấy ra data
+            self.dataSource = res.data.Data;
+            // lấy ra tổng số bản ghi
+            self.amountPage = res.data.TotalRecord;
+            // lấy ra số lượng trang
+            self.numPages = res.data.TotalPage;
+            // set value startRecord, endRecord
+            self.startRecord = (self.pageIndex - 1) * self.pageSize + 1;
+            self.endRecord =
+              self.amountPage < self.pageSize * self.pageIndex
+                ? self.amountPage
+                : self.pageSize * self.pageIndex;
+            self.isLoading = false;
+            // quay về trang đầu tiên
+            self.$refs.pagination.selectFirstPage();
+          });
+      }, 200);
     },
 
     /**------------------------------------------------------------------------
@@ -421,8 +421,8 @@ export default {
      * CreatedBy: LQNHAT(24/09/2021)
      */
     customizeColumn(headers) {
-      this.headerGrid = [...headers.filter((i) => i.Checked === true)];
       this.headers = [...headers];
+      this.headerGrid = [...headers.filter((i) => i.Checked === true)];
     },
 
     /**----------------------------------------------
@@ -430,9 +430,9 @@ export default {
      * CreatedBy: LQNHAT(24/09/2021)
      */
     refreshColumn() {
-      this.headersDefault = [...HEADERS_DEFAULT];
       this.headerGrid = [...this.headersDefault];
-      this.headers = [...this.headersDefault];
+      this.headers = [...HEADERS_DEFAULT];
+      this.closeCustomizeColumn();
     },
 
     /**------------------------------------------------
@@ -440,9 +440,12 @@ export default {
      * CreatedBy: LQNHAT(14/09/2021)
      */
     openModal() {
-      this.isOpenModal = !this.isOpenModal;
+      this.isOpenModal = true;
       this.modeFormDetail = MODE.ADD;
-      this.$refs.modeForm.show(this.modeFormDetail);
+      var me = this;
+      setTimeout(() => {
+        me.$refs.modeForm.show(me.modeFormDetail);
+      }, 300);
     },
 
     /**--------------------------------------------------------
@@ -451,9 +454,12 @@ export default {
      */
     rowDblClick(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
-      this.isOpenModal = !this.isOpenModal;
+      this.isOpenModal = true;
       this.modeFormDetail = MODE.EDIT;
-      this.$refs.modeForm.show(this.modeFormDetail, this.salaryCompositionID);
+      var me = this;
+      setTimeout(() => {
+        me.$refs.modeForm.show(me.modeFormDetail, me.salaryCompositionID);
+      }, 300);
     },
 
     /**------------------------------------------------------------------------
@@ -462,10 +468,13 @@ export default {
      */
     openFormDetail(data) {
       this.salaryCompositionID = data.SalaryCompositionID;
-      this.isOpenModal = !this.isOpenModal;
+      this.isOpenModal = true;
       this.modeFormDetail = MODE.EDIT;
-      this.$refs.modeForm.show(this.modeFormDetail, this.salaryCompositionID);
-      this.$refs.modeForm.openBoxBtn();
+      var me = this;
+      setTimeout(() => {
+        me.$refs.modeForm.show(me.modeFormDetail, me.salaryCompositionID);
+        me.$refs.modeForm.openBoxBtn();
+      }, 300);
     },
 
     /**---------------------------------------------------------------------------
@@ -473,8 +482,11 @@ export default {
      * CreatedBy: LQNHAT(23/09/2021)
      */
     cloneRow(data) {
-      this.isOpenModal = !this.isOpenModal;
-      this.$refs.modeForm.cloneSalaryComposition(data);
+      this.isOpenModal = true;
+      var me = this;
+      setTimeout(() => {
+        me.$refs.modeForm.cloneSalaryComposition(data);
+      }, 300);
     },
 
     /**------------------------------------------------------------------------
@@ -707,7 +719,7 @@ export default {
      * CreatedBy : LQNHAT(14/09/2021)
      */
     closeForm() {
-      this.isOpenModal = true;
+      this.isOpenModal = false;
       this.reloadTableAndFilter();
     },
 

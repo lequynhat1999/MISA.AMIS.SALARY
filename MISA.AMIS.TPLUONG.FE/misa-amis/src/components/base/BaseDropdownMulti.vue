@@ -28,7 +28,7 @@
           selection-mode="multiple"
           show-check-boxes-mode="normal"
           :display-expr="displayExprProp"
-          @content-ready="syncTreeViewSelection($event)"
+          @content-ready="contentReady($event)"
           @item-selection-changed="treeView_itemSelectionChanged($event)"
         />
       </template>
@@ -90,6 +90,7 @@ export default {
     return {
       treeBoxValue: this.value,
       treeViewName: "treeView",
+      isFirst: true,
     };
   },
   created() {
@@ -97,6 +98,13 @@ export default {
     //this.treeBoxValue = [this.valueDefault];
   },
   methods: {
+    contentReady(e){
+      if(this.isFirst){
+        this.$refs[this.treeViewName].instance.unselectAll();
+        this.syncTreeViewSelection(e);
+        this.isFirst = false;
+      }
+    },
     /**--------------------------------------------------------------
      * Bắt sự kiện khi value thay đổi
      * CreatedBy:LQNHAT(16/09/2021)
@@ -108,10 +116,11 @@ export default {
           this.$refs[this.treeViewName].instance);
 
       if (treeView) {
-        if (e.value === null) {
+        if (this.value == null) {
           treeView.unselectAll();
         } else {
           let values = e.value || this.value;
+          
           for (let index = 0; index < values.length; index++) {
             treeView.selectItem(values[index]);
           }
@@ -125,7 +134,6 @@ export default {
      */
     treeView_itemSelectionChanged(e) {
       this.$emit("getListSelected",e.component.getSelectedNodes());
-      console.log(e.component.getSelectedNodes());
     },
   },
 };

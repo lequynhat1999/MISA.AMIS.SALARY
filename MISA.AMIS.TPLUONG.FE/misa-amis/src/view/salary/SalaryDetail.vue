@@ -1,5 +1,5 @@
 <template>
-  <div id="myModal" class="modal" :class="{ 'hidden-modal': isOpenModal }">
+  <div id="myModal" class="modal">
     <div class="modal-content">
       <div class="header-form flex">
         <div
@@ -152,7 +152,7 @@
                   @getListSelected="getListSelected"
                 />
                 <div v-if="errors.length > 0">
-                  <div class="text-error">{{ errors[0] }}</div>
+                  <div class="text-error-component">{{ errors[0] }}</div>
                 </div>
               </ValidationProvider>
             </div>
@@ -175,7 +175,7 @@
                   :borderRed="errors.length > 0 ? true : false"
                 />
                 <div v-if="errors.length > 0">
-                  <div class="text-error">{{ errors[0] }}</div>
+                  <div class="text-error-component">{{ errors[0] }}</div>
                 </div>
               </ValidationProvider>
             </div>
@@ -199,7 +199,7 @@
                   />
                 </div>
                 <div v-if="errors.length > 0">
-                  <div class="text-error">{{ errors[0] }}</div>
+                  <div class="text-error-component">{{ errors[0] }}</div>
                 </div>
               </ValidationProvider>
               <div class="box-earning" v-if="salaryComposition.NatureID == 1">
@@ -338,11 +338,7 @@ export default {
     DxRadioGroup,
     Money,
   },
-  // props: ["isOpenModal", "treeDataSource"],
   props: {
-    isOpenModal: {
-      type: Boolean,
-    },
     treeDataSource: {
       type: Array,
     },
@@ -404,11 +400,11 @@ export default {
       this.mode = mode;
       this.salaryCompositionID = id;
       this.$refs.form_salary.reset();
-      this.salaryComposition = {}
+      this.salaryComposition = {};
       // mode == 0 thì add
       if (mode == MODE.ADD) {
         this.salaryComposition = {
-          OrganizationUnitID: null,
+          OrganizationUnitID: ["9b6e83a4-38d5-4184-a44f-2f202ea6c814"],
           OrganizationUnitName: [""],
           SalaryCompositionTypeID: "",
           NatureID: 1,
@@ -422,7 +418,10 @@ export default {
           this.salaryComposition
         );
         // focus vào ô tên thành phần
-        this.$nextTick(() => this.$refs.salaryCompositionName.focus());
+        var me = this;
+        setTimeout(() => {
+          me.$nextTick(() => me.$refs.salaryCompositionName.focus());
+        }, 300);
       }
       // mode == 1 thì bind data lên form
       else {
@@ -459,21 +458,9 @@ export default {
       this.$set(this.salaryComposition, "TaxableID", data.TaxableID);
       this.$set(this.salaryComposition, "ReduceBoolean", data.ReduceBoolean);
       this.$set(this.salaryComposition, "ValueTypeID", data.ValueTypeID);
-      this.$set(
-        this.salaryComposition,
-        "Quota",
-        data.Quota
-      );
-      this.$set(
-        this.salaryComposition,
-        "Cost",
-        data.Cost
-      );
-      this.$set(
-        this.salaryComposition,
-        "Description",
-        data.Description
-      );
+      this.$set(this.salaryComposition, "Quota", data.Quota);
+      this.$set(this.salaryComposition, "Cost", data.Cost);
+      this.$set(this.salaryComposition, "Description", data.Description);
       // focus vào ô tên thành phần
       this.$nextTick(() => this.$refs.salaryCompositionName.focus());
     },
@@ -528,10 +515,12 @@ export default {
         }
         if (this.mode == MODE.ADD) {
           this.addSalaryComposition();
+          this.$refs.form_salary.reset();
           this.salaryComposition = {};
           this.salaryComposition = {
             OrganizationUnitID: ["9b6e83a4-38d5-4184-a44f-2f202ea6c814"],
-            SalaryCompositionTypeID: [""],
+            OrganizationUnitName: [""],
+            SalaryCompositionTypeID: "",
             NatureID: 1,
             TaxableID: 0,
             ValueTypeID: 2,

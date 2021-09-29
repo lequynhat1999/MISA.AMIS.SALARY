@@ -2,6 +2,7 @@
   <div
     class="customize-column"
     :class="{ 'hidden-column': hiddenCustomizeColumn }"
+    v-if="!hiddenCustomizeColumn"
   >
     <div class="content-customize">
       <div class="header-customize flex a-l-c">
@@ -46,12 +47,12 @@
           </transition-group>
         </draggable>
       </div>
-      <div class="footer-customize-column">
-        <div class="box-btn-add box-btn-save-column">
-          <button class="m-btn btn-add btn-save-column" @click="saveColumn">
-            <div class="text-btn">Lưu</div>
-          </button>
-        </div>
+    </div>
+    <div class="footer-customize-column">
+      <div class="box-btn-add box-btn-save-column">
+        <button class="m-btn btn-add btn-save-column" @click="saveColumn">
+          <div class="text-btn">Lưu</div>
+        </button>
       </div>
     </div>
   </div>
@@ -59,6 +60,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import _cloneDeep from "lodash/cloneDeep";
 export default {
   name: "BaseCustomizeColumn",
   // props: ["hiddenCustomizeColumn", "headers"],
@@ -68,9 +70,7 @@ export default {
     },
     headers: {
       type: Array,
-    },
-    headerGrid: {
-      type: Array,
+      default: () => [],
     },
     headersDefault: {
       type: Array,
@@ -82,13 +82,16 @@ export default {
   data() {
     return {
       showIconDefault: false,
-      headersSalary: this.headers,
+      headersSalary: null,
       keysearch: "",
     };
   },
   watch: {
-    headers(data) {
-      this.headersSalary = data;
+    headers: {
+      handler(val) {
+        this.headersSalary = _cloneDeep(val);
+      },
+      immediate: true,
     },
   },
   methods: {
@@ -126,7 +129,6 @@ export default {
      */
     refreshColumn() {
       this.$emit("refreshColumn");
-      this.$emit("closeCustomizeColumn");
     },
 
     /**----------------------------------------------------------------------
@@ -138,7 +140,7 @@ export default {
         this.$emit("closeCustomizeColumn");
       }
       this.keysearch = "";
-      console.log(this.headersSalary);
+      this.headersSalary = _cloneDeep(this.headersDefault);
     },
   },
   mounted() {

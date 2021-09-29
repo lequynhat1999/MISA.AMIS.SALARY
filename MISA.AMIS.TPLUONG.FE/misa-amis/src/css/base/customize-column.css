@@ -18,7 +18,9 @@
 
 .content-customize
 {
-    padding: 15px ;
+    padding-top:  15px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .header-customize
@@ -137,5 +139,5 @@
 .box-btn-save-column
 {
     position: absolute;
-    bottom: 15px;
+    bottom: 12px;
 }
