@@ -340,6 +340,7 @@ export default {
         .then((res) => {
           // lấy ra data
           self.dataSource = res.data.Data;
+          console.log(self.dataSource);
           // lấy ra tổng số bản ghi
           self.amountPage = res.data.TotalRecord;
           // lấy ra số lượng trang
@@ -788,6 +789,7 @@ export default {
         this.organizationUnitID,
         this.keysearch
       );
+      console.log(this.pageSize);
     },
 
     /**---------------------------------------------

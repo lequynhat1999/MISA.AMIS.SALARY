@@ -60,7 +60,7 @@
 
 <script>
 import draggable from "vuedraggable";
-import _cloneDeep from "lodash/cloneDeep";
+// import _cloneDeep from "lodash/cloneDeep";
 export default {
   name: "BaseCustomizeColumn",
   // props: ["hiddenCustomizeColumn", "headers"],
@@ -86,13 +86,20 @@ export default {
       keysearch: "",
     };
   },
+  created(){
+    this.headersSalary = this.headers;
+  },
   watch: {
-    headers: {
-      handler(val) {
-        this.headersSalary = _cloneDeep(val);
-      },
-      immediate: true,
-    },
+    // headers: {
+    //   handler(val) {
+    //     this.headersSalary = _cloneDeep(val);
+    //   },
+    //   immediate: true,
+    // },
+    headers()
+    {
+      this.headersSalary = this.headers;
+    }
   },
   methods: {
     /**---------------------------------------------------------------------------
@@ -129,6 +136,9 @@ export default {
      */
     refreshColumn() {
       this.$emit("refreshColumn");
+      this.headersSalary.forEach(element => {
+        element.Checked = true;
+      });
     },
 
     /**----------------------------------------------------------------------
@@ -140,7 +150,7 @@ export default {
         this.$emit("closeCustomizeColumn");
       }
       this.keysearch = "";
-      this.headersSalary = _cloneDeep(this.headersDefault);
+      // this.headersSalary = _cloneDeep(this.headersDefault);
     },
   },
   mounted() {
